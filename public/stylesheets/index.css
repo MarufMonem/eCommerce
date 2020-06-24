@@ -19,28 +19,39 @@ nav{
 
 
 #subHeader{
-    background-color: #001514;
+    background-color: #A3320B;
     color: #fbfffe;
+}
+
+cite{
+    color: whitesmoke;
+}
+#item #men h1{
+    color: #001514;
+}
+
+#item #women h1{
+    color: #A3320B;
 }
 #itemTitle{
     font-size: 1.2rem;
     font-weight: 500;
-
 }
 
 #item button {
     float: right;
 }
 
-#item a{
-    color:#fbfffe;
+#men button:hover{
+    background-color: #001514;
 }
 
-#item a:hover{
-    color: #fbfffe;
+#women button:hover{
+    background-color: #A3320B;
+    border: white;
 }
 
-#item .card:hover{
+#item #men .card:hover{
     border: 3px solid #001514;
     background-color: #001514;
     color: white;
@@ -59,6 +70,7 @@ nav{
     transition-timing-function: ease-in-out;
     
 }
+
 
 
 #footer .card{
