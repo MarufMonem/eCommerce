@@ -1,6 +1,8 @@
 /* color pallete : https://coolors.co/437c90-255957-eeebd3-a98743-f7c548 */
 /* https://coolors.co/001514-fbfffe-6b0504-a3320b-e6af2e */
-
+body{
+    background-color: #fbfffe;
+}
 nav{
     background-color:#001514 ;
     color: #fbfffe;
@@ -20,6 +22,46 @@ nav{
     background-color: #001514;
     color: #fbfffe;
 }
+#itemTitle{
+    font-size: 1.2rem;
+    font-weight: 500;
+
+}
+
 #item button {
     float: right;
+}
+
+#item a{
+    color:#fbfffe;
+}
+
+#item a:hover{
+    color: #fbfffe;
+}
+
+#item .card:hover{
+    border: 3px solid #001514;
+    background-color: #001514;
+    color: white;
+    transition: 400ms;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+    
+}
+
+#item #women .card:hover{
+    border: 3px solid #A3320B;
+    background-color: #A3320B;
+    color: white;
+    transition: 400ms;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+    
+}
+
+
+#footer .card{
+    background-color: #001514;
+    color: #fbfffe;
 }
