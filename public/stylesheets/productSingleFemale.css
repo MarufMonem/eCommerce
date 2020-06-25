@@ -1,0 +1,48 @@
+body{
+    width: 100%;
+}
+nav{
+    background-color:#A3320B ;
+    color: #fbfffe;
+}
+
+#productDetails .row{
+    background-color:#A3320B ;
+    color: #fbfffe;
+}
+
+#header .jumbotron{
+    background-color:#A3320B ;
+    color: #fbfffe;
+    font-size: 1.5rem;
+    letter-spacing: 10px;
+}
+#products .card:hover{
+    border: 3px solid #A3320B;
+    background-color: #A3320B;
+    color: white;
+    transition: 400ms;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+    
+}
+
+
+
+#footer .card{
+    background-color: #A3320B;
+    color: #fbfffe;
+}
+
+#footer i{
+    font-size: 2rem;
+    margin-right: 1rem;
+    color: #fbfffe;
+}
+
+#footer i:hover{
+    color: #001514;
+    transition: 300ms;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+}

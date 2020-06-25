@@ -1,0 +1,58 @@
+/* https://coolors.co/001514-fbfffe-6b0504-a3320b-e6af2e */
+nav{
+    background-color:#001514 ;
+    color: #fbfffe;
+}
+ul .dropdown-menu .active{
+    background-color: #001514;
+    color: #fbfffe ;
+}
+
+#headTitle{
+    background-color: #001514;
+    color: #fbfffe ;
+}
+
+
+#header .jumbotron{
+    background-color: #001514;
+    color: #fbfffe ;
+    height: 9rem;
+}
+#header blockquote{
+    font-size: 1.5rem;
+}
+
+#header cite{
+    font-size: 1.2rem;
+    color: whitesmoke;
+}
+
+#products .card:hover{
+    border: 3px solid #001514;
+    background-color: #001514;
+    color: white;
+    transition: 400ms;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+    
+}
+
+
+#footer .card{
+    background-color: #001514;
+    color: #fbfffe;
+}
+
+#footer i{
+    font-size: 2rem;
+    margin-right: 1rem;
+    color: #fbfffe;
+}
+
+#footer i:hover{
+    color: #d43d0b;
+    transition: 300ms;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+}
