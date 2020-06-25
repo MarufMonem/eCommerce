@@ -77,3 +77,16 @@ cite{
     background-color: #001514;
     color: #fbfffe;
 }
+
+#footer i{
+    font-size: 2rem;
+    margin-right: 1rem;
+    color: #fbfffe;
+}
+
+#footer i:hover{
+    color: #d43d0b;
+    transition: 300ms;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+}
