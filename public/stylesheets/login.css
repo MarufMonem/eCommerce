@@ -1,0 +1,35 @@
+#header p{
+    font-size: 2rem;
+    letter-spacing: 10px;
+    background-color: #e6af2e;
+    color: #fbfffe;
+}
+
+#formSection  button{
+    background-color: #f3b82d;
+    color: #001514;
+}
+
+#formSection  button:hover{
+    border: 2px solid #6b0504;
+    color: #fbfffe;
+}
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+
+#footer i{
+    font-size: 2rem;
+    margin-right: 1rem;
+    color: #001514;
+}
+
+#footer i:hover{
+    color: #d43d0b;
+    transition: 300ms;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+}
