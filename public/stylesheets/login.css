@@ -32,13 +32,13 @@ footer .card .card-header{
 }
 
 
-#loginFooter i{
+footer i{
     font-size: 2rem;
     margin-right: 1rem;
     color: #001514;
 }
 
-#loginFooter i:hover{
+footer i:hover{
     color: #d43d0b;
     transition: 300ms;
     transition-property: all;
