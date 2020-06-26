@@ -38,15 +38,15 @@ cite{
     font-weight: 500;
 }
 
-#item button {
+#item a {
     float: right;
 }
 
-#men button:hover{
+#men a:hover{
     background-color: #001514;
 }
 
-#women button:hover{
+#women a:hover{
     background-color: #A3320B;
     border: white;
 }
