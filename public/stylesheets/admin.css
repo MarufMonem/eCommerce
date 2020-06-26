@@ -1,3 +1,6 @@
+html{
+    width: 100%;
+}
 #header p{
     font-size: 2rem;
     letter-spacing: 10px;
@@ -25,9 +28,9 @@ footer {
 }
  h2{
     background-color: #6b0504;
-    padding: 5px;
+    padding: 10px;
     color: whitesmoke;
-    letter-spacing: ;
+    letter-spacing: 10px;
 }
 
 #footer i{

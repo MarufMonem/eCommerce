@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="../public/stylesheets/profile.css">
+    <title>PothoRekha</title>
+</head>
+
+<body>
+
+    <!-- navbar -->
+    <section id="navbar">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#">Pothorekha</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home <span class="sr-only"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Products
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item " href="productMale.html">Men</a>
+                            <a class="dropdown-item" href="productFemale.html">Women</a>
+                            <a class="dropdown-item" href="#">Unisex</a>
+
+                        </div>
+                    </li>
+
+                </ul>
+                <ul class="navbar-nav">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="register.html">My Profile</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log out</a>
+                    </li>
+
+                </ul>
+
+                <!-- <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form> -->
+
+            </div>
+        </nav>
+
+        <!-- Header image -->
+    </section>
+
+    <section id="header">
+        <p class="text-center py-3">Hello, <span>Username</span></p>
+    </section>
+
+    <section id="content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-7">
+                    <h3 class="text-center">Your Information</h3>
+                    <hr>
+
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td>Address</td>
+                                <td>ASdasdasdsadsad</td>
+                            </tr>
+                            <tr>
+                                <td>Phone Number</td>
+                                <td>564213</td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>sdfsdfsdfsdf</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div class="row  ">
+                        <div class="col-4 px-1 d-flex justify-content-center">
+                            <a class="btn btn-info" data-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            Update Information
+                        </a>
+                        </div>
+                        <div class="col-4 px-1 mx-0 d-flex justify-content-center">
+                            <button class="btn btn-warning">Change Password</button>
+                        
+                        </div>
+                        <div class="col-4 px-1 mx-0 d-flex justify-content-center">
+                            <form  id="delete" action="">
+                                <button class="btn btn btn-danger d-block"> Delete Account</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body mt-4">
+
+                            <form>
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" placeholder="Enter your name"
+                                                required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Shipping Address</label>
+                                            <input type="text" class="form-control" placeholder="Enter your address"
+                                                required>
+                                            <small class="form-text text-muted">Where the product would be
+                                                delivered.</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Phone Number</label>
+                                            <input type="number" class="form-control"
+                                                placeholder="Enter your phone number" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Email address</label>
+                                            <input type="email" class="form-control" placeholder="Enter email" required>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row d-flex justify-content-center">
+                                    <div class=" form-group col-6">
+                                        <label for="inputState">Sex</label>
+                                        <select id="inputState" class="form-control" required>
+                                            <option selected>Male</option>
+                                            <option>Female</option>
+                                            <option>Other</option>
+                                            <option>Dont want to disclose</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>Age</label>
+                                            <input type="number" class="form-control" placeholder="Enter your age"
+                                                min="5" max="110" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label">Password</label>
+                                                <input type="password" class="form-control" placeholder="Password"
+                                                    required>
+                                                <small class="form-text text-muted">We'll never share your details
+                                                    anyone.
+                                                </small>
+                                        </div>
+                                        <button id="submit" type="submit" class="btn">Submit</button>
+                                        <button type="reset" class="btn btn-danger">Reset</button>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-5 py-3 py-lg-0">
+                    <h3 class="text-center">Previous Orders</h3>
+                    <hr>
+                    <table class="table table-hover text-center ">
+                        <thead>
+                            <tr>
+                                <th scope="col">OrderID</th>
+                                <th scope="col">No. Items</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Items</th>
+                                <th scope="col">Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>45521</td>
+                                <td>2</td>
+                                <td>25 Feb</td>
+                                <td>Bag, purse</td>
+                                <td>250$</td>
+                                
+
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="loginFooter">
+        <footer class="footer">
+            <div class="card mt-5 ">
+                <div class="card-header text-center">
+                    Pothorekha.com
+                </div>
+                <div class="card-body pb-0">
+                    <p class="text-center">
+                        <a href="https://www.facebook.com/marufmonem.anik" class="contactLinks"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/maruf_monem_anik/" class="contactLinks"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/marufmonemanik" class="contactLinks"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto: maruf.monem@g.bracu.ac.bd?cc=marufmonem@google.com" class="contactLinks"><i
+                                class="far fa-envelope"></i></a>
+                        <a href="https://github.com/MarufMonem" class="contactLinks"><i class="fab fa-github"></i></a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

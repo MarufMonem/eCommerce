@@ -1,25 +1,22 @@
 body{
     background-color: #fbfffe;
 }
-#header p{
-    font-size: 2rem;
-    letter-spacing: 10px;
-    background-color: #e6af2e;
-    color: #fbfffe;
+nav{
+    background-color:#e6af2e ;
 }
 
-form #submit {
-    background-color: #f3b82d;
+#header p{
+    font-size: 2.5rem;
+    background-color: #e6af2e;
     color: #001514;
 }
-
-form .btn:hover{
-    border: 2px solid #A3320B;
-}
+/* #delete{
+    display: flex;
+} */
 
 #loginFooter footer{
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    bottom: -300px;
     width: 100%;
 }
 
