@@ -7,6 +7,7 @@ var userSchema = new mongoose.Schema({
     email: String,
     password: String,
     phone: Number,
+    admin: Boolean,
     orders: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -16,4 +17,4 @@ var userSchema = new mongoose.Schema({
 });
 
 userSchema.plugin(passportLocalMongoose);
-module.exports = mongoose.model("comment", commentSchema);
+module.exports= mongoose.model("user",userSchema);

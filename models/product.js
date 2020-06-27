@@ -7,3 +7,4 @@ var productSchema = new mongoose.Schema({
     sex: String,
     date: Date
 });
+module.exports = mongoose.model("product", productSchema);
