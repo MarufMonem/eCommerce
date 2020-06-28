@@ -18,6 +18,9 @@ var user                    = require("./models/user");
 var productRoutes           = require("./routes/product"),
     indexRoutes             = require("./routes/index");
 
+mongoose.set('useUnifiedTopology', true); //removing deprication errors
+mongoose.connect("mongodb://localhost/eCommerceWebsite" ,{ useNewUrlParser: true });
+
 //MAKING ALL DIFFRENT PACKAGES AND FEATURES USEABLE IN THE APP    
 app.use(bodyParser.urlencoded({ extended: true })); //get form data
 app.set("view engine", "ejs"); //not write ejs every time
