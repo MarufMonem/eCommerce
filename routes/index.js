@@ -53,6 +53,14 @@ router.get("/login", function(req, res){
     res.render("login");
 });
 
+//passport authenticate middleware
+router.post("/login", passport.authenticate("local", {
+    successRedirect: "/", //if the login was successful
+    failureRedirect: "/login" // if it wasnt
+    // failureFlash: true
+}) , function(req, res){
+    
+});
 
 
 module.exports = router;

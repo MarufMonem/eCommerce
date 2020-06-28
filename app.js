@@ -41,7 +41,31 @@ app.use(passport.session());
 
 //this line is telling passport to use the user authenticate method
 //which is given to the userSchema
-passport.use(new localStrategy(user.authenticate()))
+// passport.use(new localStrategy(user.authenticate()));
+
+
+passport.use(new localStrategy({
+    usernameField: 'phone', // this is where you do that
+    passwordField: 'password'
+},
+(phone, password, done) => {
+    user.findOne({
+        phone: phone
+    }, (error, founduser) => {
+        if (error) {
+            return done(error);
+        }
+        if (!founduser) {
+            return done(null, false, {
+                message: 'Username or password incorrect'
+            });
+        }
+        // Do other validation/check if any
+        return done(null, founduser);
+    });
+}
+));
+
 
 
 passport.serializeUser(user.serializeUser()); //encode
