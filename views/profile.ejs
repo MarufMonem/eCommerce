@@ -8,7 +8,7 @@
     <meta name="Description" content="Enter your description here" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    <link rel="stylesheet" href="../public/stylesheets/profile.css">
+    <link rel="stylesheet" href="../profile.css">
     <title>PothoRekha</title>
 </head>
 
@@ -46,14 +46,23 @@
 
                 </ul>
                 <ul class="navbar-nav">
+                    <% if(!currentUser){ %>
+                        <li class="nav-item">
+                          <a class="nav-link" href="/login">login</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="/register">Sign Up</a>
+                        </li>
+                      <% }else{ %>
+                        <li class="nav-item">
+                            <a class="nav-link" href=""> <strong> <%= currentUser.username.toUpperCase() %> </strong></a>
+                        </li>
+      
+                        <li class="nav-item">
+                          <a class="nav-link" href="/logout">Log out</a>
+                        </li>
+                      <% } %>
 
-                    <li class="nav-item">
-                        <a class="nav-link active" href="register.html">My Profile</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Log out</a>
-                    </li>
 
                 </ul>
 
@@ -69,7 +78,7 @@
     </section>
 
     <section id="header">
-        <p class="text-center py-3">Hello, <span>Username</span></p>
+        <p class="text-center py-3">Hello, <span><%=user.username.toUpperCase()%></span></p>
     </section>
 
     <section id="content">
@@ -77,21 +86,25 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-7">
                     <h3 class="text-center">Your Information</h3>
-                    <hr>
+                    
 
                     <table class="table table-hover">
                         <tbody>
                             <tr>
-                                <td>Address</td>
-                                <td>ASdasdasdsadsad</td>
+                                <td>Address:</td>
+                                <td><%=user.address%></td>
                             </tr>
                             <tr>
-                                <td>Phone Number</td>
-                                <td>564213</td>
+                                <td>Phone Number:</td>
+                                <td><%=user.phone%></td>
                             </tr>
                             <tr>
-                                <td>Email</td>
-                                <td>sdfsdfsdfsdf</td>
+                                <td>Email:</td>
+                                <td><%=user.email%></td>
+                            </tr>
+                            <tr>
+                                <td>Age:</td>
+                                <td><%=user.age%></td>
                             </tr>
                         </tbody>
                     </table>
@@ -109,7 +122,7 @@
                         
                         </div>
                         <div class="col-4 px-1 mx-0 d-flex justify-content-center">
-                            <form  id="delete" action="">
+                            <form  id="delete" action="/user/<%=user._id%>?_method=DELETE" method="POST">
                                 <button class="btn btn btn-danger d-block"> Delete Account</button>
                             </form>
                         </div>
@@ -118,18 +131,18 @@
                     <div class="collapse" id="collapseExample">
                         <div class="card card-body mt-4">
 
-                            <form>
+                            <form action="/user/<%=user._id%>?_method=PUT" method="POST">
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label>Name</label>
-                                            <input type="text" class="form-control" placeholder="Enter your name"
+                                            <input type="text" name="user[username]" class="form-control" value="<%=user.username%>"
                                                 required>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Shipping Address</label>
-                                            <input type="text" class="form-control" placeholder="Enter your address"
+                                            <input type="text" name="user[address]" class="form-control" value="<%=user.address%>"
                                                 required>
                                             <small class="form-text text-muted">Where the product would be
                                                 delivered.</small>
@@ -137,49 +150,29 @@
 
                                         <div class="form-group">
                                             <label>Phone Number</label>
-                                            <input type="number" class="form-control"
-                                                placeholder="Enter your phone number" required>
+                                            <input type="number" name="user[phone]" class="form-control"
+                                                value="<%=user.phone%>" required>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Email address</label>
-                                            <input type="email" class="form-control" placeholder="Enter email" required>
+                                            <input type="email" name="user[email]" class="form-control" value="<%=user.email%>" required>
 
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div class="row d-flex justify-content-center">
-                                    <div class=" form-group col-6">
-                                        <label for="inputState">Sex</label>
-                                        <select id="inputState" class="form-control" required>
-                                            <option selected>Male</option>
-                                            <option>Female</option>
-                                            <option>Other</option>
-                                            <option>Dont want to disclose</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-6">
                                         <div class="form-group">
                                             <label>Age</label>
-                                            <input type="number" class="form-control" placeholder="Enter your age"
-                                                min="5" max="110" required>
+                                            <input type="number" name="user[age]" class="form-control" value="<%=user.age%>" required>
+
                                         </div>
                                     </div>
                                 </div>
+
+
 
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-12">
-                                        <div class="form-group">
-                                            <label">Password</label>
-                                                <input type="password" class="form-control" placeholder="Password"
-                                                    required>
-                                                <small class="form-text text-muted">We'll never share your details
-                                                    anyone.
-                                                </small>
-                                        </div>
-                                        <button id="submit" type="submit" class="btn">Submit</button>
+                                        
+                                        <button id="submit" type="submit" class="btn btn-warning">Submit</button>
                                         <button type="reset" class="btn btn-danger">Reset</button>
                                     </div>
 

@@ -8,7 +8,7 @@
     <meta name="Description" content="Enter your description here" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    <link rel="stylesheet" href="../public/stylesheets/productSingleMale.css">
+    <link rel="stylesheet" href="../productSingleFemale.css">
     <title>Product</title>
 </head>
 
@@ -25,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home <span class="sr-only"></span></a>
+                        <a class="nav-link" href="/public/">Home <span class="sr-only"></span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">About Us</a>
@@ -36,11 +36,11 @@
                             Products
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item " href="productMale.html">Men</a>
-                            <a class="dropdown-item " href="productFemale.html">Women</a>
+                            <a class="dropdown-item " href="/products/male">Men</a>
+                            <a class="dropdown-item " href="/products/female">Women</a>
                             <a class="dropdown-item disabled" href="#">Unisex</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Browse All</a>
+                            <a class="dropdown-item disabled" href="#">Browse All</a>
                         </div>
                     </li>
 
@@ -48,16 +48,22 @@
                 <ul class="navbar-nav">
 
 
+                    <% if(!currentUser){ %>
                     <li class="nav-item">
                         <a class="nav-link" href="/login">login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/register">Sign Up</a>
                     </li>
+                    <% }else{ %>
+                    <li class="nav-item">
+                        <a class="nav-link" href=""> <strong> <%= currentUser.username.toUpperCase() %> </strong></a>
+                    </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Log out</a>
                     </li>
+                    <% } %>
 
                 </ul>
 
@@ -77,18 +83,16 @@
                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img class="d-block w-100"
-                                    src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjIyMjh9&auto=format&fit=crop&w=800&q=80"
-                                    alt="First slide">
+                                <img class="d-block w-100" src="<%=product.image%>" alt="First slide">
                             </div>
                             <div class="carousel-item">
                                 <img class="d-block w-100"
-                                    src="https://images.unsplash.com/photo-1529810313688-44ea1c2d81d3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1106&q=80"
+                                    src="https://images.unsplash.com/photo-1499013819532-e4ff41b00669?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjF9&auto=format&fit=crop&w=800&q=80"
                                     alt="Second slide">
                             </div>
                             <div class="carousel-item">
                                 <img class="d-block w-100"
-                                    src="https://images.unsplash.com/photo-1528397793240-d982e35a1d55?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
+                                    src="https://images.unsplash.com/photo-1544220828-1becb7f7b284?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
                                     alt="Third slide">
                             </div>
                         </div>
@@ -106,10 +110,12 @@
                 </div>
 
                 <div class="col-12 col-md-6 py-4 py-md-0 py-lg-5 ">
-                    <h1 class="text-center ">Product Name</h1>
-                    <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores sequi adipisci, unde
-                        voluptas minus placeat, dolorem cupiditate magni soluta accusantium neque sapiente tempora
-                        dolores omnis sed. Totam ab doloremque quis.</p>
+                    <h1 class="text-center "><%=product.title%></h1>
+                    <p class="text-justify"><%=product.description%></p>
+                    <div id="divPrice" class="text-center d-block d-lg-flex justify-content-center ">
+                        <p class="py-2  px-lg-5"><%=product.price%> Taka</p>
+                    </div>
+
                     <!-- <button type="button" class="btn">
                         Profile <span class="badge badge-light">9</span>
                         <span class="sr-only">unread messages</span>
@@ -166,54 +172,47 @@
 
     <!-- More Products -->
     <!-- products -->
-    
+
     <section id="products">
         <section id="header">
             <div class="jumbotron jumbotron-fluid py-4">
                 <div class="container">
-                  <h1 class=" text-center">More Products</h1>
+                    <h1 class=" text-center">More Products</h1>
                 </div>
-              </div>
+            </div>
         </section>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-sm-6 col-md-4 col-lg-4 py-2 ">
-                    <div class="card mx-auto" style="width: 14rem;">
-                        <a href=""><img class="card-img-top"
-                                src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1317&q=80"
-                                alt="Card image cap"></a>
+                <% var count = 0; %>
+
+                <% for(let i=0; i < allProducts.length; i++){
+
+                    if(count < 3){
+                        if(allProducts[i]._id.equals(product._id)){
+                            continue;
+                        }else{
+                 %>
+
+
+                <div class="col-12 col-md-6 col-lg-4 py-2">
+                    <div class="card mx-auto" style="width: 18.7rem;">
+                        <a href="/products/<%=allProducts[i]._id%>"><img class="card-img-top"
+                                src="<%=allProducts[i].image%>" alt="Card image cap"></a>
 
                         <div class="card-body">
-                            <h5  class="text-center card-title">Black and white Charm</h5>
-                            <h6 class="card-subtitle text-center mb-2">200$</h6>
+                            <h5 class="text-center card-title"><%=allProducts[i].title%></h5>
+                            <p class="card-text"><%=allProducts[i].description.substring(0,100)%>...</p>
+                            <h6 class="card-subtitle text-center mb-2"><%=allProducts[i].price%> Taka</h6>
                         </div>
                     </div>
                 </div>
+                <% count++;
+            }
+                }else{
+                    break;
+                } 
+            } %>
 
-                <div class="col-12 col-sm-6 col-md-4 col-lg-4 py-2 ">
-                    <div class="card mx-auto" style="width: 14rem;">
-                        <a href=""><img class="card-img-top"
-                                src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1317&q=80"
-                                alt="Card image cap"></a>
-
-                        <div class="card-body">
-                            <h5  class="text-center card-title">Black and white Charm</h5>
-                            <h6 class="card-subtitle text-center mb-2">200$</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-4 py-2 ">
-                    <div class="card mx-auto" style="width: 14rem;">
-                        <a href=""><img class="card-img-top"
-                                src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1317&q=80"
-                                alt="Card image cap"></a>
-
-                        <div class="card-body">
-                            <h5  class="text-center card-title">Black and white Charm</h5>
-                            <h6 class="card-subtitle text-center mb-2">200$</h6>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>

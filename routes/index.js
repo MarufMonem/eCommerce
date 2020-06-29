@@ -62,5 +62,76 @@ router.post("/login", passport.authenticate("local", {
     
 });
 
+//logging out handler
+router.get("/logout", function(req, res){
+    req.logOut();
+    // req.flash("success", "Logged you out");
+    res.redirect("/");
+});
+
+//Delete user
+router.delete("/user/:id", isloggedIn, function(req, res){
+    user.findById(req.params.id, function (err, foundUser) {
+
+        // foundCamp.comments.forEach(function (commentID) {
+        //     comment.findByIdAndDelete(commentID, function (err) {
+        //         console.log("DELETED");
+        //     });
+        // });
+        foundUser.remove();
+    // req.flash("success", "Logged you out");
+    res.redirect("/admin/users");
+});
+});
+
+//Delete user
+router.get("/user/:id", isloggedIn, function(req, res){
+    user.findById(req.params.id, function (err, foundUser) {
+
+        if(err){
+            console.log(err);
+        }else{
+            res.render("profile",{user:foundUser});
+        }    
+});
+});
+
+//PRODUCT DELETE ROUTE
+router.put("/user/:id", isloggedIn, function (req, res) {
+    user.findByIdAndUpdate(req.params.id, req.body.user, function (err, updateduser) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(updateduser);
+            // req.flash("success", "Campground updated!");
+            res.redirect("/user/" + req.params.id);
+        }
+        // req.flash("success", "Logged you out");
+    });
+});
+
+
+//logged in checker
+function isloggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    // req.flash("error", "You need to logged in to do that!");
+    res.redirect("/login");
+}
+
+function isAdmin(req, res, next) {
+    if (req.isAuthenticated()) {
+        if(req.user.admin === true){
+            console.log("PERSON IS ADMIN******************")
+            return next();
+        }else{
+            console.log("PERSON IS NOT ADMIN******************")
+            res.send("ONLY FOR ADMIN");
+        }
+    }else{
+        res.redirect("/login");
+    }
+}
 
 module.exports = router;

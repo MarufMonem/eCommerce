@@ -26,7 +26,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Home <span class="sr-only"></span></a>
+                        <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#">About Us</a>
@@ -37,27 +37,42 @@
                             Products
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item " href="productMale.html">Men</a>
+                            <a class="dropdown-item " href="/products/male">Men</a>
                             <a class="dropdown-item" href="productFemale.html">Women</a>
                             <a class="dropdown-item" href="#">Unisex</a>
-                            
+
                         </div>
                     </li>
-                    
+
                 </ul>
                 <ul class="navbar-nav">
 
-
+                    <% if(!currentUser){ %>
                     <li class="nav-item">
-                        <a class="nav-link" href="login.html">login</a>
+                        <a class="nav-link" href="/login">login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="register.html">Sign Up</a>
+                        <a class="nav-link" href="/register">Sign Up</a>
+                    </li>
+                    <% }else{ 
+                          
+                        if(currentUser.admin == true){%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/products"> <strong> Admin Panel </strong></a>
+                    </li>
+
+                    <% 
+                    }
+                        %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/<%=currentUser._id%>"> <strong>
+                                <%= currentUser.username.toUpperCase() %> </strong></a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Log out</a>
                     </li>
+                    <% } %>
 
                 </ul>
 
@@ -97,8 +112,8 @@
     <!-- one section of clothes -->
     <section id="item">
         <div id="men" class="container">
-            <a href="productMale.html" class="btn btn-sm btn-outline-dark mt-3">Explore More</a>
-            
+            <a href="/products/male" class="btn btn-sm btn-outline-dark mt-3">Explore More</a>
+
             <h1>Men shoes</h1>
             <hr>
             <div class="row pt-3 justify-content-center">
@@ -106,8 +121,8 @@
                 <div class="col-12 col-md-6 col-lg-4 py-2">
                     <div class="card mx-auto" style="width: 18.7rem;">
                         <a href=""></a><img class="card-img-top"
-                                src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1317&q=80"
-                                alt="Card image cap">
+                            src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1317&q=80"
+                            alt="Card image cap">
                         </a>
 
                         <div class="card-body">
@@ -158,7 +173,7 @@
     <section id="item">
         <div id="women" class="container pt-4">
             <a href="productFemale.html" class="btn btn-sm btn-outline-dark mt-3">Explore More</a>
-            
+
             <h1>Women shoes</h1>
             <hr>
             <div class="row pt-3 justify-content-center">

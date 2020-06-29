@@ -8,7 +8,7 @@
   <meta name="Description" content="Enter your description here" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-  <link rel="stylesheet" href="../public/stylesheets/admin.css">
+  <link rel="stylesheet" href="../admin.css">
   <title>Login Here</title>
 </head>
 
@@ -26,31 +26,31 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="admin.html">Admin <span class="sr-only"></span></a>
+            <a class="nav-link" href="/">Admin <span class="sr-only"></span></a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="productAdd.html">Add new product</a>
+            <a class="nav-link" href="../products/new">Add new product</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link active" href="allProduct.html">All products</a>
+            <a class="nav-link active" href="../admin/products">All products</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="allusers.html">All Users</a>
+            <a class="nav-link" href="../admin/users">All Users</a>
           </li>
         </ul>
         <ul class="navbar-nav">
 
 
+          <% if(currentUser){ %>
           <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/register">Sign Up</a>
+            <a class="nav-link" href=""> <strong> <%= currentUser.username.toUpperCase() %> </strong></a>
           </li>
 
           <li class="nav-item">
             <a class="nav-link" href="/logout">Log out</a>
           </li>
+          <% }%>
+
 
         </ul>
 
@@ -91,36 +91,50 @@
                 </tr>
               </thead>
               <tbody>
+
+                <% 
+                var count=1;
+                products.forEach(function(product){ 
+                  var date = new Date(product.date);  // dateStr you get from mongodb
+
+                  var d = date.getDate();
+                  var m = date.getMonth()+1;
+                  var y = date.getFullYear()
+                  %>
                 <tr>
-                  <th scope="row">1</th>
-                  <td><img class="img-thumbnail"
-                      src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1017&q=80"
-                      alt=""></td>
-                  <td>Black and white Magic</td>
-                  <td>200$</td>
+                  <th scope="row"><%=count%></th>
+                  <td>
+                    <a href="../products/<%=product._id%>"><img class="img-thumbnail" src="<%=product.image%>"
+                        alt="product image"></a>
+                  </td>
+                  <td><%=product.title%></td>
+                  <td><%=product.price%> Taka</td>
                   <!-- Use substring below -->
-                  <td class="text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, temporibus.
-                    Quo vel expedita saepe maxime molestiae officiis magni nisi quibusdam!</td>
-                  <td>male</td>
-                  <td>2 Feb</td>
-                  <td> <button class="btn btn-primary"> <i class="far fa-edit"></i></button></td>
-                  <td> <button class="btn btn-danger"> <i class="far fa-trash-alt"></i></button></td>
+                  <td class="text-justify"><%=product.description%></td>
+                  <td><%=product.sex%></td>
+                  <td><%=d%>/<%=m%>/<%=y%></td>
+                  <td>
+                    <!-- <form action="/<%=product._id%>?_method=PUT" method="PUT">
+                      <button class="btn btn-sm btn-outline-info"><i class="far fa-edit"></i></button>
+                    </form>
+                    <button class="btn btn-sm btn-outline-info"><i class="far fa-edit"></i></button> -->
+                    <a href="/products/<%=product._id%>/edit" class="btn btn-sm btn-outline-info"><i class="far fa-edit"></i></a>
+
+                  </td>
+
+                  <td>
+                    <form action="/products/<%=product._id%>?_method=DELETE" method="POST">
+                      <button class="btn btn-sm btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+                    </form>
+                  </td>
+
                 </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td><img class="img-thumbnail"
-                      src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1017&q=80"
-                      alt=""></td>
-                  <td>Black and white Magic</td>
-                  <td>200$</td>
-                  <!-- Use substring below -->
-                  <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, temporibus. Quo vel expedita saepe
-                    maxime molestiae officiis magni nisi quibusdam!</td>
-                  <td>male</td>
-                  <td>3 Feb</td>
-                  <td> <button class="btn btn-primary"> <i class="far fa-edit"></i></button></td>
-                  <td> <button class="btn btn-danger"> <i class="far fa-trash-alt"></i></button></td>
-                </tr>
+                <% 
+              count++;
+              }) %>
+
+
+
 
 
               </tbody>

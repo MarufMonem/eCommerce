@@ -8,7 +8,7 @@
   <meta name="Description" content="Enter your description here" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-  <link rel="stylesheet" href="../public/stylesheets/admin.css">
+  <link rel="stylesheet" href="../admin.css">
   <title>Login Here</title>
 </head>
 
@@ -26,24 +26,28 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item ">
-            <a class="nav-link" href="admin.html">Admin <span class="sr-only"></span></a>
+            <a class="nav-link" href="/">Admin <span class="sr-only"></span></a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="productAdd.html">Add new product</a>
+            <a class="nav-link" href="../products/new">Add new product</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="allProduct.html">All products</a>
+            <a class="nav-link " href="/admin/products">All products</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="allusers.html">All Users</a>
+            <a class="nav-link" href="/admin/users">All Users</a>
           </li>
         </ul>
         <ul class="navbar-nav">
+          <% if(currentUser){ %>
+            <li class="nav-item">
+              <a class="nav-link" href=""> <strong> <%= currentUser.username.toUpperCase() %> </strong></a>
+          </li>
 
           <li class="nav-item">
             <a class="nav-link" href="/logout">Log out</a>
           </li>
-
+          <% }%>
         </ul>
 
         <!-- <form class="form-inline my-2 my-lg-0">
@@ -73,23 +77,38 @@
               <th scope="col">Address</th>
               <th scope="col">Phone Number</th>
               <th scope="col">Email</th>
+              <th scope="col">Age</th>
+              <th scope="col">Admin</th>
+              <th scope="col">Orders</th>
               <th scope="col">Remove</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Maruf</td>
-              <td>Bashundhara</td>
-              <td>14246542</td>
-              <td>dasdlk@dnflfj.com</td>
-              <td>
-                <form action="">
-                  <button class="btn btn-sm btn-outline-danger"><i class="fas fa-times"></i></button>
-                </form>
-
-              </td>
-            </tr>
+            <%
+            var count=1;
+            users.forEach(function(user){
+              %>
+              <tr>
+                <th scope="row"><%=count%></th>
+                <td><%=user.username%></td>
+                <td><%=user.address%></td>
+                <td><%=user.phone%></td>
+                <td><%=user.email%></td>
+                <td><%=user.age%></td>
+                <td><%=user.admin%></td>
+                <td><%=user.orders.length%></td>
+                <td>
+                  <form action="/user/<%=user._id%>?_method=DELETE" method="POST">
+                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-times"></i></button>
+                  </form>
+  
+                </td>
+              </tr>
+            <% 
+          count++;
+          }) 
+          %>
+            
 
 
           </tbody>

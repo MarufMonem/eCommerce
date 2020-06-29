@@ -17,6 +17,16 @@ nav{
     font-size: 1.5rem;
     letter-spacing: 10px;
 }
+#divPrice p{
+    border: 1px solid #d43d0b;
+    border-radius: 15px;
+    /* background-color: #d43d0b; */
+    color: #fbfffe;
+    font-size: 1.3rem;
+}
+#divPrice p:hover{
+    background-color: #d43d0b;
+}
 #products .card:hover{
     border: 3px solid #001514;
     background-color: #001514;

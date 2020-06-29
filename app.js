@@ -16,7 +16,8 @@ var user                    = require("./models/user");
 
 //THE ROUTES
 var productRoutes           = require("./routes/product"),
-    indexRoutes             = require("./routes/index");
+    indexRoutes             = require("./routes/index"),
+    adminRoutes             = require("./routes/admin");
 
 mongoose.set('useUnifiedTopology', true); //removing deprication errors
 mongoose.connect("mongodb://localhost/eCommerceWebsite" ,{ useNewUrlParser: true });
@@ -72,22 +73,17 @@ passport.serializeUser(user.serializeUser()); //encode
 passport.deserializeUser(user.deserializeUser()); //decode
 
 //middleware for pasing logged in user information.
-// app.use(function(req,res,next){
-//     res.locals.currentUser  = req.user;
-//     res.locals.error        = req.flash("error");
-//     res.locals.success      = req.flash("success");
-//     next(); // for running the next part of the code
-// });
+app.use(function(req,res,next){
+    res.locals.currentUser  = req.user;
+
+    next(); // for running the next part of the code
+});
 
 //MAKING ROUTES A BIT SIMPLER TO WRITE
 app.use("/",indexRoutes);
 app.use("/products",productRoutes);
+app.use("/admin",adminRoutes);
 
-//middleware for pasing logged in user information.
-app.use(function(req,res,next){
-    res.locals.currentUser = req.user;
-    next(); // for running the next part of the code
-});
 
 app.listen(5501, "127.0.0.1", function () {
     console.log("App has started");
