@@ -7,6 +7,10 @@ nav{
     background-color:#001514 ;
     color: #fbfffe;
 }
+
+.modal {
+    color: #001514;
+}
 #header .jumbotron{
     background-image: url(https://images.unsplash.com/photo-1542651314-8c3b3fb85762?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1487&q=80);
     background-repeat: no-repeat;

@@ -43,9 +43,9 @@ router.post("/new", isAdmin, function (req, res) {
 });
 
 //NEW PRODUCT CREATE ROUTE
-router.get("/new", isAdmin, function (req, res) {
-    res.render("productAdd");
-});
+// router.get("/new", isAdmin, function (req, res) {
+//     res.render("productAdd");
+// });
 
 
 //INDIVIUAL PAGE ROUTE 
@@ -113,7 +113,7 @@ router.delete("/:id", isAdmin, function (req, res) {
         }
 
         // req.flash("success", "Logged you out");
-        res.redirect("/admin/products");
+        res.redirect("/admin");
     });
 });
 

@@ -1,5 +1,4 @@
 var mongoose                = require("mongoose");
-
 //Schema setup
 var orderSchema = new mongoose.Schema({
     date: {type: Date, default:Date.now},
@@ -12,8 +11,8 @@ var orderSchema = new mongoose.Schema({
     },
     product: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "product"
+            type: Map,
+            of: String
         }
     ]
 });

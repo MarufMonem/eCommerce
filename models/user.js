@@ -12,7 +12,9 @@ var userSchema = new mongoose.Schema({
     orders: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "order"
+            ref: "product",
+            size: String,
+            amount: {type:Number, default:1}
         }
     ]
 });

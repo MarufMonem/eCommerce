@@ -49,21 +49,30 @@
 
                     <% if(!currentUser){ %>
                         <li class="nav-item">
-                          <a class="nav-link" href="/login">login</a>
+                            <a class="nav-link" href="/login">login</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="/register">Sign Up</a>
+                            <a class="nav-link" href="/register">Sign Up</a>
                         </li>
-                      <% }else{ %>
+                        <% }else{ 
+                              
+                            if(currentUser.admin == true){%>
                         <li class="nav-item">
-                            <a class="nav-link" href=""> <strong> <%= currentUser.username.toUpperCase() %> </strong></a>
+                            <a class="nav-link" href="/admin/products"> <strong> Admin Panel </strong></a>
                         </li>
-      
+    
+                        <% 
+                        }
+                            %>
                         <li class="nav-item">
-                          <a class="nav-link" href="/logout">Log out</a>
+                            <a class="nav-link" href="/user/<%=currentUser._id%>"> <strong>
+                                    <%= currentUser.username.toUpperCase() %> </strong></a>
                         </li>
-                      <% } %>
-
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Log out</a>
+                        </li>
+                        <% } %>
                 </ul>
 
                 <!-- <form class="form-inline my-2 my-lg-0">

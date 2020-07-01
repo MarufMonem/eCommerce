@@ -50,9 +50,8 @@ passport.use(new localStrategy({
     passwordField: 'password'
 },
 (phone, password, done) => {
-    user.findOne({
-        phone: phone
-    }, (error, founduser) => {
+    user.findOne(
+        {phone: phone}, function(error, founduser){
         if (error) {
             return done(error);
         }
@@ -61,6 +60,10 @@ passport.use(new localStrategy({
                 message: 'Username or password incorrect'
             });
         }
+        console.log("found user is: " + founduser);
+        // if (!founduser.validPassword(password)) { 
+        //     return done(null, false); 
+        // }
         // Do other validation/check if any
         return done(null, founduser);
     });

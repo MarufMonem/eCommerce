@@ -80,7 +80,7 @@ router.delete("/user/:id", isloggedIn, function(req, res){
         // });
         foundUser.remove();
     // req.flash("success", "Logged you out");
-    res.redirect("/admin/users");
+    res.redirect("/admin");
 });
 });
 
@@ -109,6 +109,22 @@ router.put("/user/:id", isloggedIn, function (req, res) {
         // req.flash("success", "Logged you out");
     });
 });
+
+// router.put("/user/:id/passwordChange", isloggedIn, function (req, res) {
+//     user.findById(req.params.id, function (err, foundUser) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//                 foundUser.setPassword(req.body.password, function(){
+//                 foundUser.save();
+//             })
+//             // req.flash("success", "Campground updated!");
+//             res.redirect("/user/" + req.params.id);
+//         }
+//         // req.flash("success", "Logged you out");
+//     });
+// });
+
 
 
 //logged in checker

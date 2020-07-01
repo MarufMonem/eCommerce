@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="../adminMain.css">
+    <title>Login Here</title>
+</head>
+
+<body>
+
+    <!-- navbar -->
+    <section id="navbar">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">Pothorekha</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/admin">Admin <span class="sr-only"></span></a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log out</a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </nav>
+
+    </section>
+
+    <section id="header">
+        <div class="container-fluid px-0 mx-0">
+            <p class="text-center py-3">Welcome, Admin!</p>
+        </div>
+    </section>
+
+
+    <!-- All info here -->
+
+    <section id="listButton" class="mb-5">
+        <div class="container-fluid px-4">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-7">
+                    <div id="button" class="my-2 mx-auto">
+                        <a class="btn btn-lg px-5 py-4" data-toggle="collapse" href="#addProduct" role="button"
+                        aria-expanded="false" aria-controls="collapseExample">
+                            New Product
+                        </a>
+                    </div>
+
+                    <div id="button" class="my-2 mx-auto">
+                        <a class="btn btn-lg px-5 py-4" data-toggle="collapse" href="#newProduct" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            Your Inventory
+                        </a>
+                    </div>
+
+                    <div id="button" class="my-2 mx-auto">
+                        <a class="btn btn-lg px-5 py-4" href="">
+                            Detailed Orders
+                        </a>
+                    </div>
+
+                    <div id="button" class="my-2 mx-auto">
+                        <a class="btn btn-lg px-5 py-4" data-toggle="collapse" href="#allUsers" role="button"
+                        aria-expanded="false" aria-controls="collapseExample">
+                            All Customers
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-5">
+                    <h2 class="text-center pt-5 pt-lg-1 pb-3">At a glance</h2>
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <th class="text-center">Completed Order </th>
+                                <td><i class="fas fa-arrow-right"></i></td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">Pending Order </th>
+                                <td><i class="fas fa-arrow-right"></i></td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">Items Shown </th>
+                                <td><i class="fas fa-arrow-right"></i></td>
+                                <td>25</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">Total Money Earned </th>
+                                <td><i class="fas fa-arrow-right"></i></td>
+                                <td>500 Taka</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">Total Customers </th>
+                                <td><i class="fas fa-arrow-right"></i></td>
+                                <td>50</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="container-fluid">
+        <div class="collapse" id="newProduct">
+            <div class="row d-flex px-1 px-lg-2 pt-5">
+                <div class="col-12">
+                    <section id="list">
+                        <h2 class="text-center py-3">Products Displayed</h2>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Serial</th>
+                                        <th scope="col">Image Preview</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Sex</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Edit</th>
+                                        <th scope="col">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <% 
+                  var count=1;
+                  products.forEach(function(product){ 
+                    var date = new Date(product.date);  // dateStr you get from mongodb
+  
+                    var d = date.getDate();
+                    var m = date.getMonth()+1;
+                    var y = date.getFullYear()
+                    %>
+                                    <tr>
+                                        <th scope="row"><%=count%></th>
+                                        <td>
+                                            <a href="../products/<%=product._id%>"><img class="img-thumbnail"
+                                                    src="<%=product.image%>" alt="product image"></a>
+                                        </td>
+                                        <td><%=product.title%></td>
+                                        <td><%=product.price%> Taka</td>
+                                        <!-- Use substring below -->
+                                        <td class="text-justify"><%=product.description%></td>
+                                        <td><%=product.sex%></td>
+                                        <td><%=d%>/<%=m%>/<%=y%></td>
+                                        <td>
+                                            <!-- <form action="/<%=product._id%>?_method=PUT" method="PUT">
+                        <button class="btn btn-sm btn-outline-info"><i class="far fa-edit"></i></button>
+                      </form>
+                      <button class="btn btn-sm btn-outline-info"><i class="far fa-edit"></i></button> -->
+                                            <a href="/products/<%=product._id%>/edit"
+                                                class="btn btn-sm btn-outline-info"><i class="far fa-edit"></i></a>
+
+                                        </td>
+
+                                        <td>
+                                            <form action="/products/<%=product._id%>?_method=DELETE" method="POST">
+                                                <button class="btn btn-sm btn-outline-danger"><i
+                                                        class="far fa-trash-alt"></i></button>
+                                            </form>
+                                        </td>
+
+                                    </tr>
+                                    <% 
+                count++;
+                }) %>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+
+<section id="addProduct" class="collapse">
+    <h2 class="text-center py-3">Add New Product</h2>
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                
+                <form action="/products/new" method="POST">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Title of the product</label>
+                        <input type="text" class="form-control" name="product[title]" placeholder="Product Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Price</label>
+                        <input type="text" class="form-control" name="product[price]" placeholder="Price">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Image</label>
+                        <input type="text" class="form-control" name="product[image]" placeholder="Image link">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="inputState">Sex</label>
+                        <select name= "product[sex]" class="form-control">
+                          <option>Male</option>
+                          <option>Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Description</label>
+                        <textarea class="form-control" name= "product[description]" rows="3"></textarea>
+                      </div>
+            
+                    <button type="submit" class="btn btn-danger">Submit</button>
+                    <button type="reset" class="btn btn-warning">Reset</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<section >
+    <div id="allUsers" class="container-fluid collapse">
+        <h2 class="text-center py-3">All Customers</h2>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Serial</th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Email</th>
+                <th scope="col">Age</th>
+                <th scope="col">Admin</th>
+                <th scope="col">Orders</th>
+                <th scope="col">Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%
+              var count=1;
+              users.forEach(function(user){
+                %>
+                <tr>
+                  <th scope="row"><%=count%></th>
+                  <td><%=user.username%></td>
+                  <td><%=user.address%></td>
+                  <td><%=user.phone%></td>
+                  <td><%=user.email%></td>
+                  <td><%=user.age%></td>
+                  <td><%=user.admin%></td>
+                  <td><%=user.orders.length%></td>
+                  <td>
+                    <form action="/user/<%=user._id%>?_method=DELETE" method="POST">
+                      <button class="btn btn-sm btn-outline-danger"><i class="fas fa-times"></i></button>
+                    </form>
+    
+                  </td>
+                </tr>
+              <% 
+            count++;
+            }) 
+            %>
+              
+  
+  
+            </tbody>
+          </table>
+        </div>
+      </div>
+</section>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>
