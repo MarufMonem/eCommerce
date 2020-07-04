@@ -5,6 +5,38 @@ var order = require("../models/order");
 const user = require("../models/user");
 const cartItem = require("../models/cartItem");
 
+
+router.post("/cart/confirmed", function(req,res){
+    var userOrder = {
+        buyer: res.locals.currentUser._id,
+        cart: res.locals.currentUser.cart
+    }
+
+    order.create(userOrder, function(err, newOrder){
+        if(err){
+            console.log(err);
+        }else{
+            console.log(newOrder);
+            res.locals.currentUser.cart.forEach(function(item){
+                res.locals.currentUser.cart.remove({_id: item.id});
+            })
+            res.locals.currentUser.save();
+        }
+    });
+
+    res.redirect("/user/" + res.locals.currentUser._id);
+
+});
+
+router.delete("/cart/:id", function(req,res ){
+    //res.send("The user is: " + res.locals.currentUser + "The users cart contains: " +  res.locals.currentUser.cart + "item id: " + req.params.id);
+    res.locals.currentUser.cart.remove({_id: req.params.id});
+    res.locals.currentUser.save();
+    res.redirect("back");
+})
+
+
+
 router.post("/:id/cartAdd",isloggedIn, function (req, res) {
     //get all campgrounds
     user.findOne(res.locals.currentUser._id, function (err, foundUser) {
@@ -47,6 +79,7 @@ router.post("/:id/cartAdd",isloggedIn, function (req, res) {
         }
     })
 });
+
 
 //MIDDLE WARE
 function isloggedIn(req, res, next) {

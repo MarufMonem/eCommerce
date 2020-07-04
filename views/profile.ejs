@@ -239,15 +239,27 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <%var count=0;
+                             
+                            userOrder.cart.forEach(function(item){
+                                var date = new Date(userOrder.date);  // dateStr you get from mongodb
+
+                                    var d = date.getDate();
+                                    var m = date.getMonth()+1;
+                                    var y = date.getFullYear()
+                                count++; 
+                                %>
                             <tr>
-                                <td>45521</td>
-                                <td>2</td>
-                                <td>25 Feb</td>
-                                <td>Bag, purse</td>
+                                <td><%= item._id %></td>
+                                <td><%= count %></td>
+                                <td><%=d%>/<%=m%>/<%=y%></td>
+                                <td><%= item.productName%></td>
                                 <td>250$</td>
-
-
                             </tr>
+                            <% }) %>
+
+
+
 
                         </tbody>
                     </table>

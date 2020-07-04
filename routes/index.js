@@ -2,13 +2,14 @@ var express     = require("express");
 var router      = express.Router();
 var passport    = require("passport");
 var user        = require("../models/user");
+var order        = require("../models/order");
 var cartItem        = require("../models/cartItem");
 
 // ROOT PATH
 router.get("/", function (req, res) {
     if(res.locals.currentUser){
-        user.findById(res.locals.currentUser).populate("cart").exec(function(err, foundUser){
-            res.render("index",{userCart:foundUser});
+        user.findById(res.locals.currentUser._id).populate("cart").exec(function(err, foundUser){
+            res.render("index",{user:foundUser});
         })
     }else{
         res.render("index");
@@ -118,7 +119,17 @@ router.get("/user/:id", isloggedIn, function(req, res){
         if(err){
             console.log(err);
         }else{
-            res.render("profile",{user:foundUser});
+            order.findOne({buyer: req.params.id}).populate("cart").exec(function(err, foundOrder){
+                if(err){
+                    console.log(err);
+                    console.log("COULDNT FIND ORDER");
+                    res.render("profile",{user:foundUser});
+                }else{
+                    console.log("FOUND THE ORDER LOOKING FOR: " + foundOrder.cart);
+                    res.render("profile",{user:foundUser, userOrder: foundOrder});
+                }
+            })
+            
         }    
 });
 });
