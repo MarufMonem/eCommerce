@@ -1,20 +1,20 @@
-var mongoose                = require("mongoose");
+var mongoose = require("mongoose");
 //Schema setup
 var orderSchema = new mongoose.Schema({
-    date: {type: Date, default:Date.now},
-    delivered: {type: Boolean, default: false},
-    buyer:{
-        id:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"user"
-        }
+    date: { type: Date, default: Date.now },
+    delivered: { type: Boolean, default: false },
+    // contains the buyers info
+    buyer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user"
     },
-    product: [
+    //Points to the created cart by the buyer    
+    cart: [
         {
-            type: Map,
-            of: String
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "cartItem"
         }
     ]
 });
 
-module.exports= mongoose.model("order",orderSchema);
+module.exports = mongoose.model("order", orderSchema);

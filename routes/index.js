@@ -2,11 +2,38 @@ var express     = require("express");
 var router      = express.Router();
 var passport    = require("passport");
 var user        = require("../models/user");
+var cartItem        = require("../models/cartItem");
 
 // ROOT PATH
 router.get("/", function (req, res) {
-    res.render("index");
+    if(res.locals.currentUser){
+        user.findById(res.locals.currentUser).populate("cart").exec(function(err, foundUser){
+            res.render("index",{userCart:foundUser});
+        })
+    }else{
+        res.render("index");
+    }
+    
 });
+
+//CART ROUTE
+router.get("/cartItems",isloggedIn, function (req, res) {
+
+
+
+    user.findById(res.locals.currentUser).populate("cart").exec(function(err, foundUser){
+    
+        res.send(foundUser);
+    })
+
+
+
+
+
+
+});
+
+
 
 //SIGN UP PATH
 router.get("/register", function(req,res){

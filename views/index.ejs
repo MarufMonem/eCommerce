@@ -58,7 +58,7 @@
                           
                         if(currentUser.admin == true){%>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/products"> <strong> Admin Panel </strong></a>
+                        <a class="nav-link" href="/admin"> <strong> Admin Panel </strong></a>
                     </li>
 
                     <% 
@@ -71,9 +71,11 @@
 
 
                     <li class="nav-item">
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">
+                        <a href="/cartItems" type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter" href="">
                             Your Cart
-                        </button </li>
+                        </a>
+                        <a href="/cartItems">asdasd</a>
+                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Log out</a>
                     </li>
@@ -89,7 +91,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body">
+                                <div>
                                     <table class="table">
                                         <tbody>
                                             <tr>
@@ -97,16 +99,20 @@
                                                 <th>Size</th>
                                                 <th>Quantity</th>
                                             </tr>
-                                            <tr>
-                                                <td>Black and white pearl</td>
-                                                <td>XL</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Black and white pearl</td>
-                                                <td>XL</td>
-                                                <td>1</td>
-                                            </tr>
+                                            <% 
+                                            if(currentUser){
+
+                                            
+                                            userCart.cart.forEach(function(item){ %>
+                                                <tr>
+                                                    <td><%= item.productName %></td>
+                                                    <td><%= item.size %></td>
+                                                    <td><%= item.amount %></td>
+                                                </tr>
+                                            <%
+                                                }) 
+                                                } %>
+                                            
                                         </tbody>
 
                                     </table>

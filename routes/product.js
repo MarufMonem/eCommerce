@@ -35,7 +35,7 @@ router.post("/new", isAdmin, function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            //redirect back to /campgrounds
+            //redirect back to product creationm
             res.redirect("back");
         }
     })
@@ -81,7 +81,7 @@ router.get("/:id", function (req, res) {
 
 
 
-//PRODUCT DELETE ROUTE
+//PRODUCT UPDATE ROUTE
 router.put("/:id", isAdmin, function (req, res) {
     product.findByIdAndUpdate(req.params.id, req.body.product, function (err, updatedProduct) {
         if (err) {
@@ -95,7 +95,7 @@ router.put("/:id", isAdmin, function (req, res) {
     });
 });
 
-//NEW PRODUCT CREATE ROUTE
+//NEW PRODUCT CREATE FORM ROUTE
 router.get("/:id/edit", isAdmin, function (req, res) {
     product.findById(req.params.id, function (err, foundProduct) {
         res.render("editProduct", { product: foundProduct });
@@ -117,6 +117,11 @@ router.delete("/:id", isAdmin, function (req, res) {
     });
 });
 
+
+
+
+
+// ************MIDDLE WARE***************
 
 //logged in checker
 function isloggedIn(req, res, next) {

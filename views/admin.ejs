@@ -227,7 +227,29 @@
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Description</label>
                         <textarea class="form-control" name= "product[description]" rows="3"></textarea>
-                      </div>
+                    </div>
+
+                    <h3>Size & Amount</h3>
+
+                    <div class="form-group">
+                        <label for="inputState">Extra Large</label>
+                        <input type="number" class="form-control" name="product[sizeXL]" placeholder="Amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputState">Large</label>
+                        <input type="number" class="form-control" name="product[sizeLG]" placeholder="Amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputState">Medium</label>
+                        <input type="number" class="form-control" name="product[sizeMD]" placeholder="Amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputState">Small</label>
+                        <input type="number" class="form-control" name="product[sizeSM]" placeholder="Amount">
+                    </div>
+
+                    
+
             
                     <button type="submit" class="btn btn-danger">Submit</button>
                     <button type="reset" class="btn btn-warning">Reset</button>
@@ -253,7 +275,7 @@
                 <th scope="col">Email</th>
                 <th scope="col">Age</th>
                 <th scope="col">Admin</th>
-                <th scope="col">Orders</th>
+                <!-- <th scope="col">Orders</th> -->
                 <th scope="col">Remove</th>
               </tr>
             </thead>
@@ -270,7 +292,7 @@
                   <td><%=user.email%></td>
                   <td><%=user.age%></td>
                   <td><%=user.admin%></td>
-                  <td><%=user.orders.length%></td>
+
                   <td>
                     <form action="/user/<%=user._id%>?_method=DELETE" method="POST">
                       <button class="btn btn-sm btn-outline-danger"><i class="fas fa-times"></i></button>

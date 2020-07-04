@@ -9,12 +9,10 @@ var userSchema = new mongoose.Schema({
     phone: {type:Number, unique:true},
     age: Number,
     admin: {type:Boolean, default:false},
-    orders: [
+    cart: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "product",
-            size: String,
-            amount: {type:Number, default:1}
+            ref: "cartItem",
         }
     ]
 });

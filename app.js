@@ -13,11 +13,14 @@ var express                 = require("express"),
 var product                 = require("./models/product");
 var order                   = require("./models/order");
 var user                    = require("./models/user");
+var cart                    = require("./models/cart");
+var cartItem                    = require("./models/cartItem");
 
 //THE ROUTES
 var productRoutes           = require("./routes/product"),
     indexRoutes             = require("./routes/index"),
-    adminRoutes             = require("./routes/admin");
+    adminRoutes             = require("./routes/admin"),
+    orderRoutes             = require("./routes/order");
 
 mongoose.set('useUnifiedTopology', true); //removing deprication errors
 mongoose.connect("mongodb://localhost/eCommerceWebsite" ,{ useNewUrlParser: true });
@@ -86,6 +89,7 @@ app.use(function(req,res,next){
 app.use("/",indexRoutes);
 app.use("/products",productRoutes);
 app.use("/admin",adminRoutes);
+app.use("/order",orderRoutes);
 
 
 app.listen(5501, "127.0.0.1", function () {

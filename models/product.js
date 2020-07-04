@@ -6,7 +6,12 @@ var productSchema = new mongoose.Schema({
     image: String,
     description: String,
     sex: String,
-    date: {type: Date, default:Date.now}
+    date: {type: Date, default:Date.now},
+    sizeXL: Number,
+    sizeLG: Number,
+    sizeMD: Number,
+    sizeSM: Number,
+    
 });
 
 module.exports = mongoose.model("product", productSchema);
