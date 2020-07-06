@@ -74,7 +74,6 @@
                         <a href="/cartItems" type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter" href="">
                             Your Cart
                         </a>
-                        <a href="/cartItems">asdasd</a>
                      </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Log out</a>
@@ -92,6 +91,13 @@
                                     </button>
                                 </div>
                                 <div>
+                                    <% if(currentUser){ 
+                                        
+                                        if(user.cart != ""){
+
+                                        
+                                        %>
+
                                     <table class="table">
                                         <tbody>
                                             <tr>
@@ -100,11 +106,12 @@
                                                 <th>Quantity</th>
                                                 <th>Remove</th>
                                             </tr>
-                                            <% 
-                                            if(currentUser){
-
+                                           
                                             
-                                            user.cart.forEach(function(item){ %>
+                                                
+                                                
+                                            
+                                            <% user.cart.forEach(function(item){ %>
                                                 <tr>
                                                     <td><%= item.productName %></td>
                                                     <td><%= item.size %></td>
@@ -116,21 +123,33 @@
                                                     
                                                     </td>
                                                 </tr>
-                                            <%
-                                                }) 
-                                                } %>
+                                            <% }) %> 
+                                                
                                             
                                         </tbody>
 
                                     </table>
+
                                 </div>
-                                <div class="modal-footer">
+                                <div class="modal-footer text-center mx-auto">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     <form action="/order/cart/confirmed" method="POST">
                                         <button type="submit" class="btn btn-success">Confirm Order</button>
                                     </form>
                                     
                                 </div>
+
+                               <% 
+                                }else{ %>
+                                    <div class="text-center px-3">
+                                        <h3>You havent added anything to your cart yet!</h3>
+                                        <p>Pick your favourite item and click add to cart!</p>
+                                    </div>
+                                    
+                                <% }
+                            
+                            } %>
+                                
                             </div>
                         </div>
                     </div>

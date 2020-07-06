@@ -239,7 +239,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <%var count=0;
+                            <%
+                            if(userOrder !=null){
+
+                            
+                            var count=0;
                              
                             userOrder.cart.forEach(function(item){
                                 var date = new Date(userOrder.date);  // dateStr you get from mongodb
@@ -250,13 +254,15 @@
                                 count++; 
                                 %>
                             <tr>
-                                <td><%= item._id %></td>
+                                <td><%= userOrder._id %></td>
                                 <td><%= count %></td>
                                 <td><%=d%>/<%=m%>/<%=y%></td>
                                 <td><%= item.productName%></td>
                                 <td>250$</td>
                             </tr>
-                            <% }) %>
+                            <% }) 
+                        }
+                            %>
 
 
 

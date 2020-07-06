@@ -125,7 +125,8 @@ router.get("/user/:id", isloggedIn, function(req, res){
                     console.log("COULDNT FIND ORDER");
                     res.render("profile",{user:foundUser});
                 }else{
-                    console.log("FOUND THE ORDER LOOKING FOR: " + foundOrder.cart);
+                    console.log("LOOKING FOR USER ORDER LIST: " + foundOrder);
+                    // console.log("FOUND THE ORDER LOOKING FOR: " + foundOrder.cart);
                     res.render("profile",{user:foundUser, userOrder: foundOrder});
                 }
             })
