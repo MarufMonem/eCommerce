@@ -130,7 +130,7 @@
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">Available Sizes</label>
                                     <select class="form-control" id="productSize" onchange="pick()" name="cartItem[size]">
-                                        <option>Select Size</option>
+                                        <option selected disabled>Select Size</option>
                                         <% if(product.sizeSM > 0){ %>
                                         <option>Small </option>
                                         <% } %>
@@ -151,7 +151,7 @@
                                     <label for="exampleFormControlSelect1">Amount</label>
                                     
                                     <select class="form-control" id="productAmount" name="cartItem[amount]">
-                                        <option>0</option>
+                                        <option selected disabled>0</option>
                                         <option class="d-none" id="optionNo1">1</option>
                                         <option class="d-none" id="optionNo2">2</option>
                                         <option class="d-none" id="optionNo3">3</option>
@@ -243,15 +243,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script>
         function pick(){
-            var data = document.getElementById("productSize");
+            //gettung the user picked value
+            var data = document.getElementById("productSize"); 
             var userPicked = data.value;
-            var arr = [document.getElementById("optionNo1"), document.getElementById("optionNo2"),document.getElementById("optionNo3"),document.getElementById("optionNo4")];
+
+            //putting all the options inside the array
+            var arr = [
+                document.getElementById("optionNo1"), 
+                document.getElementById("optionNo2"),
+                document.getElementById("optionNo3"),
+                document.getElementById("optionNo4")
+            ];
         
+            //Product amount for each size
             var xlarge  = <%= product.sizeXL %>;
             var large   = <%= product.sizeLG %>;
             var medium  = <%= product.sizeMD %>;
             var small   = <%= product.sizeSM %>;
-            console.log("x large is : " + xlarge);
+            console.log(medium);
+            //Based on what user picked we pass amount and the option array to the caller method
             if(userPicked == "Extra Large"){
                 caller(xlarge,arr);
             }else if(userPicked == "Large"){
@@ -262,12 +272,9 @@
                 caller(small,arr);
             }
         }
-        // var option1 = document.getElementById("optionNo1");
-        // var option2 = document.getElementById("optionNo2");
-        // var option3 = document.getElementById("optionNo3");
-        // var option4 = document.getElementById("optionNo4");
 
         function caller(pickedValueAmount,arr){
+            //Based on the amount avalable we pass that to class control method
             if(pickedValueAmount>4){
                 classControl(arr, 4);
             }else if(pickedValueAmount == 3){
@@ -284,13 +291,13 @@
 
         }
 
+        //The class control method takes the option array and available amount for that size 
         function classControl(array, amount){
-            console.log(amount);
-            console.log(array);
+            //Initially everyone is set to display none.
             for(var i=0; i < 4; i++){
                 array[i].classList.add("d-none");
             }
-            
+            //Based on the amount of the size options are shown
             for(var i=0; i < amount; i++){
                 array[i].classList.remove("d-none");
             }

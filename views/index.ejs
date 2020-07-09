@@ -199,48 +199,32 @@
             <h1>Men shoes</h1>
             <hr>
             <div class="row pt-3 justify-content-center">
-
-                <div class="col-12 col-md-6 col-lg-4 py-2">
-                    <div class="card mx-auto" style="width: 18.7rem;">
-                        <a href=""></a><img class="card-img-top"
-                            src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1317&q=80"
-                            alt="Card image cap">
-                        </a>
-
-                        <div class="card-body">
-                            <p id="itemTitle" class="text-center">Black and white Charm</p>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-4 py-2">
-                    <div class="card mx-auto" style="width: 18.7rem;">
-                        <a href=""><img class="card-img-top"
-                                src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1317&q=80"
-                                alt="Card image cap"></a>
-
-                        <div class="card-body">
-                            <p id="itemTitle" class="text-center">Black and white Charm</p>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 py-2">
-                    <div class="card mx-auto" style="width: 18.7rem;">
-                        <a href=""><img class="card-img-top"
-                                src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1317&q=80"
-                                alt="Card image cap"></a>
-
-                        <div class="card-body">
-                            <p id="itemTitle" class="text-center">Black and white Charm</p>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                        </div>
-                    </div>
-                </div>
+                <% 
+                var count=1;
+                maleProducts.forEach(function(product){ 
+                    if(count<3){ 
+                        if(product.featured == true){
+                %>
+                            <div class="col-12 col-md-6 col-lg-4 py-2">
+                                <div class="card mx-auto" style="width: 18.7rem;">
+                                    <a href="/products/<%=product._id%>"><img class="card-img-top"
+                                            src="<%=product.image%>"
+                                            alt="Card image cap"></a>
+            
+                                    <div class="card-body">
+                                        <h5 class="text-center card-title"><%=product.title%></h5>
+                                        <p class="card-text"><%=product.description.substring(0,100)%>...</p>
+                                        <h6 class="card-subtitle text-center mb-2"><%=product.price%> Taka</h6>
+                                    </div>
+                                </div>
+                            </div>    >
+                    
+                <% 
+                        count++;
+                            }
+                        }
+                    }) 
+                %>
             </div>
 
 
@@ -260,45 +244,32 @@
             <hr>
             <div class="row pt-3 justify-content-center">
 
-                <div class="col-12 col-md-6 col-lg-4 py-2">
-                    <div class="card mx-auto" style="width: 18.7rem;">
-                        <a href=""><img class="card-img-top"
-                                src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1317&q=80"
-                                alt="Card image cap"></a>
-
-                        <div class="card-body">
-                            <p id="itemTitle" class="text-center">Black and white Charm</p>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 py-2">
-                    <div class="card mx-auto" style="width: 18.7rem;">
-                        <a href=""><img class="card-img-top"
-                                src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1317&q=80"
-                                alt="Card image cap"></a>
-
-                        <div class="card-body">
-                            <p id="itemTitle" class="text-center">Black and white Charm</p>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 py-2">
-                    <div class="card mx-auto" style="width: 18.7rem;">
-                        <a href=""><img class="card-img-top"
-                                src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1317&q=80"
-                                alt="Card image cap"></a>
-
-                        <div class="card-body">
-                            <p id="itemTitle" class="text-center">Black and white Charm</p>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                        </div>
-                    </div>
-                </div>
+                <% 
+                var count=1;
+                femaleProducts.forEach(function(product){ 
+                    if(count<3){ 
+                        if(product.featured == true){
+                %>
+                            <div class="col-12 col-md-6 col-lg-4 py-2">
+                                <div class="card mx-auto" style="width: 18.7rem;">
+                                    <a href="/products/<%=product._id%>"><img class="card-img-top"
+                                            src="<%=product.image%>"
+                                            alt="Card image cap"></a>
+            
+                                    <div class="card-body">
+                                        <h5 class="text-center card-title"><%=product.title%></h5>
+                                        <p class="card-text"><%=product.description.substring(0,100)%>...</p>
+                                        <h6 class="card-subtitle text-center mb-2"><%=product.price%> Taka</h6>
+                                    </div>
+                                </div>
+                            </div>    >
+                    
+                <% 
+                        count++;
+                            }
+                        }
+                    }) 
+                %>
             </div>
 
         </div>

@@ -3,17 +3,36 @@ var router      = express.Router();
 var passport    = require("passport");
 var user        = require("../models/user");
 var order        = require("../models/order");
+var product        = require("../models/product");
 var cartItem        = require("../models/cartItem");
 
 // ROOT PATH
 router.get("/", function (req, res) {
-    if(res.locals.currentUser){
-        user.findById(res.locals.currentUser._id).populate("cart").exec(function(err, foundUser){
-            res.render("index",{user:foundUser});
-        })
-    }else{
-        res.render("index");
-    }
+
+    product.find({ sex: "Male" }, function (err, allMaleProducts) {
+        if (err) {
+            console.log(err);
+        } else {
+            product.find({ sex: "Female" }, function (err, allFemaleProducts) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    if(res.locals.currentUser){
+                        user.findById(res.locals.currentUser._id).populate("cart").exec(function(err, foundUser){
+                            res.render("index",{user:foundUser, maleProducts: allMaleProducts,femaleProducts: allFemaleProducts });
+                        })
+                    }else{
+                        res.render("index",{maleProducts: allMaleProducts,femaleProducts: allFemaleProducts });
+                    }
+                }
+            })
+        }
+    })
+
+
+
+
+
     
 });
 
