@@ -30,13 +30,44 @@ router.get("/female", function (req, res) {
 
 //
 router.post("/new", isAdmin, function (req, res) {
+
+    console.log("The product request looks like: " + req.body.product);
+    var productInfo = {
+        title: req.body.product.title,
+        price: req.body.product.price,
+        sex: req.body.product.sex,
+        description: req.body.product.description,
+        sizeXL: req.body.product.sizeXL,
+        sizeLG: req.body.product.sizeLG,
+        sizeMD: req.body.product.sizeMD,
+        sizeSM: req.body.product.sizeSM,
+    }
+    var imagesArray = req.body.product.image;
+
+
     //create new campground and save
-    product.create(req.body.product, function (err, newProduct) {
+    product.create(productInfo, function (err, newProduct) {
         if (err) {
             console.log(err);
         } else {
             //redirect back to product creationm
-            res.redirect("back");
+            imagesArray.forEach(function(imageUrl){
+                console.log("IMAGE URL :" +  imageUrl);
+                if(!imageUrl == ""){
+                    newProduct.image.push(imageUrl);
+                }
+                
+            });
+            newProduct.save(function(err, savedProduct){
+                if (err) {
+                    console.log("There was an error");
+                    console.log(err);
+                } else {
+                    console.log("saved");
+                    res.redirect("back");
+                }
+            })
+            
         }
     })
 
