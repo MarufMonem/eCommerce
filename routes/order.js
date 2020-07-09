@@ -61,6 +61,28 @@ router.delete("/cart/:id", function (req, res) {
     res.redirect("back");
 })
 
+router.put("/confirm/:id",isAdmin,function(req,res){
+    let update = {delivered:true};
+    order.findByIdAndUpdate(req.params.id, update, function(err, foundOrder){
+        if(err){
+            console.log("Couldnt Update");
+        }else{
+            res.redirect("/admin");
+        }
+    })
+});
+
+router.delete("/delete/:id",isAdmin,function(req,res){
+
+    order.findById(req.params.id, function(err, foundOrder){
+        if(err){
+            console.log("Couldnt Update");
+        }else{
+            foundOrder.remove();
+            res.redirect("back");
+        }
+    })
+});
 
 
 router.post("/:id/cartAdd", isloggedIn, function (req, res) {
@@ -81,6 +103,7 @@ router.post("/:id/cartAdd", isloggedIn, function (req, res) {
                         } else {
                             newCartItem.id = req.params.id; //assigning th eproduct id
                             newCartItem.productName = foundProduct.title;
+                            newCartItem.price = parseInt(foundProduct.price);
                             newCartItem.save(function (err, newCart) {
                                 foundUser.cart.push(newCart);
                                 foundUser.save(function (err, saveduser) {
@@ -115,4 +138,17 @@ function isloggedIn(req, res, next) {
     // req.flash("error", "You need to logged in to do that!");
     res.redirect("/login");
 }
+function isAdmin(req, res, next) {
+    if (req.isAuthenticated()) {
+        if(req.user.admin === true){
+            return next();
+        }else{
+            console.log("PERSON IS NOT ADMIN******************")
+            res.send("ONLY FOR ADMIN");
+        }
+    }else{
+        res.redirect("/login");
+    }
+}
 module.exports = router;
+

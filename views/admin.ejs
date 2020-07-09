@@ -9,11 +9,38 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="../adminMain.css">
-    <title>Login Here</title>
+    <title>Admin</title>
 </head>
 
 <body>
+<%
+var totalIncome = 0;
 
+var totalProduct = 0;
+products.forEach(function(product){
+    totalProduct++;
+})
+
+var completedOrders = 0;
+var pendingOrders = 0;
+userOrders.forEach(function(singleOrder){
+    if(singleOrder.delivered == true){
+        completedOrders++;
+        singleOrder.cart.forEach(function(item){ 
+            totalIncome=totalIncome + item.price;
+        })
+    }else{
+        pendingOrders++;
+    }
+}) 
+
+
+var totalCustomer = 0;
+users.forEach(function(user){
+    totalCustomer++;
+}) 
+
+%>
     <!-- navbar -->
     <section id="navbar">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -57,7 +84,7 @@
                 <div class="col-12 col-md-6 col-lg-7">
                     <div id="button" class="my-2 mx-auto">
                         <a class="btn btn-lg px-5 py-4" data-toggle="collapse" href="#addProduct" role="button"
-                        aria-expanded="false" aria-controls="collapseExample">
+                            aria-expanded="false" aria-controls="collapseExample">
                             New Product
                         </a>
                     </div>
@@ -70,15 +97,22 @@
                     </div>
 
                     <div id="button" class="my-2 mx-auto">
-                        <a class="btn btn-lg px-5 py-4" href="">
-                            Detailed Orders
+                        <a class="btn btn-lg px-5 py-4" data-toggle="collapse" href="#newOrders" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            New Orders
                         </a>
                     </div>
 
                     <div id="button" class="my-2 mx-auto">
                         <a class="btn btn-lg px-5 py-4" data-toggle="collapse" href="#allUsers" role="button"
-                        aria-expanded="false" aria-controls="collapseExample">
+                            aria-expanded="false" aria-controls="collapseExample">
                             All Customers
+                        </a>
+                    </div>
+                    <div id="button" class="my-2 mx-auto">
+                        <a class="btn btn-lg px-5 py-4" data-toggle="collapse" href="#completedOrders" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            Completed Orders
                         </a>
                     </div>
                 </div>
@@ -90,27 +124,27 @@
                             <tr>
                                 <th class="text-center">Completed Order </th>
                                 <td><i class="fas fa-arrow-right"></i></td>
-                                <td>5</td>
+                                <td><%=completedOrders%></td>
                             </tr>
                             <tr>
                                 <th class="text-center">Pending Order </th>
                                 <td><i class="fas fa-arrow-right"></i></td>
-                                <td>2</td>
+                                <td><%=pendingOrders%></td>
                             </tr>
                             <tr>
                                 <th class="text-center">Items Shown </th>
                                 <td><i class="fas fa-arrow-right"></i></td>
-                                <td>25</td>
+                                <td><%=totalProduct%></td>
                             </tr>
                             <tr>
                                 <th class="text-center">Total Money Earned </th>
                                 <td><i class="fas fa-arrow-right"></i></td>
-                                <td>500 Taka</td>
+                                <td><%=totalIncome%></td>
                             </tr>
                             <tr>
                                 <th class="text-center">Total Customers </th>
                                 <td><i class="fas fa-arrow-right"></i></td>
-                                <td>50</td>
+                                <td><%=totalCustomer%></td>
                             </tr>
                         </tbody>
                     </table>
@@ -186,7 +220,9 @@
                                     </tr>
                                     <% 
                 count++;
-                }) %>
+                })
+                totalProduct=count;
+                %>
 
                                 </tbody>
                             </table>
@@ -197,122 +233,279 @@
             </div>
         </div>
 
-<section id="addProduct" class="collapse">
-    <h2 class="text-center py-3">Add New Product</h2>
-    <div class="container py-5">
-        <div class="row d-flex justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6">
-                
-                <form action="/products/new" method="POST">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Title of the product</label>
-                        <input type="text" class="form-control" name="product[title]" placeholder="Product Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Price</label>
-                        <input type="text" class="form-control" name="product[price]" placeholder="Price">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Image</label>
-                        <input type="text" class="form-control" name="product[image]" placeholder="Image link">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="inputState">Sex</label>
-                        <select name= "product[sex]" class="form-control">
-                          <option>Male</option>
-                          <option>Female</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Description</label>
-                        <textarea class="form-control" name= "product[description]" rows="3"></textarea>
-                    </div>
+        <section id="addProduct" class="collapse">
+            <h2 class="text-center py-3">Add New Product</h2>
+            <div class="container py-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-12 col-md-8 col-lg-6">
 
-                    <h3>Size & Amount</h3>
+                        <form action="/products/new" method="POST">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Title of the product</label>
+                                <input type="text" class="form-control" name="product[title]"
+                                    placeholder="Product Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Price</label>
+                                <input type="text" class="form-control" name="product[price]" placeholder="Price">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Image</label>
+                                <input type="text" class="form-control" name="product[image]" placeholder="Image link">
+                            </div>
 
-                    <div class="form-group">
-                        <label for="inputState">Extra Large</label>
-                        <input type="number" class="form-control" name="product[sizeXL]" placeholder="Amount">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputState">Large</label>
-                        <input type="number" class="form-control" name="product[sizeLG]" placeholder="Amount">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputState">Medium</label>
-                        <input type="number" class="form-control" name="product[sizeMD]" placeholder="Amount">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputState">Small</label>
-                        <input type="number" class="form-control" name="product[sizeSM]" placeholder="Amount">
-                    </div>
+                            <div class="form-group">
+                                <label for="inputState">Sex</label>
+                                <select name="product[sex]" class="form-control">
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Description</label>
+                                <textarea class="form-control" name="product[description]" rows="3"></textarea>
+                            </div>
 
-                    
+                            <h3>Size & Amount</h3>
 
-            
-                    <button type="submit" class="btn btn-danger">Submit</button>
-                    <button type="reset" class="btn btn-warning">Reset</button>
-                </form>
+                            <div class="form-group">
+                                <label for="inputState">Extra Large</label>
+                                <input type="number" class="form-control" name="product[sizeXL]" placeholder="Amount">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputState">Large</label>
+                                <input type="number" class="form-control" name="product[sizeLG]" placeholder="Amount">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputState">Medium</label>
+                                <input type="number" class="form-control" name="product[sizeMD]" placeholder="Amount">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputState">Small</label>
+                                <input type="number" class="form-control" name="product[sizeSM]" placeholder="Amount">
+                            </div>
+
+
+
+
+                            <button type="submit" class="btn btn-danger">Submit</button>
+                            <button type="reset" class="btn btn-warning">Reset</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-</section>
+        </section>
 
 
-<section >
-    <div id="allUsers" class="container-fluid collapse">
-        <h2 class="text-center py-3">All Customers</h2>
-        <div class="table-responsive">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">Serial</th>
-                <th scope="col">Name</th>
-                <th scope="col">Address</th>
-                <th scope="col">Phone Number</th>
-                <th scope="col">Email</th>
-                <th scope="col">Age</th>
-                <th scope="col">Admin</th>
-                <!-- <th scope="col">Orders</th> -->
-                <th scope="col">Remove</th>
-              </tr>
-            </thead>
-            <tbody>
-              <%
+        <section>
+            <div id="allUsers" class="container-fluid collapse">
+                <h2 class="text-center py-3">All Customers</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Serial</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Admin</th>
+                                <!-- <th scope="col">Orders</th> -->
+                                <th scope="col">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
               var count=1;
               users.forEach(function(user){
                 %>
-                <tr>
-                  <th scope="row"><%=count%></th>
-                  <td><%=user.username%></td>
-                  <td><%=user.address%></td>
-                  <td><%=user.phone%></td>
-                  <td><%=user.email%></td>
-                  <td><%=user.age%></td>
-                  <td><%=user.admin%></td>
+                            <tr>
+                                <th scope="row"><%=count%></th>
+                                <td><%=user.username%></td>
+                                <td><%=user.address%></td>
+                                <td><%=user.phone%></td>
+                                <td><%=user.email%></td>
+                                <td><%=user.age%></td>
+                                <td><%=user.admin%></td>
 
-                  <td>
-                    <form action="/user/<%=user._id%>?_method=DELETE" method="POST">
-                      <button class="btn btn-sm btn-outline-danger"><i class="fas fa-times"></i></button>
-                    </form>
-    
-                  </td>
-                </tr>
-              <% 
+                                <td>
+                                    <form action="/user/<%=user._id%>?_method=DELETE" method="POST">
+                                        <button class="btn btn-sm btn-outline-danger"><i
+                                                class="fas fa-times"></i></button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                            <% 
             count++;
             }) 
             %>
-              
-  
-  
-            </tbody>
-          </table>
-        </div>
-      </div>
-</section>
-        
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+
+        <section>
+
+            <div id="newOrders" class="container-fluid collapse">
+                <h2 class="text-center py-3">Pending Orders</h2>
+                <div class="table-responsive">
+
+                    <table class="table table-hover text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">OrderID</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Items</th>
+                                <th scope="col">No. Items</th>
+                                <th scope="col">Cost</th>
+                                <th scope="col">Buyer Name</th>
+                                <th scope="col">Contact Number</th>
+                                <th scope="col">Buyer Email</th>
+                                <th scope="col">Buyer Location</th>
+                                <th scope="col">Completed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <%
+                            
+                                if(userOrders !=null){                       
+                                    userOrders.forEach(function(singleOrder){
+                                        if(singleOrder.delivered == false){
+
+                                        
+                                        var count=0;
+                                        var totalCost=0;
+                                        var date = new Date(singleOrder.date);
+                                        var d = date.getDate();
+                                        var m = date.getMonth()+1;
+                                        var y = date.getFullYear()
+
+                            %>
+
+                            <tr>
+                                <td> <%= singleOrder._id %> </td>
+                                <td> <%=d%>/<%=m%>/<%=y%> </td>
+                                <td>
+                                    <%  singleOrder.cart.forEach(function(item){ 
+                                        count= count + parseInt(item.amount);
+                                        totalCost=totalCost + item.price;
+                                        %>
+                                    <p><%= item.productName%> (<%= item.size %>) | <%=item.amount%></p>
+                                    <% }) %>
+
+                                </td>
+                                <td><%= count %></td>
+                                <td><%=totalCost%></td>
+                                <td><%=singleOrder.buyer.username.toUpperCase()%></td>
+                                <td><%=singleOrder.buyer.phone%></td>
+                                <td><%=singleOrder.buyer.email%></td>
+                                <td><%=singleOrder.buyer.address%></td>
+                                <td>
+                                    <form action="/order/confirm/<%=singleOrder._id%>?_method=PUT" method="POST">
+                                        <button class="btn btn-outline-success "><i class="far fa-check-circle"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <%
+                                    } 
+                                })%>
+
+                            <%}%>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+
+        <section>
+
+            <div id="completedOrders" class="container-fluid collapse">
+                <h2 class="text-center py-3">Completed Orders</h2>
+                <div class="table-responsive">
+
+                    <table class="table table-hover text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">OrderID</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Items</th>
+                                <th scope="col">No. Items</th>
+                                <th scope="col">Cost</th>
+                                <th scope="col">Buyer Name</th>
+                                <th scope="col">Contact Number</th>
+                                <th scope="col">Buyer Email</th>
+                                <th scope="col">Buyer Location</th>
+                                <th scope="col">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <%
+                            
+                                if(userOrders !=null){                       
+                                    userOrders.forEach(function(singleOrder){
+                                        if(singleOrder.delivered == true){
+
+                                        
+                                        var count=0;
+
+                                        var totalCost=0;
+                                        var date = new Date(singleOrder.date);
+                                        var d = date.getDate();
+                                        var m = date.getMonth()+1;
+                                        var y = date.getFullYear()
+
+                            %>
+
+                            <tr class="table-success">
+                                <td> <%= singleOrder._id %> </td>
+                                <td> <%=d%>/<%=m%>/<%=y%> </td>
+                                <td>
+                                    <%  singleOrder.cart.forEach(function(item){ 
+                                        count= count + parseInt(item.amount);
+                                        %>
+                                    <p><%= item.productName%> (<%= item.size %>) | <%=item.amount%></p>
+                                    <% }) %>
+
+                                </td>
+                                <td><%= count %></td>
+                                <td><%=totalCost%></td>
+                                <td><%=singleOrder.buyer.username.toUpperCase()%></td>
+                                <td><%=singleOrder.buyer.phone%></td>
+                                <td><%=singleOrder.buyer.email%></td>
+                                <td><%=singleOrder.buyer.address%></td>
+                                <td>
+                                    <form action="/order/delete/<%=singleOrder._id%>?_method=DELETE" method="POST">
+                                        <button href="" class="btn btn-outline-danger "><i class="fas fa-ban"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <%
+                            totalIncome = totalIncome + totalCost
+                                    } 
+                                })%>
+
+                            <%}%>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>

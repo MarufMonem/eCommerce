@@ -13,6 +13,23 @@ nav{
 /* #delete{
     display: flex;
 } */
+/* #pending{
+padding-left: 5%;
+} */
+.loader {
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #e6af2e; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
 #loginFooter footer{
     position: relative;

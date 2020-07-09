@@ -62,16 +62,24 @@ router.post("/register", function(req, res){
             //This logs the user in handles everything related to the session
             //then run the serialize user method
             //then specifying that we would use local strategy
-            passport.authenticate("local")(req,res, function(err){
-                if(err){
-                    console.log("*******UNSUCCESSFUL USER CREATION********");
-                }else{
-                    // req.flash("success", "Welcome to pothorekha, " + newUser.username);
-                    console.log("*******SUCCESSFUL USER CREATION********");
-                    res.redirect("/");
-                }
+            // passport.authenticate("local")(req,res, function(err){
+            //     if(err){
+            //         console.log("*******UNSUCCESSFUL USER CREATION********");
+            //     }else{
+            //         // req.flash("success", "Welcome to pothorekha, " + newUser.username);
+            //         console.log("*******SUCCESSFUL USER CREATION********");
+            //         res.redirect("/");
+            //     }
                 
-            });
+            // });
+
+            req.login(user, function(err) {
+                if (err) {
+                  console.log(err);
+                  return next(err);
+                }
+                return res.redirect('/');
+              })
         }
     });
 });
@@ -119,15 +127,15 @@ router.get("/user/:id", isloggedIn, function(req, res){
         if(err){
             console.log(err);
         }else{
-            order.findOne({buyer: req.params.id}).populate("cart").exec(function(err, foundOrder){
+            order.find({buyer: req.params.id}).populate("cart").exec(function(err, foundOrders){
                 if(err){
                     console.log(err);
                     console.log("COULDNT FIND ORDER");
                     res.render("profile",{user:foundUser});
                 }else{
-                    console.log("LOOKING FOR USER ORDER LIST: " + foundOrder);
+                    // console.log("LOOKING FOR USER ORDER LIST: " + foundOrders);
                     // console.log("FOUND THE ORDER LOOKING FOR: " + foundOrder.cart);
-                    res.render("profile",{user:foundUser, userOrder: foundOrder});
+                    res.render("profile",{user:foundUser, userOrders: foundOrders});
                 }
             })
             

@@ -17,5 +17,5 @@ var userSchema = new mongoose.Schema({
     ]
 });
 
-userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose, { usernameField: "phone" });
 module.exports= mongoose.model("user",userSchema);

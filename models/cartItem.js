@@ -7,7 +7,8 @@ var cartItemSchema = new mongoose.Schema({
     },
     productName: String,
     size: String,
-    amount: { type: Number, default: 1 }
+    amount: { type: Number, default: 1 },
+    price: Number
 
 }) 
 module.exports = mongoose.model("cartItem", cartItemSchema);

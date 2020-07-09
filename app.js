@@ -48,30 +48,32 @@ app.use(passport.session());
 // passport.use(new localStrategy(user.authenticate()));
 
 
-passport.use(new localStrategy({
-    usernameField: 'phone', // this is where you do that
-    passwordField: 'password'
-},
-(phone, password, done) => {
-    user.findOne(
-        {phone: phone}, function(error, founduser){
-        if (error) {
-            return done(error);
-        }
-        if (!founduser) {
-            return done(null, false, {
-                message: 'Username or password incorrect'
-            });
-        }
-        console.log("found user is: " + founduser);
-        // if (!founduser.validPassword(password)) { 
-        //     return done(null, false); 
-        // }
-        // Do other validation/check if any
-        return done(null, founduser);
-    });
-}
-));
+// passport.use(new localStrategy({
+//     usernameField: 'phone', // this is where you do that
+//     passwordField: 'password'
+// },
+// (phone, password, done) => {
+//     user.findOne(
+//         {phone: phone}, function(error, founduser){
+//         if (error) {
+//             return done(error);
+//         }
+//         if (!founduser) {
+//             return done(null, false, {
+//                 message: 'Username or password incorrect'
+//             });
+//         }
+//         console.log("found user is: " + founduser);
+//         // if (!founduser.validPassword(password)) { 
+//         //     return done(null, false); 
+//         // }
+//         // Do other validation/check if any
+//         return done(null, founduser);
+//     });
+// }
+// ));
+
+passport.use(user.createStrategy()); 
 
 
 

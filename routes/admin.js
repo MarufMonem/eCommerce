@@ -2,6 +2,7 @@ var express     = require("express");
 var router      = express.Router();
 var product     = require("../models/product");
 var user        = require("../models/user");
+var order        = require("../models/order");
 
 
 //One route handles all
@@ -15,7 +16,11 @@ router.get("/", isAdmin, function (req, res) {
                 if(err){
                     console.log("ERR WITH GETING PRODUCTS: " + ERR);
                 }else{
-                    res.render("admin", { products: allProducts, users: allUser })
+                    order.find().populate("cart buyer").exec(function(err, foundOrders){
+                        res.render("admin", { products: allProducts, users: allUser, userOrders: foundOrders })
+                    })
+                    
+                    
                 }
 
             })  

@@ -225,44 +225,76 @@
 
                 </div>
 
-                <div class="col-12 col-md-5 py-3 py-lg-0">
+                <div class="col-12 col-lg-5 py-3 py-lg-0">
                     <h3 class="text-center">Previous Orders</h3>
-                    <hr>
-                    <table class="table table-hover text-center ">
+                    <table class="table table-hover text-center table-responsive-sm">
                         <thead>
                             <tr>
                                 <th scope="col">OrderID</th>
-                                <th scope="col">No. Items</th>
+                                <th scope="col">Order Status</th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Items</th>
+                                <th scope="col">No. Items</th>
                                 <th scope="col">Cost</th>
                             </tr>
                         </thead>
                         <tbody>
                             <%
-                            if(userOrder !=null){
-
                             
-                            var count=0;
-                             
-                            userOrder.cart.forEach(function(item){
-                                var date = new Date(userOrder.date);  // dateStr you get from mongodb
-
+                            if(userOrders !=null){                       
+                                userOrders.forEach(function(singleOrder){
+                                    var count=0;
+                                    var totalCost=0;
+                                    var date = new Date(singleOrder.date);
                                     var d = date.getDate();
                                     var m = date.getMonth()+1;
                                     var y = date.getFullYear()
-                                count++; 
-                                %>
-                            <tr>
-                                <td><%= userOrder._id %></td>
-                                <td><%= count %></td>
-                                <td><%=d%>/<%=m%>/<%=y%></td>
-                                <td><%= item.productName%></td>
-                                <td>250$</td>
-                            </tr>
-                            <% }) 
-                        }
+                                    if(singleOrder.delivered == true){
+
                             %>
+
+                            <tr class="table-success">
+                                <td>    <%= singleOrder._id %>  </td>
+                                <td>Complete</td>
+                                
+                                <td>    <%=d%>/<%=m%>/<%=y%>    </td>
+                                <td>
+                                    <% singleOrder.cart.forEach(function(item){ 
+                                        count++
+                                        totalCost=totalCost + item.price;
+                                        %>
+                                        <p><%= item.productName%></p>
+                                    <% }) %>
+                                
+                                </td>
+                                <td><%= count %></td>
+                                <td><%=totalCost%></td>
+                            </tr>
+
+                        <% }else{%>
+                            <tr>
+                                <td>    <%= singleOrder._id %>  </td>
+                                <td class="pl-4">    <div class="loader"></div>  </td>
+                                
+                                <td>    <%=d%>/<%=m%>/<%=y%>    </td>
+                                <td>
+                                    <% singleOrder.cart.forEach(function(item){ 
+                                        count++
+                                        totalCost=totalCost + item.price;
+                                        %>
+                                        <p><%= item.productName%></p>
+                                    <% }) %>
+                                
+                                </td>
+                                <td><%= count %></td>
+                                <td><%=totalCost%></td>
+                            </tr>
+
+                        <%}%>
+                            
+                        <%      })
+                            }
+                        %>
 
 
 
@@ -303,6 +335,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+        var pendingOrder = document.getElementById("pending");
+
+    </script>
 </body>
 
 </html>
