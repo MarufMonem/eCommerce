@@ -62,24 +62,24 @@ router.post("/register", function(req, res){
             //This logs the user in handles everything related to the session
             //then run the serialize user method
             //then specifying that we would use local strategy
-            // passport.authenticate("local")(req,res, function(err){
-            //     if(err){
-            //         console.log("*******UNSUCCESSFUL USER CREATION********");
-            //     }else{
-            //         // req.flash("success", "Welcome to pothorekha, " + newUser.username);
-            //         console.log("*******SUCCESSFUL USER CREATION********");
-            //         res.redirect("/");
-            //     }
-                
-            // });
-
-            req.login(user, function(err) {
-                if (err) {
-                  console.log(err);
-                    res.redirect("/login");
+            passport.authenticate("local")(req,res, function(err){
+                if(err){
+                    console.log("*******UNSUCCESSFUL USER CREATION********");
+                }else{
+                    // req.flash("success", "Welcome to pothorekha, " + newUser.username);
+                    console.log("*******SUCCESSFUL USER CREATION********");
+                    res.redirect("/");
                 }
-                 res.redirect('/');
-              })
+                
+            });
+
+            // req.login(user, function(err) {
+            //     if (err) {
+            //       console.log(err);
+            //         res.redirect("/login");
+            //     }
+            //      res.redirect('/');
+            //   })
         }
     });
 });

@@ -24,6 +24,37 @@ router.post("/cart/confirmed", function (req, res) {
             var countingItems = 0; //variable to keep track of how many items are traversed
             console.log("**************ENTER LOOP****************");
             for (var i = 0; i < loopLength;i++ ) {
+            console.log("CART INFO: " + cartInfo[0]);
+
+
+            cartItem.findById(cartInfo[0], function(err, foundCart){
+                if(err){
+                    console.log("ERR finding the cart: " + err);
+                }else{
+                    product.findById(foundCart.id, function(err, foundCartProduct){
+                        if(foundCart.size.localeCompare("Small")==0){
+                            foundCartProduct.sizeSM = foundCartProduct.sizeSM - foundCart.amount;
+                            if(foundCartProduct.sizeSM<0){
+                                res.send("Sorry your product: " + foundCartProduct.title + " just went out of stock! Better Luck next time.");
+                            }
+                            foundCartProduct.save();
+                        }else if(foundCart.size == "Medium"){
+                            foundCartProduct.sizeMD = foundCartProduct.sizeMD - foundCart.amount;
+                            foundCartProduct.save();
+                        }else if(foundCart.size == "Large"){
+                            foundCartProduct.sizeLG = foundCartProduct.sizeLG - foundCart.amount;
+                            foundCartProduct.save();
+                        }else if(foundCart.size == "Extra Large"){
+                            foundCartProduct.sizeXL = foundCartProduct.sizeXL - foundCart.amount;
+                            foundCartProduct.save();
+                        }
+                    })
+                }
+            })
+
+
+
+
                 console.log("REMOVING: " + cartInfo[0]);
                 res.locals.currentUser.cart.remove({ _id: cartInfo[0] });
 
