@@ -1,35 +1,31 @@
-var express = require("express");
-var router = express.Router();
-var product = require("../models/product");
-var order = require("../models/order");
-const user = require("../models/user");
-const cartItem = require("../models/cartItem");
+var express     = require("express");
+var router      = express.Router();
+var product     = require("../models/product");
+var order       = require("../models/order");
+const user      = require("../models/user");
+const cartItem  = require("../models/cartItem");
 
-
+//If the uder places the order
 router.post("/cart/confirmed", function (req, res) {
     var userOrder = {
         buyer: res.locals.currentUser._id,
         cart: res.locals.currentUser.cart
     }
-
     order.create(userOrder, function (err, newOrder) {
         if (err) {
             console.log(err);
+            req.flash("error","Couldnt create the order " + err);
         } else {
             // console.log("NEW CREATED ORDER IS: " + newOrder);
-            console.log("USERS CART LOOKS LIKE : " + res.locals.currentUser.cart);
             var cartInfo = res.locals.currentUser.cart; //Storing the cart array inside a variable
             var loopLength= cartInfo.length;
-            console.log("LENGTH OF CART IS :" + cartInfo.length); //Prints the length of the array
             var countingItems = 0; //variable to keep track of how many items are traversed
-            console.log("**************ENTER LOOP****************");
             for (var i = 0; i < loopLength;i++ ) {
             console.log("CART INFO: " + cartInfo[0]);
-
-
             cartItem.findById(cartInfo[0], function(err, foundCart){
                 if(err){
                     console.log("ERR finding the cart: " + err);
+                    req.flash("error","Cart not found " + err);
                 }else{
                     product.findById(foundCart.id, function(err, foundCartProduct){
                         if(foundCart.size.localeCompare("Small")==0){
@@ -51,30 +47,14 @@ router.post("/cart/confirmed", function (req, res) {
                     })
                 }
             })
-
-
-
-
                 console.log("REMOVING: " + cartInfo[0]);
                 res.locals.currentUser.cart.remove({ _id: cartInfo[0] });
-
-                // cartItem.findById(cartInfo[0], function (err, foundCartItem) {
-                // if(err){
-                //     console.log(err);
-                // }else{
-                //     foundCartItem.remove();
-                // }
-                // });
-                // console.log("cartInfo: " + cartInfo);
-                // console.log("i: " + i);
-
             }
             res.locals.currentUser.save();
         }
     });
-
+    req.flash("success","Your order has been placed! We would contact you when its ready.");
     res.redirect("/user/" + res.locals.currentUser._id);
-
 });
 
 router.delete("/cart/:id", function (req, res) {
@@ -84,11 +64,13 @@ router.delete("/cart/:id", function (req, res) {
     cartItem.findById(req.params.id, function (err, foundCartItem) {
         if (err) {
             console("ERR DELETEING CART ITEM :  " + err);
+            req.flash("error","Couldnt delete cart item");
         } else {
+            req.flash("success","Item has been removed.");
             foundCartItem.remove();
         }
-
     });
+    
     res.redirect("back");
 })
 
@@ -98,23 +80,23 @@ router.put("/confirm/:id",isAdmin,function(req,res){
         if(err){
             console.log("Couldnt Update");
         }else{
+            req.flash("success","Order has been confirmed");
             res.redirect("/admin");
         }
     })
 });
 
 router.delete("/delete/:id",isAdmin,function(req,res){
-
     order.findById(req.params.id, function(err, foundOrder){
         if(err){
             console.log("Couldnt Update");
         }else{
             foundOrder.remove();
+            req.flash("success","Order has been removed.");
             res.redirect("back");
         }
     })
 });
-
 
 router.post("/:id/cartAdd", isloggedIn, function (req, res) {
     //get all campgrounds
@@ -141,25 +123,19 @@ router.post("/:id/cartAdd", isloggedIn, function (req, res) {
                                     if (err) {
                                         console.log("There was an error");
                                     } else {
-                                        console.log("saved");
-                                        // console.log("SAVED USER: " + saveduser);
                                         console.log("USER Looks like this now: " + saveduser);
+                                        req.flash("success","Item added to cart.");
                                         res.redirect("back");
                                     }
                                 })
                             });
                         }
                     });
-
                 }
-
             });
-
-
         }
     })
 });
-
 
 //MIDDLE WARE
 function isloggedIn(req, res, next) {

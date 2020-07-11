@@ -13,10 +13,16 @@
 </head>
 
 <body>
+    <script>
+        function alertJS() {
+            var alertMsg = document.getElementById("alertMsg");
+            setTimeout(function () { alertMsg.classList.add("d-none") }, 3000);
+        };
+    </script>
     <!-- navbar -->
     <section id="navbar">
         <nav class="navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand" href="#">Pothorekha</a>
+            <a class="navbar-brand" href="/">Lets Buy Shoes</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -27,7 +33,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item disabled">
                         <a class="nav-link" href="#">About Us</a>
                     </li>
                     <li class="nav-item dropdown">
@@ -39,33 +45,12 @@
                             <a class="dropdown-item " href="/products/male">Men</a>
                             <a class="dropdown-item" href="/products/female">Women</a>
                             <a class="dropdown-item disabled" href="#">Unisex</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item disabled" href="#">Browse All</a>
+                            
                         </div>
                     </li>
 
                 </ul>
-                <ul class="navbar-nav">
-
-
-                    <% if(!currentUser){ %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register">Sign Up</a>
-                    </li>
-                    <% }else{ %>
-                    <li class="nav-item">
-                        <a class="nav-link" href=""> <strong> <%= currentUser.username.toUpperCase() %> </strong></a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Log out</a>
-                    </li>
-                    <% } %>
-
-                </ul>
+                <%- include("../views/partials/navbarUserInfo") %>
 
                 <!-- <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -75,6 +60,25 @@
             </div>
         </nav>
     </section>
+
+
+    <div id="alertMsg" class="container-fluid my-0 py-0 px-0 mx-0 my-0 ">
+        <!-- Checking error -->
+        <% if(error && error.length > 0){ %>
+        <script>alertJS();</script>
+        <div class="alert alert-danger text-center my-0 py-1" role="alert">
+            <%= error %>
+        </div>
+        <% } %>
+        <!-- Checking Success -->
+        <% if(success && success.length > 0){ %>
+        <script>alertJS();</script>
+        <div class="alert alert-success text-center  my-0 py-1" role="alert">
+            <%= success %>
+        </div>
+        <% } %>
+    </div>
+    
     <!-- selectedm item -->
     <section id="productDetails">
         <div class="container-fluid">
@@ -119,7 +123,7 @@
 
                 <div class="col-12 col-md-6 py-4 py-md-0 py-lg-5 ">
                     <h1 class="text-center "><%=product.title%></h1>
-                    <p class="text-justify"><%=product.description%></p>
+                    <p class="text-justify"><%-product.description%></p>
                     <div id="divPrice" class="text-center d-block d-lg-flex justify-content-center ">
                         <p class="py-2  px-lg-5"><%=product.price%> Taka</p>
                     </div>
@@ -220,7 +224,7 @@
     <section id="footer">
         <div class="card mt-5">
             <div class="card-header text-center">
-                Pothorekha.com
+                LetsBuyShoes.com
             </div>
             <div class="card-body">
                 <p class="text-center">
@@ -275,7 +279,7 @@
 
         function caller(pickedValueAmount,arr){
             //Based on the amount avalable we pass that to class control method
-            if(pickedValueAmount>4){
+            if(pickedValueAmount>=4){
                 classControl(arr, 4);
             }else if(pickedValueAmount == 3){
                 classControl(arr, 3);

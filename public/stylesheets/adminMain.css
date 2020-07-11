@@ -17,6 +17,8 @@ html{
     color: whitesmoke;
 }
 
+
+
 #listButton div a{
     display: block;
     color: #6b0504;
@@ -34,6 +36,11 @@ html{
     color: #001516;
     font-size: 1.3rem;
     font-weight: 700;
+}
+
+.selectedBtn{
+    background-color: #ebcf8f;
+    border: 5px dotted #6b0504;
 }
 
 h2{

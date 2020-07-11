@@ -4,6 +4,10 @@ body{
 nav{
     background-color:#e6af2e ;
 }
+.fadeOutAlert{
+    display: none;
+    transition:display 3s;
+}
 
 #header p{
     font-size: 2.5rem;
@@ -16,6 +20,41 @@ nav{
 /* #pending{
 padding-left: 5%;
 } */
+#cartButton{
+    background-color:transparent;
+    color: #001514;
+}
+
+
+.modal-content{
+    background-color: #fbfffe;
+    color: #001514;
+}
+
+
+.modal-content table{
+    color: #001514;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.modal-content a{
+    color: #fbfffe;
+}
+.modal-header button{
+    color:#fbfffe;
+}
+
+table tbody tr{
+    color: #000;
+}
+
+table tbody tr:hover{
+    background-color: #e6af2e;
+    color: #001514;
+}
+
+
 .loader {
     border: 5px solid #f3f3f3; /* Light grey */
     border-top: 5px solid #e6af2e; /* Blue */

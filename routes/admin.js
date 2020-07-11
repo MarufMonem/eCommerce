@@ -2,8 +2,7 @@ var express     = require("express");
 var router      = express.Router();
 var product     = require("../models/product");
 var user        = require("../models/user");
-var order        = require("../models/order");
-
+var order       = require("../models/order");
 
 //One route handles all
 router.get("/", isAdmin, function (req, res) {

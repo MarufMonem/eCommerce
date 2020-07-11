@@ -13,6 +13,7 @@
 </head>
 
 <body>
+
 <%
 var totalIncome = 0;
 
@@ -41,10 +42,17 @@ users.forEach(function(user){
 }) 
 
 %>
+
+<script>
+    function alertJS() {
+        var alertMsg = document.getElementById("alertMsg");
+        setTimeout(function () { alertMsg.classList.add("d-none") }, 3000);
+    };
+</script>
     <!-- navbar -->
     <section id="navbar">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/">Pothorekha</a>
+            <a class="navbar-brand" href="/">Lets Buy Shoes!</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -68,6 +76,23 @@ users.forEach(function(user){
         </nav>
 
     </section>
+    <div id="alertMsg" class="container-fluid my-0 py-0 px-0 mx-0 my-0 ">
+        <!-- Checking error -->
+        <% if(error && error.length > 0){ %>
+        <script>alertJS();</script>
+        <div class="alert alert-danger text-center my-0 py-1" role="alert">
+            <%= error %>
+        </div>
+        <% } %>
+        <!-- Checking Success -->
+        <% if(success && success.length > 0){ %>
+        <script>alertJS();</script>
+        <div class="alert alert-success text-center  my-0 py-1" role="alert">
+            <%= success %>
+        </div>
+        <% } %>
+    </div>
+
 
     <section id="header">
         <div class="container-fluid px-0 mx-0">
@@ -83,34 +108,34 @@ users.forEach(function(user){
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-7">
                     <div id="button" class="my-2 mx-auto">
-                        <a class="btn btn-lg px-5 py-4" data-toggle="collapse" href="#addProduct" role="button"
+                        <a onclick="myFunction(this)" class="btn btn-lg px-5 py-4 adminButtons" data-toggle="collapse" href="#addProduct" role="button"
                             aria-expanded="false" aria-controls="collapseExample">
                             New Product
                         </a>
                     </div>
 
                     <div id="button" class="my-2 mx-auto">
-                        <a class="btn btn-lg px-5 py-4" data-toggle="collapse" href="#newProduct" role="button"
+                        <a onclick="myFunction(this)" class="btn btn-lg px-5 py-4 adminButtons" data-toggle="collapse" href="#newProduct" role="button"
                             aria-expanded="false" aria-controls="collapseExample">
-                            Your Inventory
+                            Inventory
                         </a>
                     </div>
 
                     <div id="button" class="my-2 mx-auto">
-                        <a class="btn btn-lg px-5 py-4" data-toggle="collapse" href="#newOrders" role="button"
+                        <a onclick="myFunction(this)" class="btn btn-lg px-5 py-4 adminButtons" data-toggle="collapse" href="#newOrders" role="button"
                             aria-expanded="false" aria-controls="collapseExample">
                             New Orders
                         </a>
                     </div>
 
                     <div id="button" class="my-2 mx-auto">
-                        <a class="btn btn-lg px-5 py-4" data-toggle="collapse" href="#allUsers" role="button"
+                        <a onclick="myFunction(this)" class="btn btn-lg px-5 py-4 adminButtons" data-toggle="collapse" href="#allUsers" role="button"
                             aria-expanded="false" aria-controls="collapseExample">
                             All Customers
                         </a>
                     </div>
                     <div id="button" class="my-2 mx-auto">
-                        <a class="btn btn-lg px-5 py-4" data-toggle="collapse" href="#completedOrders" role="button"
+                        <a onclick="myFunction(this)" class="btn btn-lg px-5 py-4 adminButtons" data-toggle="collapse" href="#completedOrders" role="button"
                             aria-expanded="false" aria-controls="collapseExample">
                             Completed Orders
                         </a>
@@ -173,6 +198,7 @@ users.forEach(function(user){
                                         <th scope="col">Description</th>
                                         <th scope="col">Sex</th>
                                         <th scope="col">Date</th>
+                                        <th scope="col">Featured</th>
                                         <th scope="col">Edit</th>
                                         <th scope="col">Remove</th>
                                     </tr>
@@ -200,11 +226,9 @@ users.forEach(function(user){
                                         <td class="text-justify"><%=product.description%></td>
                                         <td><%=product.sex%></td>
                                         <td><%=d%>/<%=m%>/<%=y%></td>
+                                        <td><%=product.featured%></td>
                                         <td>
-                                            <!-- <form action="/<%=product._id%>?_method=PUT" method="PUT">
-                        <button class="btn btn-sm btn-outline-info"><i class="far fa-edit"></i></button>
-                      </form>
-                      <button class="btn btn-sm btn-outline-info"><i class="far fa-edit"></i></button> -->
+
                                             <a href="/products/<%=product._id%>/edit"
                                                 class="btn btn-sm btn-outline-info"><i class="far fa-edit"></i></a>
 
@@ -271,8 +295,9 @@ users.forEach(function(user){
                             </div>
 
                             <div class="form-group">
-                                <label for="inputState">Sex</label>
+                                <label for="inputState">Gender</label>
                                 <select name="product[sex]" class="form-control">
+                                    <option selected disabled>Select Gender</option>
                                     <option>Male</option>
                                     <option>Female</option>
                                 </select>
@@ -300,7 +325,14 @@ users.forEach(function(user){
                                 <label for="inputState">Small</label>
                                 <input type="number" class="form-control" name="product[sizeSM]" placeholder="Amount">
                             </div>
-
+                            <div class="form-group">
+                                <label for="inputState">Featured</label>
+                                <select name="product[featured]" class="form-control">
+                                    <option selected disabled>Will it show in homepage?</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
 
 
 
@@ -525,6 +557,21 @@ users.forEach(function(user){
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+        <script>
+            var adminButton = document.getElementsByClassName("adminButtons");
+
+            function myFunction(elmnt) {
+                elmnt.classList.toggle("selectedBtn");
+                for(let i=0; i < adminButton.length;i++){
+                    adminButton[i].setAttribute("aria-expanded", false);
+                    adminButton[i].classList.add("collapsed");
+                    // adminButton[i].classList.remove("selectedBtn");
+                }
+                elmnt.setAttribute("aria-expanded", true);
+                elmnt.classList.remove("collapsed");
+            }
+        </script>
 </body>
 
 </html>

@@ -7,6 +7,7 @@ var productSchema = new mongoose.Schema({
     description: String,
     sex: String,
     date: {type: Date, default:Date.now},
+    featured: {type: Boolean, default:false},
     sizeXL: Number,
     sizeLG: Number,
     sizeMD: Number,

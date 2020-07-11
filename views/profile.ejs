@@ -9,15 +9,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="../profile.css">
-    <title>PothoRekha</title>
+    <title> Lets Buy Stuff</title>
 </head>
 
 <body>
+    <script>
+        function alertJS() {
+            var alertMsg = document.getElementById("alertMsg");
+            setTimeout(function () { alertMsg.classList.add("d-none") }, 3000);
+        };
+    </script>
 
     <!-- navbar -->
     <section id="navbar">
         <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="#">Pothorekha</a>
+            <a class="navbar-brand" href="/">Lets Buy Stuff</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -26,7 +32,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home <span class="sr-only"></span></a>
+                        <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#">About Us</a>
@@ -37,46 +43,37 @@
                             Products
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item " href="productMale.html">Men</a>
-                            <a class="dropdown-item" href="productFemale.html">Women</a>
-                            <a class="dropdown-item" href="#">Unisex</a>
+                            <a class="dropdown-item" href="/products/male">Men</a>
+                            <a class="dropdown-item" href="/products/female">Women</a>
+                            <a class="dropdown-item disabled" href="#">Unisex</a>
 
                         </div>
                     </li>
 
                 </ul>
-                <ul class="navbar-nav">
-                    <% if(!currentUser){ %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register">Sign Up</a>
-                    </li>
-                    <% }else{ %>
-                    <li class="nav-item">
-                        <a class="nav-link" href=""> <strong> <%= currentUser.username.toUpperCase() %> </strong></a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Log out</a>
-                    </li>
-                    <% } %>
-
-
-                </ul>
-
-                <!-- <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form> -->
-
+                <%- include("../views/partials/navbarUserInfo") %>
             </div>
         </nav>
 
         <!-- Header image -->
     </section>
 
+    <div id="alertMsg" class="container-fluid my-0 py-0 px-0 mx-0 my-0 ">
+        <!-- Checking error -->
+        <% if(error && error.length > 0){ %>
+        <script>alertJS();</script>
+        <div class="alert alert-danger text-center my-0 py-1" role="alert">
+            <%= error %>
+        </div>
+        <% } %>
+        <!-- Checking Success -->
+        <% if(success && success.length > 0){ %>
+        <script>alertJS();</script>
+        <div class="alert alert-success text-center  my-0 py-1" role="alert">
+            <%= success %>
+        </div>
+        <% } %>
+    </div>
     <section id="header">
         <p class="text-center py-3">Hello, <span><%=user.username.toUpperCase()%></span></p>
     </section>
@@ -113,23 +110,23 @@
 
 
                     <div class="row ">
-                        <div class="col-4 px-1 d-flex justify-content-center">
-                            <a class="btn btn-info" data-toggle="collapse" href="#collapseExample" role="button"
-                                aria-expanded="false" aria-controls="collapseExample">
+                        <div class="col-6 px-1 d-flex justify-content-center">
+                            <a class="btn btn-info btn-block" data-toggle="collapse" href="#collapseExample"
+                                role="button" aria-expanded="false" aria-controls="collapseExample">
                                 Update Information
                             </a>
                         </div>
 
-                        <div class="col-4 px-1 mx-0 d-flex justify-content-center">
+                        <!-- <div class="col-4 px-1 mx-0 d-flex justify-content-center">
 
                             <button class="btn btn-warning" data-toggle="collapse" href="#password" role="button"
                                 aria-expanded="false" aria-controls="collapseExample">Change Password</button>
 
-                        </div>
+                        </div> -->
 
-                        <div class="col-4 px-1 mx-0 d-flex justify-content-center">
+                        <div class="col-6 px-1 mx-0 d-block justify-content-center">
                             <form id="delete" action="/user/<%=user._id%>?_method=DELETE" method="POST">
-                                <button class="btn btn btn-danger d-block"> Delete Account</button>
+                                <button class="btn btn-danger btn-block"> Delete Account</button>
                             </form>
                         </div>
 
@@ -254,43 +251,45 @@
                             %>
 
                             <tr class="table-success">
-                                <td>    <%= singleOrder._id %>  </td>
+                                <td> <%= singleOrder._id %> </td>
                                 <td>Complete</td>
-                                
-                                <td>    <%=d%>/<%=m%>/<%=y%>    </td>
+
+                                <td> <%=d%>/<%=m%>/<%=y%> </td>
                                 <td>
                                     <% singleOrder.cart.forEach(function(item){ 
                                         count++
                                         totalCost=totalCost + item.price;
                                         %>
-                                        <p><%= item.productName%></p>
+                                    <p><%= item.productName%></p>
                                     <% }) %>
-                                
+
                                 </td>
                                 <td><%= count %></td>
                                 <td><%=totalCost%></td>
                             </tr>
 
-                        <% }else{%>
+                            <% }else{%>
                             <tr>
-                                <td>    <%= singleOrder._id %>  </td>
-                                <td class="pl-4">    <div class="loader"></div>  </td>
-                                
-                                <td>    <%=d%>/<%=m%>/<%=y%>    </td>
+                                <td> <%= singleOrder._id %> </td>
+                                <td class="pl-4">
+                                    <div class="loader"></div>
+                                </td>
+
+                                <td> <%=d%>/<%=m%>/<%=y%> </td>
                                 <td>
                                     <% singleOrder.cart.forEach(function(item){ 
                                         count++
                                         totalCost=totalCost + item.price;
                                         %>
-                                        <p><%= item.productName%></p>
+                                    <p><%= item.productName%></p>
                                     <% }) %>
-                                
+
                                 </td>
                                 <td><%= count %></td>
                                 <td><%=totalCost%></td>
                             </tr>
 
-                        <%}%>
+                            <%}%>
                             
                         <%      })
                             }
@@ -313,7 +312,7 @@
         <footer class="footer">
             <div class="card mt-5 ">
                 <div class="card-header text-center">
-                    Pothorekha.com
+                    LetsBuyShoes.com
                 </div>
                 <div class="card-body pb-0">
                     <p class="text-center">

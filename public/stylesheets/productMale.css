@@ -7,12 +7,44 @@ ul .dropdown-menu .active{
     background-color: #001514;
     color: #fbfffe ;
 }
+.fadeOutAlert{
+    display: none;
+    transition:display 4s;
+    transition-timing-function: ease-in-out;
+}
 
 #headTitle{
     background-color: #001514;
     color: #fbfffe ;
 }
+#cartButton{
+    background-color:transparent;
+    color: #d43d0b;
+}
 
+.modal-content{
+    background-color: #001514;
+    color: #fbfffe;
+}
+
+
+.modal-content table{
+    color: #fbfffe;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.modal-content a{
+    color: #fbfffe;
+}
+.modal-header button{
+    color:#d43d0b;
+}
+    
+table tbody tr:hover{
+    background-color: #fbfffe;
+    color: #001514;
+}
 
 #header .jumbotron{
     background-color: #001514;

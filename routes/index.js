@@ -28,29 +28,13 @@ router.get("/", function (req, res) {
             })
         }
     })
-
-
-
-
-
-    
 });
 
 //CART ROUTE
 router.get("/cartItems",isloggedIn, function (req, res) {
-
-
-
     user.findById(res.locals.currentUser).populate("cart").exec(function(err, foundUser){
-    
         res.send(foundUser);
     })
-
-
-
-
-
-
 });
 
 
@@ -74,7 +58,7 @@ router.post("/register", function(req, res){
             ), req.body.password, function(err, newUser){
         if(err){
             console.log("There is an error: " + err );
-            // req.flash("error",err.message);
+            req.flash("error",err.message);
             res.redirect("/register");
         }else{
             //once the user is created this would run. 
@@ -84,14 +68,15 @@ router.post("/register", function(req, res){
             passport.authenticate("local")(req,res, function(err){
                 if(err){
                     console.log("*******UNSUCCESSFUL USER CREATION********");
+                    req.flash("error",err.message);
+                    res.redirect("/register");
                 }else{
                     // req.flash("success", "Welcome to pothorekha, " + newUser.username);
                     console.log("*******SUCCESSFUL USER CREATION********");
+                    req.flash("success", "Welcome, " + newUser.username);
                     res.redirect("/");
                 }
-                
             });
-
             // req.login(user, function(err) {
             //     if (err) {
             //       console.log(err);
@@ -114,25 +99,18 @@ router.post("/login", passport.authenticate("local", {
     failureRedirect: "/login" // if it wasnt
     // failureFlash: true
 }) , function(req, res){
-    
 });
 
 //logging out handler
 router.get("/logout", function(req, res){
     req.logOut();
-    // req.flash("success", "Logged you out");
+    req.flash("success", "Logged you out");
     res.redirect("/");
 });
 
 //Delete user
 router.delete("/user/:id", isloggedIn, function(req, res){
     user.findById(req.params.id, function (err, foundUser) {
-
-        // foundCamp.comments.forEach(function (commentID) {
-        //     comment.findByIdAndDelete(commentID, function (err) {
-        //         console.log("DELETED");
-        //     });
-        // });
         foundUser.remove();
     // req.flash("success", "Logged you out");
     res.redirect("/admin");
@@ -141,8 +119,7 @@ router.delete("/user/:id", isloggedIn, function(req, res){
 
 //Delete user
 router.get("/user/:id", isloggedIn, function(req, res){
-    user.findById(req.params.id, function (err, foundUser) {
-
+    user.findById(req.params.id).populate("cart").exec(function (err, foundUser) {
         if(err){
             console.log(err);
         }else{
@@ -167,9 +144,10 @@ router.put("/user/:id", isloggedIn, function (req, res) {
     user.findByIdAndUpdate(req.params.id, req.body.user, function (err, updateduser) {
         if (err) {
             console.log(err);
+            req.flash("error", "Couldnt update");
         } else {
             console.log(updateduser);
-            // req.flash("success", "Campground updated!");
+            req.flash("success", "Updated");
             res.redirect("/user/" + req.params.id);
         }
         // req.flash("success", "Logged you out");
@@ -190,8 +168,6 @@ router.put("/user/:id", isloggedIn, function (req, res) {
 //         // req.flash("success", "Logged you out");
 //     });
 // });
-
-
 
 //logged in checker
 function isloggedIn(req, res, next) {

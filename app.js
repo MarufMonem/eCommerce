@@ -30,6 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true })); //get form data
 app.set("view engine", "ejs"); //not write ejs every time
 app.use(express.static(__dirname + "/public/stylesheets/")); //where the stulesheets are lcoated
 app.use(methodOverride("_method")); //Making sure put and delete work
+app.use(flash());//for flash messages
 
 app.use(require("express-session")({
     //secret code to encode and decode the username and password
@@ -47,43 +48,15 @@ app.use(passport.session());
 //which is given to the userSchema
 // passport.use(new localStrategy(user.authenticate()));
 
-
-// passport.use(new localStrategy({
-//     usernameField: 'phone', // this is where you do that
-//     passwordField: 'password'
-// },
-// (phone, password, done) => {
-//     user.findOne(
-//         {phone: phone}, function(error, founduser){
-//         if (error) {
-//             return done(error);
-//         }
-//         if (!founduser) {
-//             return done(null, false, {
-//                 message: 'Username or password incorrect'
-//             });
-//         }
-//         console.log("found user is: " + founduser);
-//         // if (!founduser.validPassword(password)) { 
-//         //     return done(null, false); 
-//         // }
-//         // Do other validation/check if any
-//         return done(null, founduser);
-//     });
-// }
-// ));
-
 passport.use(user.createStrategy()); 
-
-
-
 passport.serializeUser(user.serializeUser()); //encode
 passport.deserializeUser(user.deserializeUser()); //decode
 
 //middleware for pasing logged in user information.
 app.use(function(req,res,next){
     res.locals.currentUser  = req.user;
-
+    res.locals.error        = req.flash("error");
+    res.locals.success      = req.flash("success");
     next(); // for running the next part of the code
 });
 
@@ -92,7 +65,6 @@ app.use("/",indexRoutes);
 app.use("/products",productRoutes);
 app.use("/admin",adminRoutes);
 app.use("/order",orderRoutes);
-
 
 app.listen(5501, "127.0.0.1", function () {
     console.log("App has started");

@@ -8,6 +8,13 @@ nav{
     color: #fbfffe;
 }
 
+.fadeOutAlert{
+    display: none;
+    transition:display 4s;
+    transition-timing-function: ease-in-out;
+}
+
+
 .modal {
     color: #001514;
 }
@@ -37,6 +44,11 @@ nav{
 
 cite{
     color: whitesmoke;
+}
+
+#cartButton{
+    background-color: #d43d0b;
+    color: #fbfffe;
 }
 #item #men h1{
     color: #001514;

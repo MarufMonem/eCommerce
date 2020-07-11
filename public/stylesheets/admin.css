@@ -8,6 +8,11 @@ html{
     color: #fbfffe;
 }
 
+.fadeOutAlert{
+    display: none;
+    transition:display 4s;
+    transition-timing-function: ease-in-out;
+}
 
 footer {
     position: absolute;

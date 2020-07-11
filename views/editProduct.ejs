@@ -26,45 +26,15 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item ">
-                        <a class="nav-link" href="admin.html">Admin <span class="sr-only"></span></a>
+                        <a class="nav-link" href="/">Admin <span class="sr-only"></span></a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="productAdd.html">Add new product</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="allProduct.html">All products</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="allusers.html">All Users</a>
-                    </li>
+                   
                 </ul>
                 <ul class="navbar-nav">
-
-
-                    <% if(!currentUser){ %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register">Sign Up</a>
-                    </li>
-                    <% }else{ %>
-                    <li class="nav-item">
-                        <a class="nav-link" href=""> <strong> <%= currentUser.username.toUpperCase() %> </strong></a>
-                    </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Log out</a>
                     </li>
-                    <% } %>
-
                 </ul>
-
-                <!-- <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form> -->
-
             </div>
         </nav>
 
@@ -72,7 +42,7 @@
 
     <section id="header">
         <div class="container-fluid px-0">
-            <p class="text-center py-3">Add new product</p>
+            <p class="text-center py-3">Edit product</p>
         </div>
     </section>
 
@@ -90,8 +60,24 @@
                             <input type="text" class="form-control" name="product[price]" value="<%=product.price%>">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Image</label>
-                            <input type="text" class="form-control" name="product[image]" value="<%=product.image%>">
+                            <label for="exampleInputEmail1">Image 1</label>
+                            <input type="text" class="form-control" name="product[image][0]" value="<%=product.image[0]%>">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Image 2</label>
+                            <input type="text" class="form-control" name="product[image][1]" value="<%=product.image[1]%>">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Image 3</label>
+                            <input type="text" class="form-control" name="product[image][2]" value="<%=product.image[2]%>">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Image 4</label>
+                            <input type="text" class="form-control" name="product[image][3]" value="<%=product.image[3]%>">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Image 5</label>
+                            <input type="text" class="form-control" name="product[image][4]" value="<%=product.image[4]%>">
                         </div>
 
                         <div class="form-group">
@@ -127,6 +113,15 @@
                         <input type="number" class="form-control" name="product[sizeSM]" value="<%= product.sizeSM %>">
                     </div>
 
+                    <div class="form-group">
+                        <label for="inputState">Featured</label>
+                        <select name="product[featured]" class="form-control">
+                            <option class="selected"><%=product.featured%></option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+
                         <button type="submit" class="btn btn-danger">Submit</button>
                         <button type="reset" class="btn btn-warning">Reset</button>
                     </form>
@@ -134,13 +129,4 @@
             </div>
         </div>
     </section>
-
-
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+    <%- include("../views/partials/footer") %>
