@@ -21,7 +21,7 @@ form .btn:hover{
     color: rgb(0, 182, 0);
 }
 #uid:invalid {
-    color: rgb(141, 15, 15);
+    color: rgb(209, 16, 16);
 }
 
 #loginFooter footer{

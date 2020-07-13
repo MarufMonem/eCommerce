@@ -46,46 +46,56 @@ router.get("/register", function(req,res){
 
 //REGISTER LOGIC ROUTE
 router.post("/register", function(req, res){
-    user.register(
-        new user(
-            {
-                username    : req.body.username, 
-                address     : req.body.address,
-                phone       : req.body.phone,
-                email       : req.body.email,
-                age         : req.body.age
-            }
-            ), req.body.password, function(err, newUser){
-        if(err){
-            console.log("There is an error: " + err );
-            req.flash("error",err.message);
-            res.redirect("/register");
-        }else{
-            //once the user is created this would run. 
-            //This logs the user in handles everything related to the session
-            //then run the serialize user method
-            //then specifying that we would use local strategy
-            passport.authenticate("local")(req,res, function(err){
-                if(err){
-                    console.log("*******UNSUCCESSFUL USER CREATION********");
-                    req.flash("error",err.message);
-                    res.redirect("/register");
-                }else{
-                    // req.flash("success", "Welcome to pothorekha, " + newUser.username);
-                    console.log("*******SUCCESSFUL USER CREATION********");
-                    req.flash("success", "Welcome, " + newUser.username);
-                    res.redirect("/");
+    let reg1 = RegExp('[0-9]{11}');
+    let reg2 = RegExp('[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}');
+    let reg3 = RegExp('[0-9]{1-2}');
+    if(reg1.test(req.body.phone) && reg2.test(req.body.phone) && reg3.test(req.body.age) ){
+        user.register(
+            new user(
+                {
+                    username    : req.body.username, 
+                    address     : req.body.address,
+                    phone       : req.body.phone,
+                    email       : req.body.email,
+                    age         : req.body.age
                 }
-            });
-            // req.login(user, function(err) {
-            //     if (err) {
-            //       console.log(err);
-            //         res.redirect("/login");
-            //     }
-            //      res.redirect('/');
-            //   })
-        }
-    });
+                ), req.body.password, function(err, newUser){
+            if(err){
+                console.log("There is an error: " + err );
+                req.flash("error",err.message);
+                res.redirect("/register");
+            }else{
+                //once the user is created this would run. 
+                //This logs the user in handles everything related to the session
+                //then run the serialize user method
+                //then specifying that we would use local strategy
+                passport.authenticate("local")(req,res, function(err){
+                    if(err){
+                        console.log("*******UNSUCCESSFUL USER CREATION********");
+                        req.flash("error",err.message);
+                        res.redirect("/register");
+                    }else{
+                        // req.flash("success", "Welcome to pothorekha, " + newUser.username);
+                        console.log("*******SUCCESSFUL USER CREATION********");
+                        req.flash("success", "Welcome, " + newUser.username);
+                        res.redirect("/");
+                    }
+                });
+                // req.login(user, function(err) {
+                //     if (err) {
+                //       console.log(err);
+                //         res.redirect("/login");
+                //     }
+                //      res.redirect('/');
+                //   })
+            }
+        });
+    }else{
+        console.log("*******UNSUCCESSFUL USER CREATION, WRONG EMAIL OR MOBILE FORMAT********");
+        req.flash("error", "Your email or mobile number or age format doesnt meet standards");
+        res.redirect("/register");
+    }
+
 });
 
 //LOGIN ROUTE
