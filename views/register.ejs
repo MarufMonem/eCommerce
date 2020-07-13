@@ -62,7 +62,7 @@
     </section>
 
     
-    <div id="alertMsg" class="container-fluid my-0 py-0 px-0 mx-0 my-0 ">
+    <div id="alertMsg" class="container-fluid my-0 py-1 px-0 mx-0 my-0 ">
         <!-- Checking error -->
         <% if(error && error.length > 0){ %>
         <script>alertJS();</script>
@@ -145,7 +145,7 @@
                         <div class="form-group">
                             <label">Password</label>
                                 <input type="password" class="form-control" name="password" placeholder="Password" required>
-                                <small class="form-text text-muted">We'll never share your details anyone.
+                                <small class="form-text text-muted">We'll never share your details with anyone.
                                 </small>
                         </div>
                         <button id="submit" type="submit" class="btn">Submit</button>
@@ -184,4 +184,16 @@
     </section>
 
 
-    <%- include("../views/partials/footer") %>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+        function alertJS() {
+            var alertMsg = document.getElementById("alertMsg");
+            setTimeout(function () { alertMsg.classList.add("d-none") }, 3000);
+        };
+    </script>
+</body>
+
+</html>
