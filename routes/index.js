@@ -47,9 +47,12 @@ router.get("/register", function(req,res){
 //REGISTER LOGIC ROUTE
 router.post("/register", function(req, res){
     let reg1 = RegExp('[0-9]{11}');
-    let reg2 = RegExp('[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}');
-    let reg3 = RegExp('[0-9]{1-2}');
-    if(reg1.test(req.body.phone) && reg2.test(req.body.phone) && reg3.test(req.body.age) ){
+    let reg2 = RegExp('[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,64}');
+    // console.log("phone"  + req.body.phone + " " + reg1.test(req.body.phone));
+    // console.log("email"  + req.body.email + " " + reg2.test(req.body.email));
+    // console.log("age"  + req.body.age + " " + reg1.test(req.body.age));
+
+    if(reg1.test(req.body.phone) && reg2.test(req.body.email)){
         user.register(
             new user(
                 {
@@ -95,7 +98,6 @@ router.post("/register", function(req, res){
         req.flash("error", "Your email or mobile number or age format doesnt meet standards");
         res.redirect("/register");
     }
-
 });
 
 //LOGIN ROUTE
