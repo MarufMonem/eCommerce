@@ -23,10 +23,8 @@ var productRoutes           = require("./routes/product"),
     orderRoutes             = require("./routes/order");
 
 mongoose.set('useUnifiedTopology', true); //removing deprication errors
-// mongoose.connect("mongodb://localhost/eCommerceWebsite" ,{ useNewUrlParser: true });
-// mongoose.connect("mongodb+srv://yelpCamp:01922540460@cluster0-kfari.mongodb.net/yelp_camp?retryWrites=true&w=majority" ,{ useNewUrlParser: true });
-// mongoose.connect("mongodb+srv://eCommerce:<password>@ecommerce.gpjnj.mongodb.net/<dbname>?retryWrites=true&w=majority" ,{ useNewUrlParser: true });
-mongoose.connect("mongodb+srv://eCommerce:16101078@ecommerce.gpjnj.mongodb.net/eCommerce?retryWrites=true&w=majority" ,{ useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/eCommerceWebsite" ,{ useNewUrlParser: true });
+// mongoose.connect("mongodb+srv://eCommerce:16101078@ecommerce.gpjnj.mongodb.net/eCommerce?retryWrites=true&w=majority" ,{ useNewUrlParser: true });
 
 //MAKING ALL DIFFRENT PACKAGES AND FEATURES USEABLE IN THE APP    
 app.use(bodyParser.urlencoded({ extended: true })); //get form data
@@ -69,10 +67,10 @@ app.use("/products",productRoutes);
 app.use("/admin",adminRoutes);
 app.use("/order",orderRoutes);
 
-// app.listen(5501, "127.0.0.1", function () {
-//     console.log("App has started");
-// })
-
-app.listen(process.env.PORT,process.env.IP, function(){
-    console.log("Lets Buy Shoes has started");
+app.listen(5501, "127.0.0.1", function () {
+    console.log("App has started");
 })
+
+// app.listen(process.env.PORT,process.env.IP, function(){
+//     console.log("Lets Buy Shoes has started");
+// })

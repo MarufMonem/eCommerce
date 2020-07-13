@@ -17,6 +17,13 @@ form .btn:hover{
     border: 2px solid #A3320B;
 }
 
+#uid:valid {
+    color: rgb(0, 182, 0);
+}
+#uid:invalid {
+    color: rgb(141, 15, 15);
+}
+
 #loginFooter footer{
     position: absolute;
     bottom: 0;
