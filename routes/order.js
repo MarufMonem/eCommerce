@@ -134,7 +134,30 @@ router.delete("/delete/:id",isAdmin,function(req,res){
     })
 });
 
+//Rendering order edit page
+router.get("/edit/:id", isAdmin, function(req,res){
+    order.findById(req.params.id).populate("cart buyer").exec(function(err, foundOrder){
+        if(err){
+            console.log("Couldnt find order");
+            req.flash("error","Couldnt find order.");
+        }else{
+            console.log(foundOrder);
+            res.render("orderEdit", {order:foundOrder});
+        }
+    })
+});
 
+//changing the cart
+router.put("/edit/cart/:id", isAdmin, function(req, res){
+    cartItem.findByIdAndUpdate(req.params.id, req.body.cart, function(err, updatedCart){
+        if(err){
+            console.log("Couldnt Update Cart " + err );
+        }else{
+            req.flash("success","cart item updated");
+            res.redirect("back");
+        }
+    })
+})
 
 
 //Adding products to cart

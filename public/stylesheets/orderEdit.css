@@ -1,0 +1,14 @@
+html{
+    width: 100%;
+}
+#header p{
+    font-size: 2rem;
+    letter-spacing: 10px;
+    background-color: #6b0504;
+    color: #fbfffe;
+}
+
+.container-fluid{
+    background-color: #6b0504;
+    color: #fbfffe;
+}

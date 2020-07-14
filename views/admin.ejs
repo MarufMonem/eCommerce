@@ -418,6 +418,7 @@ users.forEach(function(user){
                                 <th scope="col">Contact Number</th>
                                 <th scope="col">Buyer Email</th>
                                 <th scope="col">Buyer Location</th>
+                                <th scope="col">Edit</th>
                                 <th scope="col">Completed</th>
                             </tr>
                         </thead>
@@ -457,6 +458,7 @@ users.forEach(function(user){
                                 <td><%=singleOrder.buyer.phone%></td>
                                 <td><%=singleOrder.buyer.email%></td>
                                 <td><%=singleOrder.buyer.address%></td>
+                                <td><a href="/order/edit/<%=singleOrder._id%>"><i class="far fa-edit"></i></a></td>
                                 <td>
                                     <form action="/order/confirm/<%=singleOrder._id%>?_method=PUT" method="POST">
                                         <button class="btn btn-outline-success "><i class="far fa-check-circle"></i></button>
