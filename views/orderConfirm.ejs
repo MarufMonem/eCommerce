@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="../profile.css">
+    <title> Order Confirmation</title>
+</head>
+
+<body>
+    <!-- navbar -->
+    <section id="navbar">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/">Lets Buy Stuff</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Products
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/products/male">Men</a>
+                            <a class="dropdown-item" href="/products/female">Women</a>
+                            <a class="dropdown-item disabled" href="#">Unisex</a>
+
+                        </div>
+                    </li>
+                </ul>
+                <%- include("../views/partials/navbarUserInfo") %>
+            </div>
+        </nav>
+    </section>
+
+    <!--All alerts  -->
+    <%- include("../views/partials/alerts") %>
+
+    <section id="header">
+        <p class="text-center py-3">Hello, <span><%=user.username.toUpperCase()%></span></p>
+    </section>
+
+    <section id="content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-7">
+                    <h3 class="text-center">Your Information</h3>
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td>Address:</td>
+                                <td><%=user.address%></td>
+                            </tr>
+                            <tr>
+                                <td>Phone Number:</td>
+                                <td><%=user.phone%></td>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td><%=user.email%></td>
+                            </tr>
+                            <tr>
+                                <td>Age:</td>
+                                <td><%=user.age%></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row ">
+                        <div class="col-4 px-1 d-flex justify-content-center">
+                            <a class="btn btn-info btn-block" data-toggle="collapse" href="#collapseExample"
+                                role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Update Information
+                            </a>
+                        </div>
+                    </div>
+
+ 
+
+                    <div class="row">
+                        <div class="collapse container" id="collapseExample">
+                            <div class="card card-body mt-4">
+                                <form action="/user/<%=user._id%>?_method=PUT" method="POST">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-12">
+
+                                            <div class="form-group">
+                                                <label>Shipping Address</label>
+                                                <input type="text" name="user[address]" class="form-control"
+                                                    value="<%=user.address%>" required>
+                                                <small class="form-text text-muted">Where the product would be
+                                                    delivered.</small>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Phone Number</label>
+                                                <input type="number" name="user[phone]" class="form-control"
+                                                    value="<%=user.phone%>" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Email address</label>
+                                                <input type="email" name="user[email]" class="form-control"
+                                                    value="<%=user.email%>" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Age</label>
+                                                <input type="number" name="user[age]" class="form-control"
+                                                    value="<%=user.age%>" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-12">
+
+                                            <button id="submit" type="submit" class="btn btn-warning">Submit</button>
+                                            <button type="reset" class="btn btn-danger">Reset</button>
+                                        </div>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-5 py-3 py-lg-0">
+                    <h3 class="text-center">Previous Orders</h3>
+                    <table class="table table-hover text-center table-responsive-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">OrderID</th>
+                                <th scope="col">Order Status</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Items</th>
+                                <th scope="col">No. Items</th>
+                                <th scope="col">Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                            
+                            if(userOrders !=null){                       
+                                userOrders.forEach(function(singleOrder){
+                                    var count=0;
+                                    var totalCost=0;
+                                    var date = new Date(singleOrder.date);
+                                    var d = date.getDate();
+                                    var m = date.getMonth()+1;
+                                    var y = date.getFullYear()
+                                    if(singleOrder.delivered == true){
+
+                            %>
+
+                            <tr class="table-success">
+                                <td> <%= singleOrder._id %> </td>
+                                <td>Complete</td>
+
+                                <td> <%=d%>/<%=m%>/<%=y%> </td>
+                                <td>
+                                    <% singleOrder.cart.forEach(function(item){ 
+                                        count++
+                                        totalCost=totalCost + item.price;
+                                        %>
+                                    <p><%= item.productName%></p>
+                                    <% }) %>
+
+                                </td>
+                                <td><%= count %></td>
+                                <td><%=totalCost%></td>
+                            </tr>
+
+                            <% }else{%>
+                            <tr>
+                                <td> <%= singleOrder._id %> </td>
+                                <td class="pl-4">
+                                    <div class="loader"></div>
+                                </td>
+
+                                <td> <%=d%>/<%=m%>/<%=y%> </td>
+                                <td>
+                                    <% singleOrder.cart.forEach(function(item){ 
+                                        count++
+                                        totalCost=totalCost + item.price;
+                                        %>
+                                    <p><%= item.productName%> | <%= item.size %> (<%=item.amount%>)</p>
+                                    <% }) %>
+
+                                </td>
+                                <td><%= count %></td>
+                                <td><%=totalCost%></td>
+                            </tr>
+
+                            <%}%>
+                        <%      })
+                            }
+                        %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="loginFooter">
+        <footer class="footer">
+            <div class="card mt-5 ">
+                <div class="card-header text-center">
+                    LetsBuyShoes.com
+                </div>
+                <div class="card-body pb-0">
+                    <p class="text-center">
+                        <a href="https://www.facebook.com/marufmonem.anik" class="contactLinks"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/maruf_monem_anik/" class="contactLinks"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/marufmonemanik" class="contactLinks"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto: maruf.monem@g.bracu.ac.bd?cc=marufmonem@google.com" class="contactLinks"><i
+                                class="far fa-envelope"></i></a>
+                        <a href="https://github.com/MarufMonem" class="contactLinks"><i class="fab fa-github"></i></a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+        var pendingOrder = document.getElementById("pending");
+    </script>
+</body>
+
+</html>
