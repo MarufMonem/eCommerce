@@ -26,7 +26,7 @@
     <li class="nav-item">
         <a href="/cartItems" type="button" id="cartButton" class="btn" data-toggle="modal"
             data-target="#exampleModalCenter" href="">
-             <i class="fas fa-shopping-cart"></i> Cart
+            <i class="fas fa-shopping-cart"></i> Cart
         </a>
     </li>
     <li class="nav-item">
@@ -59,30 +59,36 @@
                                 <th>Size</th>
                                 <th>Quantity</th>
                                 <th>Remove</th>
+                                <th>Edit</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="order-1">
                             <% user.cart.forEach(function(item){ %>
                             <tr>
                                 <td><%= item.productName %></td>
                                 <td><%= item.size %></td>
                                 <td><%= item.amount %></td>
                                 <td>
-                                    <form action="/order/cart/<%= item._id%>?_method=DELETE"
-                                        method="POST">
+                                    <form action="/order/cart/<%= item._id%>?_method=DELETE" method="POST">
                                         <button class="btn btn-outline-danger btn-sm"><i
                                                 class="fas fa-times"></i></button>
                                     </form>
 
                                 </td>
+                                <td>
+                                    <a href="/order/cart/change/<%= item._id%>" class="btn btn-sm btn-info"><i
+                                            class="fas fa-edit"></i> </a>
+
+                                </td>
+                                <td>
+
+                                </td>
                             </tr>
                             <% }) %>
-
-
                         </tbody>
 
-                    </table>
 
+                    </table>
                 </div>
                 <div class="modal-footer text-center mx-auto">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -71,8 +71,8 @@ table tbody tr:hover{
   }
 
 #loginFooter footer{
-    position: relative;
-    bottom: -300px;
+    position: absolute;
+    bottom: 0;
     width: 100%;
 }
 

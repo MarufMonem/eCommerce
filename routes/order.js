@@ -57,23 +57,42 @@ router.post("/cart/confirmed", function (req, res) {
     res.redirect("/user/" + res.locals.currentUser._id);
 });
 
+router.get("/cart/change/:id", function(req,res){
+
+    cartItem.findById(req.params.id, function (err, foundCartItem) {
+        if (err) {
+            console("ERR updating CART ITEM :  " + err);
+        } else {
+            res.locals.currentUser.cart.remove({ _id: req.params.id });
+            res.locals.currentUser.save();
+            foundCartItem.remove();
+            req.flash("secondary","Item removed from cart, your previous selection was: " + foundCartItem.productName + " size: " + foundCartItem.size + ". Total of: " + foundCartItem.amount + " items.");
+            res.redirect("/products/"+ foundCartItem.id);
+        }
+    });
+
+})
+
 router.delete("/cart/:id", function (req, res) {
     //res.send("The user is: " + res.locals.currentUser + "The users cart contains: " +  res.locals.currentUser.cart + "item id: " + req.params.id);
-    res.locals.currentUser.cart.remove({ _id: req.params.id });
-    res.locals.currentUser.save();
     cartItem.findById(req.params.id, function (err, foundCartItem) {
         if (err) {
             console("ERR DELETEING CART ITEM :  " + err);
             req.flash("error","Couldnt delete cart item");
         } else {
-            req.flash("success","Item has been removed.");
+            res.locals.currentUser.cart.remove({ _id: req.params.id });
+            res.locals.currentUser.save();
             foundCartItem.remove();
+            req.flash("success","Item has been removed.");
+            
         }
     });
     
     res.redirect("back");
 })
 
+
+//Creating new order
 router.put("/confirm/:id",isAdmin,function(req,res){
     let update = {delivered:true};
     order.findByIdAndUpdate(req.params.id, update, function(err, foundOrder){
@@ -86,6 +105,9 @@ router.put("/confirm/:id",isAdmin,function(req,res){
     })
 });
 
+
+
+//Delete order
 router.delete("/delete/:id",isAdmin,function(req,res){
     order.findById(req.params.id, function(err, foundOrder){
         if(err){
@@ -98,6 +120,10 @@ router.delete("/delete/:id",isAdmin,function(req,res){
     })
 });
 
+
+
+
+//Adding products to cart
 router.post("/:id/cartAdd", isloggedIn, function (req, res) {
     //get all campgrounds
     user.findOne(res.locals.currentUser._id, function (err, foundUser) {

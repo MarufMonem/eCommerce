@@ -122,14 +122,36 @@ router.get("/logout", function(req, res){
 
 //Delete user
 router.delete("/user/:id", isloggedIn, function(req, res){
-    user.findById(req.params.id, function (err, foundUser) {
-        foundUser.remove();
-    // req.flash("success", "Logged you out");
-    res.redirect("/admin");
-});
+    let foundUndelivered=0;
+    order.find({buyer: req.params.id}, function(err, foundOrders){
+        console.log("**************FoundOrders: *****************" + foundOrders)
+        if(err){
+            console.log("ERR DELETING USER: " + err);
+        }else{
+            foundOrders.forEach(function(order){
+                if(order.delivered == false){
+                    foundUndelivered++;
+                }
+            })
+    
+            if(foundUndelivered==0){
+                user.findById(req.params.id, function (err, foundUser) {
+                    foundUser.remove();
+                    res.redirect("/");
+            });
+            }else{
+                 req.flash("error", "You have a pending order, cant delete your account");
+                 res.redirect("back");
+            }
+        }
+
+
+    })
+
+
 });
 
-//Delete user
+//user profile route
 router.get("/user/:id", isloggedIn, function(req, res){
     user.findById(req.params.id).populate("cart").exec(function (err, foundUser) {
         if(err){
@@ -151,35 +173,45 @@ router.get("/user/:id", isloggedIn, function(req, res){
 });
 });
 
-//PRODUCT DELETE ROUTE
+//User Update Route
 router.put("/user/:id", isloggedIn, function (req, res) {
-    user.findByIdAndUpdate(req.params.id, req.body.user, function (err, updateduser) {
-        if (err) {
-            console.log(err);
-            req.flash("error", "Couldnt update");
-        } else {
-            console.log(updateduser);
-            req.flash("success", "Updated");
-            res.redirect("/user/" + req.params.id);
-        }
-        // req.flash("success", "Logged you out");
-    });
+    let reg1 = RegExp('[0-9]{11}');
+    let reg2 = RegExp('[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,64}');
+    if(reg1.test(req.body.user.phone) && reg2.test(req.body.user.email)){
+
+        user.findByIdAndUpdate(req.params.id, req.body.user, function (err, updateduser) {
+            if (err) {
+                console.log(err);
+                req.flash("error", "Couldnt update");
+            } else {
+                console.log(updateduser);
+                req.flash("success", "Updated");
+                res.redirect("/user/" + req.params.id);
+            }
+            // req.flash("success", "Logged you out");
+        });
+    }else{
+        console.log("*******UNSUCCESSFUL USER Update: WRONG EMAIL OR MOBILE FORMAT********");
+        req.flash("error", "Your email or mobile number or age format doesnt meet standards");
+        res.redirect("/user/" + req.params.id);
+    }
 });
 
-// router.put("/user/:id/passwordChange", isloggedIn, function (req, res) {
-//     user.findById(req.params.id, function (err, foundUser) {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//                 foundUser.setPassword(req.body.password, function(){
-//                 foundUser.save();
-//             })
-//             // req.flash("success", "Campground updated!");
-//             res.redirect("/user/" + req.params.id);
-//         }
-//         // req.flash("success", "Logged you out");
-//     });
-// });
+router.put("/user/:id/passwordChange", isloggedIn, function (req, res) {
+    user.findById(req.params.id, function (err, foundUser) {
+        if (err) {
+            console.log(err);
+            req.flash("error", "Couldnt Change Password");
+        } else {
+                foundUser.setPassword(req.body.password, function(){
+                foundUser.save();
+            })
+            req.flash("success", "Password updated!");
+            res.redirect("/user/" + req.params.id);
+        }
+        
+    });
+});
 
 //logged in checker
 function isloggedIn(req, res, next) {

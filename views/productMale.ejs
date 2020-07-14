@@ -44,33 +44,13 @@
                     </li>
 
                 </ul>
+                <!-- All login releated links -->
                 <%- include("../views/partials/navbarUserInfo") %>
-
-                <!-- <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form> -->
-
             </div>
         </nav>
     </section>
-
-    <div id="alertMsg" class="container-fluid my-0 py-0 px-0 mx-0 my-0 ">
-        <!-- Checking error -->
-        <% if(error && error.length > 0){ %>
-        <script>alertJS();</script>
-        <div class="alert alert-danger text-center my-0 py-1" role="alert">
-            <%= error %>
-        </div>
-        <% } %>
-        <!-- Checking Success -->
-        <% if(success && success.length > 0){ %>
-        <script>alertJS();</script>
-        <div class="alert alert-success text-center  my-0 py-1" role="alert">
-            <%= success %>
-        </div>
-        <% } %>
-    </div>
+    <!-- All alerts -->
+    <%- include("../views/partials/alerts") %>
 
     <!-- Heading -->
     <section id="header">
@@ -158,26 +138,5 @@
             </div>
         </div>
     </section>
-
-
-    <section id="footer">
-        <div class="card mt-5">
-            <div class="card-header text-center">
-                LetsBuyShoes.com
-            </div>
-            <div class="card-body">
-                <p class="text-center">
-                    <a href="https://www.facebook.com/marufmonem.anik" class="contactLinks"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/maruf_monem_anik/" class="contactLinks"><i
-                            class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/in/marufmonemanik" class="contactLinks"><i
-                            class="fab fa-linkedin-in"></i></a>
-                    <a href="mailto: maruf.monem@g.bracu.ac.bd?cc=marufmonem@google.com" class="contactLinks"><i
-                            class="far fa-envelope"></i></a>
-                </p>
-            </div>
-        </div>
-    </section>
-
+    <!-- Footer information and ending tags and scripts  -->
     <%- include("../views/partials/footer") %>

@@ -15,11 +15,11 @@ ul .dropdown-menu .active{
 
 #headTitle{
     background-color: #001514;
-    color: #fbfffe ;
+    color: #fbfffed2 ;
 }
 #cartButton{
     background-color:transparent;
-    color: #d43d0b;
+    color: #dfdfdf;
 }
 
 .modal-content{

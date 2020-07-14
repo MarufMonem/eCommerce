@@ -49,44 +49,24 @@
 
                         </div>
                     </li>
-
                 </ul>
                 <%- include("../views/partials/navbarUserInfo") %>
             </div>
         </nav>
-
-        <!-- Header image -->
     </section>
 
-    <div id="alertMsg" class="container-fluid my-0 py-0 px-0 mx-0 my-0 ">
-        <!-- Checking error -->
-        <% if(error && error.length > 0){ %>
-        <script>alertJS();</script>
-        <div class="alert alert-danger text-center my-0 py-1" role="alert">
-            <%= error %>
-        </div>
-        <% } %>
-        <!-- Checking Success -->
-        <% if(success && success.length > 0){ %>
-        <script>alertJS();</script>
-        <div class="alert alert-success text-center  my-0 py-1" role="alert">
-            <%= success %>
-        </div>
-        <% } %>
-    </div>
+    <!--All alerts  -->
+    <%- include("../views/partials/alerts") %>
+
     <section id="header">
         <p class="text-center py-3">Hello, <span><%=user.username.toUpperCase()%></span></p>
     </section>
 
     <section id="content">
         <div class="container">
-
             <div class="row justify-content-center">
-
                 <div class="col-12 col-md-7">
                     <h3 class="text-center">Your Information</h3>
-
-
                     <table class="table table-hover">
                         <tbody>
                             <tr>
@@ -108,28 +88,27 @@
                         </tbody>
                     </table>
 
-
                     <div class="row ">
-                        <div class="col-6 px-1 d-flex justify-content-center">
+                        <div class="col-4 px-1 d-flex justify-content-center">
                             <a class="btn btn-info btn-block" data-toggle="collapse" href="#collapseExample"
                                 role="button" aria-expanded="false" aria-controls="collapseExample">
                                 Update Information
                             </a>
                         </div>
 
-                        <!-- <div class="col-4 px-1 mx-0 d-flex justify-content-center">
+                        <div class="col-4 px-1 mx-0 d-flex justify-content-center">
 
-                            <button class="btn btn-warning" data-toggle="collapse" href="#password" role="button"
-                                aria-expanded="false" aria-controls="collapseExample">Change Password</button>
+                            <button class="btn btn-warning btn-block" data-toggle="collapse" href="#password"
+                                role="button" aria-expanded="false" aria-controls="collapseExample">Change
+                                Password</button>
 
-                        </div> -->
+                        </div>
 
-                        <div class="col-6 px-1 mx-0 d-block justify-content-center">
+                        <div class="col-4 px-1 mx-0 d-block justify-content-center">
                             <form id="delete" action="/user/<%=user._id%>?_method=DELETE" method="POST">
                                 <button class="btn btn-danger btn-block"> Delete Account</button>
                             </form>
                         </div>
-
                     </div>
 
                     <div class="row">
@@ -198,8 +177,6 @@
                                         </div>
                                     </div>
 
-
-
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-12">
 
@@ -213,13 +190,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
-
                 </div>
 
                 <div class="col-12 col-lg-5 py-3 py-lg-0">
@@ -281,7 +251,7 @@
                                         count++
                                         totalCost=totalCost + item.price;
                                         %>
-                                    <p><%= item.productName%></p>
+                                    <p><%= item.productName%> | <%= item.size %> (<%=item.amount%>)</p>
                                     <% }) %>
 
                                 </td>
@@ -290,24 +260,15 @@
                             </tr>
 
                             <%}%>
-                            
                         <%      })
                             }
                         %>
-
-
-
-
                         </tbody>
                     </table>
                 </div>
-
-
             </div>
         </div>
     </section>
-
-
     <section id="loginFooter">
         <footer class="footer">
             <div class="card mt-5 ">
@@ -336,7 +297,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script>
         var pendingOrder = document.getElementById("pending");
-
     </script>
 </body>
 

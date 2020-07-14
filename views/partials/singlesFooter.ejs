@@ -1,0 +1,83 @@
+<section id="footer">
+    <div class="card mt-5">
+        <div class="card-header text-center">
+            LetsBuyShoes.com
+        </div>
+        <div class="card-body">
+            <p class="text-center">
+                <a href="https://www.facebook.com/marufmonem.anik" class="contactLinks"><i
+                        class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/maruf_monem_anik/" class="contactLinks"><i
+                        class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/marufmonemanik" class="contactLinks"><i
+                        class="fab fa-linkedin-in"></i></a>
+                <a href="mailto: maruf.monem@g.bracu.ac.bd?cc=marufmonem@google.com" class="contactLinks"><i
+                        class="far fa-envelope"></i></a>
+                <a href="https://github.com/MarufMonem" class="contactLinks"><i class="fab fa-github"></i></a>
+            </p>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+    function pick() {
+        var data = document.getElementById("productSize");
+        var userPicked = data.value;
+        var arr = [document.getElementById("optionNo1"), document.getElementById("optionNo2"), document.getElementById("optionNo3"), document.getElementById("optionNo4")];
+
+        var xlarge = <%= product.sizeXL %>;
+        var large = <%= product.sizeLG %>;
+        var medium = <%= product.sizeMD %>;
+        var small = <%= product.sizeSM %>;
+        console.log("x large is : " + xlarge);
+        if (userPicked == "Extra Large") {
+            caller(xlarge, arr);
+        } else if (userPicked == "Large") {
+            caller(large, arr);
+        } else if (userPicked == "Medium") {
+            caller(medium, arr);
+        } else if (userPicked == "Small") {
+            ;
+            caller(small, arr);
+        }
+    }
+    // var option1 = document.getElementById("optionNo1");
+    // var option2 = document.getElementById("optionNo2");
+    // var option3 = document.getElementById("optionNo3");
+    // var option4 = document.getElementById("optionNo4");
+
+    function caller(pickedValueAmount, arr) {
+        if (pickedValueAmount > 4) {
+            classControl(arr, 4);
+        } else if (pickedValueAmount == 3) {
+            classControl(arr, 3);
+        } else if (pickedValueAmount == 2) {
+            classControl(arr, 2);
+        }
+        else if (pickedValueAmount == 1) {
+            classControl(arr, 1);
+        }
+        else if (pickedValueAmount <= 0) {
+            classControl(arr, 0);
+        }
+
+    }
+
+    function classControl(array, amount) {
+        console.log(amount);
+        console.log(array);
+        for (var i = 0; i < 4; i++) {
+            array[i].classList.add("d-none");
+        }
+
+        for (var i = 0; i < amount; i++) {
+            array[i].classList.remove("d-none");
+        }
+    }
+</script>
+</body>
+
+</html>
