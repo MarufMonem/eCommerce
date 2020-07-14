@@ -1,22 +1,22 @@
-var express     = require("express");
-var router      = express.Router();
-var product     = require("../models/product");
-var order       = require("../models/order");
-const user      = require("../models/user");
-const cartItem  = require("../models/cartItem");
+var express = require("express");
+var router = express.Router();
+var product = require("../models/product");
+var order = require("../models/order");
+const user = require("../models/user");
+const cartItem = require("../models/cartItem");
 
 
-router.get("/orderConfirm", isloggedIn, function(req,res){
-    user.findById(res.locals.currentUser._id).populate("cart").exec(function(err, foundUser){
-        if(err){
+router.get("/orderConfirm", isloggedIn, function (req, res) {
+    user.findById(res.locals.currentUser._id).populate("cart").exec(function (err, foundUser) {
+        if (err) {
             console.log("Error finding the user." + err);
-        }else{
+        } else {
             console.log("Founduser looks like " + foundUser);
             console.log("Founduser cart looks like " + foundUser.cart);
             console.log("Founduser cart looks like " + foundUser.product);
-            res.render("orderConfirm",{user:foundUser});
+            res.render("orderConfirm", { user: foundUser });
         }
-        
+
     })
 })
 //If the uder places the order
@@ -28,50 +28,50 @@ router.post("/cart/confirmed", function (req, res) {
     order.create(userOrder, function (err, newOrder) {
         if (err) {
             console.log(err);
-            req.flash("error","Couldnt create the order " + err);
+            req.flash("error", "Couldnt create the order " + err);
         } else {
             // console.log("NEW CREATED ORDER IS: " + newOrder);
             var cartInfo = res.locals.currentUser.cart; //Storing the cart array inside a variable
-            var loopLength= cartInfo.length;
+            var loopLength = cartInfo.length;
             var countingItems = 0; //variable to keep track of how many items are traversed
-            for (var i = 0; i < loopLength;i++ ) {
-            console.log("CART INFO: " + cartInfo[0]);
-            cartItem.findById(cartInfo[0], function(err, foundCart){
-                if(err){
-                    console.log("ERR finding the cart: " + err);
-                    req.flash("error","Cart not found " + err);
-                }else{
-                    product.findById(foundCart.id, function(err, foundCartProduct){
-                        if(foundCart.size.localeCompare("Small")==0){
-                            foundCartProduct.sizeSM = foundCartProduct.sizeSM - foundCart.amount;
-                            if(foundCartProduct.sizeSM<0){
-                                res.send("Sorry your product: " + foundCartProduct.title + " just went out of stock! Better Luck next time.");
+            for (var i = 0; i < loopLength; i++) {
+                console.log("CART INFO: " + cartInfo[0]);
+                cartItem.findById(cartInfo[0], function (err, foundCart) {
+                    if (err) {
+                        console.log("ERR finding the cart: " + err);
+                        req.flash("error", "Cart not found " + err);
+                    } else {
+                        product.findById(foundCart.id, function (err, foundCartProduct) {
+                            if (foundCart.size.localeCompare("Small") == 0) {
+                                foundCartProduct.sizeSM = foundCartProduct.sizeSM - foundCart.amount;
+                                if (foundCartProduct.sizeSM < 0) {
+                                    res.send("Sorry your product: " + foundCartProduct.title + " just went out of stock! Better Luck next time.");
+                                }
+                                foundCartProduct.save();
+                            } else if (foundCart.size == "Medium") {
+                                foundCartProduct.sizeMD = foundCartProduct.sizeMD - foundCart.amount;
+                                foundCartProduct.save();
+                            } else if (foundCart.size == "Large") {
+                                foundCartProduct.sizeLG = foundCartProduct.sizeLG - foundCart.amount;
+                                foundCartProduct.save();
+                            } else if (foundCart.size == "Extra Large") {
+                                foundCartProduct.sizeXL = foundCartProduct.sizeXL - foundCart.amount;
+                                foundCartProduct.save();
                             }
-                            foundCartProduct.save();
-                        }else if(foundCart.size == "Medium"){
-                            foundCartProduct.sizeMD = foundCartProduct.sizeMD - foundCart.amount;
-                            foundCartProduct.save();
-                        }else if(foundCart.size == "Large"){
-                            foundCartProduct.sizeLG = foundCartProduct.sizeLG - foundCart.amount;
-                            foundCartProduct.save();
-                        }else if(foundCart.size == "Extra Large"){
-                            foundCartProduct.sizeXL = foundCartProduct.sizeXL - foundCart.amount;
-                            foundCartProduct.save();
-                        }
-                    })
-                }
-            })
+                        })
+                    }
+                })
                 console.log("REMOVING: " + cartInfo[0]);
                 res.locals.currentUser.cart.remove({ _id: cartInfo[0] });
             }
             res.locals.currentUser.save();
         }
     });
-    req.flash("success","Your order has been placed! We would contact you when its ready.");
+    req.flash("success", "Your order has been placed! We would contact you when its ready.");
     res.redirect("/user/" + res.locals.currentUser._id);
 });
 
-router.get("/cart/change/:id", function(req,res){
+router.get("/cart/change/:id", function (req, res) {
 
     cartItem.findById(req.params.id, function (err, foundCartItem) {
         if (err) {
@@ -80,8 +80,8 @@ router.get("/cart/change/:id", function(req,res){
             res.locals.currentUser.cart.remove({ _id: req.params.id });
             res.locals.currentUser.save();
             foundCartItem.remove();
-            req.flash("secondary","Item removed from cart, your previous selection was: " + foundCartItem.productName + " size: " + foundCartItem.size + ". Total of: " + foundCartItem.amount + " items.");
-            res.redirect("/products/"+ foundCartItem.id);
+            req.flash("secondary", "Item removed from cart, your previous selection was: " + foundCartItem.productName + " size: " + foundCartItem.size + ". Total of: " + foundCartItem.amount + " items.");
+            res.redirect("/products/" + foundCartItem.id);
         }
     });
 
@@ -92,28 +92,28 @@ router.delete("/cart/:id", function (req, res) {
     cartItem.findById(req.params.id, function (err, foundCartItem) {
         if (err) {
             console("ERR DELETEING CART ITEM :  " + err);
-            req.flash("error","Couldnt delete cart item");
+            req.flash("error", "Couldnt delete cart item");
         } else {
             res.locals.currentUser.cart.remove({ _id: req.params.id });
             res.locals.currentUser.save();
             foundCartItem.remove();
-            req.flash("success","Item has been removed.");
-            
+            req.flash("success", "Item has been removed.");
+
         }
     });
-    
+
     res.redirect("back");
 })
 
 
 //Creating new order
-router.put("/confirm/:id",isAdmin,function(req,res){
-    let update = {delivered:true};
-    order.findByIdAndUpdate(req.params.id, update, function(err, foundOrder){
-        if(err){
+router.put("/confirm/:id", isAdmin, function (req, res) {
+    let update = { delivered: true };
+    order.findByIdAndUpdate(req.params.id, update, function (err, foundOrder) {
+        if (err) {
             console.log("Couldnt Update");
-        }else{
-            req.flash("success","Order has been confirmed");
+        } else {
+            req.flash("success", "Order has been confirmed");
             res.redirect("/admin");
         }
     })
@@ -122,41 +122,107 @@ router.put("/confirm/:id",isAdmin,function(req,res){
 
 
 //Delete order
-router.delete("/delete/:id",isAdmin,function(req,res){
-    order.findById(req.params.id, function(err, foundOrder){
-        if(err){
+router.delete("/delete/:id", isAdmin, function (req, res) {
+    order.findById(req.params.id, function (err, foundOrder) {
+        if (err) {
             console.log("Couldnt Update");
-        }else{
+        } else {
             foundOrder.remove();
-            req.flash("success","Order has been removed.");
+            req.flash("success", "Order has been removed.");
             res.redirect("back");
         }
     })
 });
 
 //Rendering order edit page
-router.get("/edit/:id", isAdmin, function(req,res){
-    order.findById(req.params.id).populate("cart buyer").exec(function(err, foundOrder){
-        if(err){
+router.get("/edit/:id", isAdmin, function (req, res) {
+    order.findById(req.params.id).populate("cart buyer").exec(function (err, foundOrder) {
+        if (err) {
             console.log("Couldnt find order");
-            req.flash("error","Couldnt find order.");
-        }else{
+            req.flash("error", "Couldnt find order.");
+        } else {
             console.log(foundOrder);
-            res.render("orderEdit", {order:foundOrder});
+            res.render("orderEdit", { order: foundOrder });
         }
     })
 });
 
 //changing the cart
-router.put("/edit/cart/:id", isAdmin, function(req, res){
-    cartItem.findByIdAndUpdate(req.params.id, req.body.cart, function(err, updatedCart){
-        if(err){
-            console.log("Couldnt Update Cart " + err );
-        }else{
-            req.flash("success","cart item updated");
-            res.redirect("back");
+router.put("/edit/cart/:id", isAdmin, function (req, res) {
+    //FInd the product which we would update then refill the inventory with the previous product then reduce with the new size n amount
+    cartItem.findById(req.params.id, function (err, foundCart) {
+        if (err) {
+            req.flash("error", "Couldnt find cart item.");
+        } else {
+            //keeps track if the change is valid or not
+            let approve = false;
+            //refilling the inventory
+            product.findById(foundCart.id, function (err2, foundCartProduct) {
+
+                if (err) {
+                    console.log("Couldnt find product. " + err2);
+                } else {
+                    if (foundCart.size == "Small") {
+                        foundCartProduct.sizeSM = foundCartProduct.sizeSM + foundCart.amount;
+                        foundCartProduct.save();
+                    } else if (foundCart.size == "Medium") {
+                        foundCartProduct.sizeMD = foundCartProduct.sizeMD + foundCart.amount;
+                        foundCartProduct.save();
+                    } else if (foundCart.size == "Large") {
+                        foundCartProduct.sizeLG = foundCartProduct.sizeLG + foundCart.amount;
+                        foundCartProduct.save();
+                    } else if (foundCart.size == "Extra Large") {
+                        foundCartProduct.sizeXL = foundCartProduct.sizeXL + foundCart.amount;
+                        foundCartProduct.save();
+                    }
+                }
+                if (req.body.cart.size == "Small") {
+                    foundCartProduct.sizeSM = foundCartProduct.sizeSM - req.body.cart.amount;
+                    if (foundCartProduct.sizeSM >= 0) {
+                        foundCartProduct.save();
+                        approve = true;
+                    }
+
+                } else if (req.body.cart.size == "Medium") {
+                    foundCartProduct.sizeMD = foundCartProduct.sizeMD - req.body.cart.amount;
+                    if (foundCartProduct.sizeMD >= 0) {
+                        foundCartProduct.save();
+                        approve = true;
+                    }
+
+                } else if (req.body.cart.size == "Large") {
+                    foundCartProduct.sizeLG = foundCartProduct.sizeLG - req.body.cart.amount;
+                    if (foundCartProduct.sizeLG >= 0) {
+                        foundCartProduct.save();
+                        approve = true;
+                    }
+
+                } else if (req.body.cart.size == "Extra Large") {
+                    foundCartProduct.sizeXL = foundCartProduct.sizeXL - req.body.cart.amount;
+                    if (foundCartProduct.sizeXL >= 0) {
+                        foundCartProduct.save();
+                        approve = true;
+                    }
+
+                }
+                //Updating the cart with changed item
+                if (approve) {
+                    cartItem.findByIdAndUpdate(req.params.id, req.body.cart, function (err, updatedCart) {
+                        if (err) {
+                            console.log("Couldnt Update Cart " + err);
+                        } else {
+                            req.flash("success", "cart item updated");
+                            res.redirect("back");
+                        }
+                    })
+                }
+            })
+
         }
-    })
+    });
+
+
+
 })
 
 
@@ -187,7 +253,7 @@ router.post("/:id/cartAdd", isloggedIn, function (req, res) {
                                         console.log("There was an error");
                                     } else {
                                         console.log("USER Looks like this now: " + saveduser);
-                                        req.flash("success","Item added to cart.");
+                                        req.flash("success", "Item added to cart.");
                                         res.redirect("back");
                                     }
                                 })
@@ -210,13 +276,13 @@ function isloggedIn(req, res, next) {
 }
 function isAdmin(req, res, next) {
     if (req.isAuthenticated()) {
-        if(req.user.admin === true){
+        if (req.user.admin === true) {
             return next();
-        }else{
+        } else {
             console.log("PERSON IS NOT ADMIN******************")
             res.send("ONLY FOR ADMIN");
         }
-    }else{
+    } else {
         res.redirect("/login");
     }
 }
