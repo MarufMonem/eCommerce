@@ -8,11 +8,17 @@
     <meta name="Description" content="Enter your description here" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    <link rel="stylesheet" href="../profile.css">
+    <link rel="stylesheet" href="../orderConfirm.css">
     <title> Order Confirmation</title>
 </head>
 
 <body>
+    <script>
+        function alertJS() {
+            var alertMsg = document.getElementById("alertMsg");
+            setTimeout(function () { alertMsg.classList.add("d-none") }, 3000);
+        };
+    </script>
     <!-- navbar -->
     <section id="navbar">
         <nav class="navbar navbar-expand-lg navbar-light">
@@ -43,210 +49,156 @@
                         </div>
                     </li>
                 </ul>
+                <!-- Login links -->
                 <%- include("../views/partials/navbarUserInfo") %>
             </div>
         </nav>
     </section>
-
     <!--All alerts  -->
     <%- include("../views/partials/alerts") %>
 
+    <!-- Heading Section -->
     <section id="header">
-        <p class="text-center py-3">Hello, <span><%=user.username.toUpperCase()%></span></p>
+        <p class="text-center py-3">Hi, <span><%=user.username.toUpperCase()%></span></p>
     </section>
 
-    <section id="content">
+
+    <section id="userInfo">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-7">
-                    <h3 class="text-center">Your Information</h3>
-                    <table class="table table-hover">
+                <div class="col-10">
+                    <h3 class="text-center mb-4">Please ensure the following information is up to date</h3>
+                    <table class="table text-center">
                         <tbody>
                             <tr>
-                                <td>Address:</td>
+                                <th>Address:</th>
                                 <td><%=user.address%></td>
                             </tr>
                             <tr>
-                                <td>Phone Number:</td>
+                                <th>Phone Number:</th>
                                 <td><%=user.phone%></td>
                             </tr>
                             <tr>
-                                <td>Email:</td>
+                                <th>Email:</th>
                                 <td><%=user.email%></td>
                             </tr>
-                            <tr>
-                                <td>Age:</td>
-                                <td><%=user.age%></td>
-                            </tr>
                         </tbody>
                     </table>
-
-                    <div class="row ">
-                        <div class="col-4 px-1 d-flex justify-content-center">
-                            <a class="btn btn-info btn-block" data-toggle="collapse" href="#collapseExample"
-                                role="button" aria-expanded="false" aria-controls="collapseExample">
-                                Update Information
-                            </a>
-                        </div>
-                    </div>
-
- 
-
-                    <div class="row">
-                        <div class="collapse container" id="collapseExample">
-                            <div class="card card-body mt-4">
-                                <form action="/user/<%=user._id%>?_method=PUT" method="POST">
-                                    <div class="row d-flex justify-content-center">
-                                        <div class="col-12">
-
-                                            <div class="form-group">
-                                                <label>Shipping Address</label>
-                                                <input type="text" name="user[address]" class="form-control"
-                                                    value="<%=user.address%>" required>
-                                                <small class="form-text text-muted">Where the product would be
-                                                    delivered.</small>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Phone Number</label>
-                                                <input type="number" name="user[phone]" class="form-control"
-                                                    value="<%=user.phone%>" required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Email address</label>
-                                                <input type="email" name="user[email]" class="form-control"
-                                                    value="<%=user.email%>" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Age</label>
-                                                <input type="number" name="user[age]" class="form-control"
-                                                    value="<%=user.age%>" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row d-flex justify-content-center">
-                                        <div class="col-12">
-
-                                            <button id="submit" type="submit" class="btn btn-warning">Submit</button>
-                                            <button type="reset" class="btn btn-danger">Reset</button>
-                                        </div>
-
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
                 </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-6 px-1 d-flex">
+                    <a class="btn btn-info btn-block" data-toggle="collapse" href="#collapseExample" role="button"
+                        aria-expanded="false" aria-controls="collapseExample">
+                        Update Information
+                    </a>
+                </div>
+            </div>
 
-                <div class="col-12 col-lg-5 py-3 py-lg-0">
-                    <h3 class="text-center">Previous Orders</h3>
-                    <table class="table table-hover text-center table-responsive-sm">
-                        <thead>
-                            <tr>
-                                <th scope="col">OrderID</th>
-                                <th scope="col">Order Status</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Items</th>
-                                <th scope="col">No. Items</th>
-                                <th scope="col">Cost</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <%
-                            
-                            if(userOrders !=null){                       
-                                userOrders.forEach(function(singleOrder){
-                                    var count=0;
-                                    var totalCost=0;
-                                    var date = new Date(singleOrder.date);
-                                    var d = date.getDate();
-                                    var m = date.getMonth()+1;
-                                    var y = date.getFullYear()
-                                    if(singleOrder.delivered == true){
+            <div class="row justify-content-center">
 
-                            %>
+                <div class="col-8">
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body bg-light mt-4">
+                            <form action="/user/<%=user._id%>?_method=PUT" method="POST">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-12">
 
-                            <tr class="table-success">
-                                <td> <%= singleOrder._id %> </td>
-                                <td>Complete</td>
+                                        <div class="form-group">
+                                            <label>Where the product would be shipped </label>
+                                            <input type="text" name="user[address]" class="form-control"
+                                                value="<%=user.address%>" required>
+                                            <small class="form-text text-muted">Where the product would be
+                                                delivered.</small>
+                                        </div>
 
-                                <td> <%=d%>/<%=m%>/<%=y%> </td>
-                                <td>
-                                    <% singleOrder.cart.forEach(function(item){ 
-                                        count++
-                                        totalCost=totalCost + item.price;
-                                        %>
-                                    <p><%= item.productName%></p>
-                                    <% }) %>
+                                        <div class="form-group">
+                                            <label>Phone Number</label>
+                                            <input type="number" name="user[phone]" class="form-control"
+                                                value="<%=user.phone%>" required>
+                                            <small>This is the number we would use to contact you.</small>
+                                            <br>
+                                            <small class="text-danger">
+                                                Changing this would log you out and you have
+                                                to use the new number to login.
+                                            </small>
+                                        </div>
 
-                                </td>
-                                <td><%= count %></td>
-                                <td><%=totalCost%></td>
-                            </tr>
 
-                            <% }else{%>
-                            <tr>
-                                <td> <%= singleOrder._id %> </td>
-                                <td class="pl-4">
-                                    <div class="loader"></div>
-                                </td>
+                                        <div class="form-group">
+                                            <label>Email address</label>
+                                            <input type="email" name="user[email]" class="form-control"
+                                                value="<%=user.email%>" required>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                <td> <%=d%>/<%=m%>/<%=y%> </td>
-                                <td>
-                                    <% singleOrder.cart.forEach(function(item){ 
-                                        count++
-                                        totalCost=totalCost + item.price;
-                                        %>
-                                    <p><%= item.productName%> | <%= item.size %> (<%=item.amount%>)</p>
-                                    <% }) %>
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-12">
+                                        <button id="submit" type="submit" class="btn btn-warning">Submit</button>
+                                        <button type="reset" class="btn btn-danger">Reset</button>
+                                    </div>
 
-                                </td>
-                                <td><%= count %></td>
-                                <td><%=totalCost%></td>
-                            </tr>
-
-                            <%}%>
-                        <%      })
-                            }
-                        %>
-                        </tbody>
-                    </table>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    <section id="loginFooter">
-        <footer class="footer">
-            <div class="card mt-5 ">
-                <div class="card-header text-center">
-                    LetsBuyShoes.com
+
+
+    <section id="orders">
+        <div class="container pt-5">
+            <div class="row justify-content-center">
+                <div class="col-10">
+                    <h3 class="text-center">Previous Orders</h3>
+                    <table class="table text-center table-responsive-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Item</th>
+                                <th scope="col">Size</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Remove</th>
+                                <th scope="col">Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% user.cart.forEach(function(item){ %>
+                            <tr>
+                                <td><a href="/products/<%=item.id%>"><%= item.productName %></a></td>
+                                <td><%= item.size %></td>
+                                <td><%= item.amount %></td>
+                                <td>
+                                    <form action="/order/cart/<%= item._id%>?_method=DELETE" method="POST">
+                                        <button class="btn btn-outline-danger btn-sm"><i
+                                                class="fas fa-times"></i></button>
+                                    </form>
+
+                                </td>
+                                <td>
+                                    <a href="/order/cart/change/<%= item._id%>" class="btn btn-sm btn-info"><i
+                                            class="fas fa-edit"></i> </a>
+
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+
+
                 </div>
-                <div class="card-body pb-0">
-                    <p class="text-center">
-                        <a href="https://www.facebook.com/marufmonem.anik" class="contactLinks"><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/maruf_monem_anik/" class="contactLinks"><i
-                                class="fab fa-instagram"></i></a>
-                        <a href="https://www.linkedin.com/in/marufmonemanik" class="contactLinks"><i
-                                class="fab fa-linkedin-in"></i></a>
-                        <a href="mailto: maruf.monem@g.bracu.ac.bd?cc=marufmonem@google.com" class="contactLinks"><i
-                                class="far fa-envelope"></i></a>
-                        <a href="https://github.com/MarufMonem" class="contactLinks"><i class="fab fa-github"></i></a>
-                    </p>
+
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-6 px-1 pt-4 d-block">
+                    <form action="/order/cart/confirmed" method="POST">
+                        <button type="submit" class="btn btn-success btn-block">Confirm Order</button>
+                    </form>
                 </div>
             </div>
-        </footer>
-
+        </div>
     </section>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script>
-        var pendingOrder = document.getElementById("pending");
-    </script>
-</body>
-
-</html>
+    <%- include("../views/partials/footer") %>

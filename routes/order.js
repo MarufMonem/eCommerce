@@ -5,6 +5,20 @@ var order       = require("../models/order");
 const user      = require("../models/user");
 const cartItem  = require("../models/cartItem");
 
+
+router.get("/orderConfirm", isloggedIn, function(req,res){
+    user.findById(res.locals.currentUser._id).populate("cart").exec(function(err, foundUser){
+        if(err){
+            console.log("Error finding the user." + err);
+        }else{
+            console.log("Founduser looks like " + foundUser);
+            console.log("Founduser cart looks like " + foundUser.cart);
+            console.log("Founduser cart looks like " + foundUser.product);
+            res.render("orderConfirm",{user:foundUser});
+        }
+        
+    })
+})
 //If the uder places the order
 router.post("/cart/confirmed", function (req, res) {
     var userOrder = {

@@ -1,0 +1,58 @@
+body{
+    background-color: #fbfffe;
+}
+nav{
+    background-color:#e6af2e ;
+}
+.fadeOutAlert{
+    display: none;
+    transition:display 3s;
+}
+
+#header p{
+    font-size: 2.5rem;
+    background-color: #e6af2e;
+    color: #001514;
+}
+
+table a{
+    font-weight: 600;
+}
+
+
+table tr{
+    color: #000;
+}
+
+table tr:hover{
+    background-color: #f1e1bc;
+    color: #001514;
+}
+
+#footer{
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+footer .card{
+    background-color: transparent;
+}
+
+footer .card .card-header{
+    background-color: transparent;
+}
+
+
+#footer i{
+    font-size: 2rem;
+    margin-right: 1rem;
+    color: #001514;
+}
+
+#footer i:hover{
+    color: #e6af2e;
+    transition: 200ms;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+}

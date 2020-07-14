@@ -55,14 +55,14 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Item</th>
-                                <th>Size</th>
-                                <th>Quantity</th>
-                                <th>Remove</th>
-                                <th>Edit</th>
+                                <th scope="col">Item</th>
+                                <th scope="col">Size</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Remove</th>
+                                <th scope="col">Edit</th>
                             </tr>
                         </thead>
-                        <tbody class="order-1">
+                        <tbody>
                             <% user.cart.forEach(function(item){ %>
                             <tr>
                                 <td><%= item.productName %></td>
@@ -92,9 +92,7 @@
                 </div>
                 <div class="modal-footer text-center mx-auto">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <form action="/order/cart/confirmed" method="POST">
-                        <button type="submit" class="btn btn-success">Confirm Order</button>
-                    </form>
+                    <a href="/order/orderConfirm" class="btn btn-success"> Confrim Order</a>
 
                 </div>
 

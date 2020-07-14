@@ -186,7 +186,7 @@ router.put("/user/:id", isloggedIn, function (req, res) {
             } else {
                 console.log(updateduser);
                 req.flash("success", "Updated");
-                res.redirect("/user/" + req.params.id);
+                res.redirect("back");
             }
             // req.flash("success", "Logged you out");
         });
