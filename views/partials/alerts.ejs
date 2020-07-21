@@ -2,14 +2,14 @@
     <!-- Checking error -->
     <% if(error && error.length > 0){ %>
     <script>alertJS();</script>
-    <div class="alert alert-danger text-center my-0 py-1" role="alert">
+    <div class="alert alert-danger text-center my-0 font-weight-bold" role="alert">
         <%= error %>
     </div>
     <% } %>
     <!-- Checking Success -->
     <% if(success && success.length > 0){ %>
     <script>alertJS();</script>
-    <div class="alert alert-success text-center  my-0 py-1" role="alert">
+    <div class="alert alert-success text-center  my-0 font-weight-bold" role="alert">
         <%= success %>
     </div>
     <% } %>

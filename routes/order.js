@@ -114,16 +114,16 @@ router.delete("/cart/:id", function (req, res) {
         if (err) {
             console("ERR DELETEING CART ITEM :  " + err);
             req.flash("error", "Couldnt delete cart item");
+            res.redirect("back");
         } else {
             res.locals.currentUser.cart.remove({ _id: req.params.id });
             res.locals.currentUser.save();
             foundCartItem.remove();
             req.flash("success", "Item has been removed.");
-
+            res.redirect("back");
         }
     });
-
-    res.redirect("back");
+    
 })
 
 
