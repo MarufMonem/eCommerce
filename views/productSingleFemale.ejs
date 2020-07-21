@@ -107,7 +107,7 @@
                                     <label for="exampleFormControlSelect1">Available Sizes</label>
                                     <select class="form-control" id="productSize" onchange="pick()"
                                         name="cartItem[size]">
-                                        <option>Select Size</option>
+                                        <option value="none">Select Size</option>
                                         <% if(product.sizeSM > 0){ %>
                                         <option>Small </option>
                                         <% } %>
@@ -128,7 +128,7 @@
                                     <label for="exampleFormControlSelect1">Amount</label>
 
                                     <select class="form-control" id="productAmount" name="cartItem[amount]">
-                                        <option disabled>Your Amount</option>
+                                        <option value=0 >Your Amount</option>
                                         <option class="d-none" id="optionNo1">1</option>
                                         <option class="d-none" id="optionNo2">2</option>
                                         <option class="d-none" id="optionNo3">3</option>

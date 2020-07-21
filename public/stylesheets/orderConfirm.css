@@ -1,3 +1,7 @@
+html{
+    position: relative;
+    min-height: 100%;
+}
 body{
     background-color: #fbfffe;
 }
@@ -25,13 +29,13 @@ table tr{
 }
 
 table tr:hover{
-    background-color: #f1e1bc;
+    background-color: #fff1cf;
     color: #001514;
 }
 
 #footer{
-    position: relative;
-    bottom: 0;
+    position: absolute;
+    bottom: 50;
     width: 100%;
 }
 

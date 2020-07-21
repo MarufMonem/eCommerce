@@ -12,8 +12,6 @@ router.get("/orderConfirm", isloggedIn, function (req, res) {
             console.log("Error finding the user." + err);
         } else {
             console.log("Founduser looks like " + foundUser);
-            console.log("Founduser cart looks like " + foundUser.cart);
-            console.log("Founduser cart looks like " + foundUser.product);
             res.render("orderConfirm", { user: foundUser });
         }
 
@@ -21,54 +19,83 @@ router.get("/orderConfirm", isloggedIn, function (req, res) {
 })
 //If the uder places the order
 router.post("/cart/confirmed", function (req, res) {
-    var userOrder = {
-        buyer: res.locals.currentUser._id,
-        cart: res.locals.currentUser.cart
-    }
-    order.create(userOrder, function (err, newOrder) {
-        if (err) {
-            console.log(err);
-            req.flash("error", "Couldnt create the order " + err);
-        } else {
-            // console.log("NEW CREATED ORDER IS: " + newOrder);
-            var cartInfo = res.locals.currentUser.cart; //Storing the cart array inside a variable
-            var loopLength = cartInfo.length;
-            var countingItems = 0; //variable to keep track of how many items are traversed
-            for (var i = 0; i < loopLength; i++) {
-                console.log("CART INFO: " + cartInfo[0]);
-                cartItem.findById(cartInfo[0], function (err, foundCart) {
-                    if (err) {
-                        console.log("ERR finding the cart: " + err);
-                        req.flash("error", "Cart not found " + err);
-                    } else {
-                        product.findById(foundCart.id, function (err, foundCartProduct) {
-                            if (foundCart.size.localeCompare("Small") == 0) {
-                                foundCartProduct.sizeSM = foundCartProduct.sizeSM - foundCart.amount;
-                                if (foundCartProduct.sizeSM < 0) {
-                                    res.send("Sorry your product: " + foundCartProduct.title + " just went out of stock! Better Luck next time.");
-                                }
-                                foundCartProduct.save();
-                            } else if (foundCart.size == "Medium") {
-                                foundCartProduct.sizeMD = foundCartProduct.sizeMD - foundCart.amount;
-                                foundCartProduct.save();
-                            } else if (foundCart.size == "Large") {
-                                foundCartProduct.sizeLG = foundCartProduct.sizeLG - foundCart.amount;
-                                foundCartProduct.save();
-                            } else if (foundCart.size == "Extra Large") {
-                                foundCartProduct.sizeXL = foundCartProduct.sizeXL - foundCart.amount;
-                                foundCartProduct.save();
-                            }
-                        })
-                    }
-                })
-                console.log("REMOVING: " + cartInfo[0]);
-                res.locals.currentUser.cart.remove({ _id: cartInfo[0] });
+
+    user.findById(res.locals.currentUser._id).populate("cart").exec(function (err, foundUser) {
+
+        var undefinedValue= false;
+        foundUser.cart.forEach(function(cartItem){
+            if(cartItem.size == "none" || cartItem.amount == 0){
+                undefinedValue=true;
             }
-            res.locals.currentUser.save();
+        })
+
+
+        if (err) {
+            console.log("Error finding the user." + err);
+        } else {
+            console.log("user cart item " + foundUser.cart);
+            console.log("user cart item size " + foundUser.cart[0].size);
+            console.log("user cart item amount " + foundUser.cart[0].amount);
+
+            if(undefinedValue){
+                req.flash("error", "Cant place order where amount and size isnt defined");
+                res.redirect("back");
+            }else{
+                var userOrder = {
+                    buyer: res.locals.currentUser._id,
+                    cart: res.locals.currentUser.cart
+                }
+                order.create(userOrder, function (err, newOrder) {
+                    if (err) {
+                        console.log(err);
+                        req.flash("error", "Couldnt create the order " + err);
+                    } else {
+                        // console.log("NEW CREATED ORDER IS: " + newOrder);
+                        var cartInfo = res.locals.currentUser.cart; //Storing the cart array inside a variable
+                        var loopLength = cartInfo.length;
+                        var countingItems = 0; //variable to keep track of how many items are traversed
+                        for (var i = 0; i < loopLength; i++) {
+                            console.log("CART INFO: " + cartInfo[0]);
+                            cartItem.findById(cartInfo[0], function (err, foundCart) {
+                                if (err) {
+                                    console.log("ERR finding the cart: " + err);
+                                    req.flash("error", "Cart not found " + err);
+                                } else {
+                                    product.findById(foundCart.id, function (err, foundCartProduct) {
+                                        if (foundCart.size.localeCompare("Small") == 0) {
+                                            foundCartProduct.sizeSM = foundCartProduct.sizeSM - foundCart.amount;
+                                            if (foundCartProduct.sizeSM < 0) {
+                                                res.send("Sorry your product: " + foundCartProduct.title + " just went out of stock! Better Luck next time.");
+                                            }
+                                            foundCartProduct.save();
+                                        } else if (foundCart.size == "Medium") {
+                                            foundCartProduct.sizeMD = foundCartProduct.sizeMD - foundCart.amount;
+                                            foundCartProduct.save();
+                                        } else if (foundCart.size == "Large") {
+                                            foundCartProduct.sizeLG = foundCartProduct.sizeLG - foundCart.amount;
+                                            foundCartProduct.save();
+                                        } else if (foundCart.size == "Extra Large") {
+                                            foundCartProduct.sizeXL = foundCartProduct.sizeXL - foundCart.amount;
+                                            foundCartProduct.save();
+                                        }
+                                    })
+                                }
+                            })
+                            console.log("REMOVING: " + cartInfo[0]);
+                            res.locals.currentUser.cart.remove({ _id: cartInfo[0] });
+                        }
+                        res.locals.currentUser.save();
+                    }
+                });
+                req.flash("success", "Your order has been placed! We would contact you when its ready.");
+                res.redirect("/user/" + res.locals.currentUser._id);
+            }
+
         }
-    });
-    req.flash("success", "Your order has been placed! We would contact you when its ready.");
-    res.redirect("/user/" + res.locals.currentUser._id);
+
+    })
+
+
 });
 
 router.get("/cart/change/:id", function (req, res) {
