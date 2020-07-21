@@ -6,6 +6,7 @@ const user = require("../models/user");
 const cartItem = require("../models/cartItem");
 
 
+//Renders the final order confirm page
 router.get("/orderConfirm", isloggedIn, function (req, res) {
     user.findById(res.locals.currentUser._id).populate("cart").exec(function (err, foundUser) {
         if (err) {
@@ -17,9 +18,9 @@ router.get("/orderConfirm", isloggedIn, function (req, res) {
 
     })
 })
-//If the uder places the order
-router.post("/cart/confirmed", function (req, res) {
 
+//If the user places the order
+router.post("/cart/confirmed", function (req, res) {
     //Finds the user and populated it cart
     user.findById(res.locals.currentUser._id).populate("cart").exec(function (err, foundUser) {
         if (err) {
@@ -92,8 +93,8 @@ router.post("/cart/confirmed", function (req, res) {
     })
 });
 
+//Changing item form user cart - redirects back to that product page
 router.get("/cart/change/:id", function (req, res) {
-
     cartItem.findById(req.params.id, function (err, foundCartItem) {
         if (err) {
             console("ERR updating CART ITEM :  " + err);
@@ -108,6 +109,7 @@ router.get("/cart/change/:id", function (req, res) {
 
 })
 
+//Deletes cart item
 router.delete("/cart/:id", function (req, res) {
     //res.send("The user is: " + res.locals.currentUser + "The users cart contains: " +  res.locals.currentUser.cart + "item id: " + req.params.id);
     cartItem.findById(req.params.id, function (err, foundCartItem) {
@@ -123,11 +125,26 @@ router.delete("/cart/:id", function (req, res) {
             res.redirect("back");
         }
     });
-    
 })
 
+// router.delete("/orderItem/:orderId/:cartItemId", function(req, res){
+//     order.findById(req.params.orderId, function(err, foundOrder){
+//         console.log(req.params.orderId);
+//         console.log(req.params.cartItemId);
+//         foundOrder.cart.forEach(function(item){
+//             if(item._id == req.params.cartItemId){
+//                 item.remove({ _id: req.params.cartItemId });
+//             }
+//         })
+//         foundOrder.save();
+//         cartItem.findById(req.params.cartItemId, function(err, cart){
+//             cart.remove();
+//         })
+//     })
+// })
 
-//Creating new order
+
+//Confirming order as successfully delivered
 router.put("/confirm/:id", isAdmin, function (req, res) {
     let update = { delivered: true };
     order.findByIdAndUpdate(req.params.id, update, function (err, foundOrder) {
@@ -168,7 +185,7 @@ router.get("/edit/:id", isAdmin, function (req, res) {
     })
 });
 
-//changing the cart
+//changing order
 router.put("/edit/cart/:id", isAdmin, function (req, res) {
     //FInd the product which we would update then refill the inventory with the previous product then reduce with the new size n amount
     cartItem.findById(req.params.id, function (err, foundCart) {
@@ -179,7 +196,6 @@ router.put("/edit/cart/:id", isAdmin, function (req, res) {
             let approve = false;
             //refilling the inventory
             product.findById(foundCart.id, function (err2, foundCartProduct) {
-
                 if (err) {
                     console.log("Couldnt find product. " + err2);
                 } else {
@@ -224,7 +240,6 @@ router.put("/edit/cart/:id", isAdmin, function (req, res) {
                         foundCartProduct.save();
                         approve = true;
                     }
-
                 }
                 //Updating the cart with changed item
                 if (approve) {
@@ -238,12 +253,8 @@ router.put("/edit/cart/:id", isAdmin, function (req, res) {
                     })
                 }
             })
-
         }
     });
-
-
-
 })
 
 

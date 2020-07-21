@@ -135,7 +135,23 @@ router.delete("/user/:id", isloggedIn, function(req, res){
             })
     
             if(foundUndelivered==0){
+                console.log("User related info removing process starts");
                 user.findById(req.params.id, function (err, foundUser) {
+                    console.log("order and cart item removing");
+                    foundOrders.forEach(function(order){
+                        order.cart.forEach(function(item){
+                            console.log("Removing cart items for order id: " + order._id);
+                            cartItem.findById(item._id, function(err, foundItem){
+                                console.log("removing cart item, ID: " + foundItem._id);
+                                foundItem.remove();
+                            })
+                        })
+                        console.log("All cart items of order removed");
+                        console.log("order removed, ID: " + order._id);
+                        order.remove();
+                    })
+                    console.log("Removing user, ID: " + foundUser._id);
+                    console.log("Removing user, Name: " + foundUser.username);
                     foundUser.remove();
                     res.redirect("/");
             });
