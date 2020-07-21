@@ -191,13 +191,14 @@ users.forEach(function(user){
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Serial</th>
+                                        <th scope="col" class="px-0">Serial</th>
                                         <th scope="col">Image Preview</th>
                                         <th scope="col">Title</th>
                                         <th scope="col">Price</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">Sex</th>
                                         <th scope="col">Date</th>
+                                        <th scope="col" class="px-0">Items</th>
                                         <th scope="col">Featured</th>
                                         <th scope="col">Edit</th>
                                         <th scope="col">Remove</th>
@@ -212,10 +213,10 @@ users.forEach(function(user){
   
                     var d = date.getDate();
                     var m = date.getMonth()+1;
-                    var y = date.getFullYear()
+                    var y = date.getFullYear()-2000;
                     %>
                                     <tr>
-                                        <th scope="row"><%=count%></th>
+                                        <th scope="row" class="px-0"><%=count%></th>
                                         <td>
                                             <a href="../products/<%=product._id%>"><img class="img-thumbnail"
                                                     src="<%=product.image%>" alt="product image"></a>
@@ -226,6 +227,7 @@ users.forEach(function(user){
                                         <td class="text-justify"><%=product.description%></td>
                                         <td><%=product.sex%></td>
                                         <td><%=d%>/<%=m%>/<%=y%></td>
+                                        <td class="px-0">XL: <%=product.sizeXL%>, L: <%=product.sizeLG%>, M: <%=product.sizeMD%>, S:<%=product.sizeSM%></td>
                                         <td><%=product.featured%></td>
                                         <td>
 
@@ -511,7 +513,7 @@ users.forEach(function(user){
                                         
                                         var count=0;
 
-                                        var totalCost=0;
+                                        var totalCost2=0;
                                         var date = new Date(singleOrder.date);
                                         var d = date.getDate();
                                         var m = date.getMonth()+1;
@@ -525,13 +527,14 @@ users.forEach(function(user){
                                 <td>
                                     <%  singleOrder.cart.forEach(function(item){ 
                                         count= count + parseInt(item.amount);
+                                        totalCost2 = totalCost2 + item.price;
                                         %>
                                     <p><%= item.productName%> (<%= item.size %>) | <%=item.amount%></p>
                                     <% }) %>
 
                                 </td>
                                 <td><%= count %></td>
-                                <td><%=totalCost%></td>
+                                <td><%=totalCost2%></td>
                                 <td><%=singleOrder.buyer.username.toUpperCase()%></td>
                                 <td><%=singleOrder.buyer.phone%></td>
                                 <td><%=singleOrder.buyer.email%></td>
@@ -544,7 +547,7 @@ users.forEach(function(user){
                             </tr>
 
                             <%
-                            totalIncome = totalIncome + totalCost
+                            totalIncome = totalIncome + totalCost2
                                     } 
                                 })%>
 
