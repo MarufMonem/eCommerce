@@ -14,6 +14,13 @@
 
 <body>
 
+    <script>
+        function alertJS() {
+            var alertMsg = document.getElementById("alertMsg");
+            setTimeout(function () { alertMsg.classList.add("d-none") }, 3000);
+        };
+    </script>
+
     <!-- navbar -->
     <section id="navbar">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -78,6 +85,8 @@
         </nav>
 
     </section>
+
+    <%- include("../views/partials/alerts") %>
 
     <section id="header">
         <div class="container-fluid px-0">

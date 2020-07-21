@@ -7,7 +7,10 @@ body{
     background-color: #e6af2e;
     color: #fbfffe;
 }
-
+.fadeOutAlert{
+    display: none;
+    transition:display 3s;
+}
 form #submit {
     background-color: #f3b82d;
     color: #001514;

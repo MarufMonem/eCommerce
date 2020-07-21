@@ -108,8 +108,8 @@ router.get("/login", function(req, res){
 //passport authenticate middleware
 router.post("/login", passport.authenticate("local", {
     successRedirect: "/", //if the login was successful
-    failureRedirect: "/login" // if it wasnt
-    // failureFlash: true
+    failureRedirect: "/login", // if it wasnt
+    failureFlash: true
 }) , function(req, res){
 });
 
@@ -202,8 +202,9 @@ router.put("/user/:id/passwordChange", isloggedIn, function (req, res) {
                 foundUser.setPassword(req.body.password, function(){
                 foundUser.save();
             })
-            req.flash("success", "Password updated!");
-            res.redirect("/user/" + req.params.id);
+            req.logout();
+            req.flash("success", "Your password has been updated. Please login again.");
+            res.redirect("/login");
         }
         
     });
