@@ -65,9 +65,9 @@
     <section id="content">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-7">
+                <div class="col-12 col-md-7 mb-5">
                     <h3 class="text-center">Your Information</h3>
-                    <table class="table table-hover">
+                    <table class="table text-center table-hover">
                         <tbody>
                             <tr>
                                 <td>Address:</td>
@@ -192,16 +192,16 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-5 py-3 py-lg-0">
+                <div class="col-12 pt-3 pb-5 mb-5">
                     <h3 class="text-center">Previous Orders</h3>
-                    <table class="table table-hover text-center table-responsive-sm">
+                    <table class="table table-hover text-center table-responsive-md">
                         <thead>
                             <tr>
                                 <th scope="col">OrderID</th>
-                                <th scope="col">Order Status</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Items</th>
-                                <th scope="col">No. Items</th>
+                                <th scope="col">Total Items</th>
                                 <th scope="col">Cost</th>
                             </tr>
                         </thead>
@@ -221,8 +221,8 @@
                             %>
 
                             <tr class="table-success">
-                                <td> <%= singleOrder._id %> </td>
-                                <td>Complete</td>
+                                <td class="px-0"> <%= singleOrder._id %> </td>
+                                <td class="px-0">Complete</td>
 
                                 <td> <%=d%>/<%=m%>/<%=y%> </td>
                                 <td>
@@ -235,14 +235,15 @@
 
                                 </td>
                                 <td><%= count %></td>
-                                <td><%=totalCost%></td>
+                                <td><%=totalCost%> Taka</td>
                             </tr>
 
                             <% }else{%>
                             <tr>
-                                <td> <%= singleOrder._id %> </td>
-                                <td class="pl-4">
-                                    <div class="loader"></div>
+                                <td class="px-0"> <%= singleOrder._id %> </td>
+                                <td class="px-0" id="pendingColorChange">
+                                    <!-- <div class="loader"></div> -->
+                                   <p>Pending</p> 
                                 </td>
 
                                 <td> <%=d%>/<%=m%>/<%=y%> </td>
@@ -251,12 +252,12 @@
                                         count++
                                         totalCost=totalCost + item.price;
                                         %>
-                                    <p><%= item.productName%> | <%= item.size %> (<%=item.amount%>)</p>
+                                    <p><%=item.amount%> - <%=item.productName%> ( <%= item.size %> )</p>
                                     <% }) %>
 
                                 </td>
                                 <td><%= count %></td>
-                                <td><%=totalCost%></td>
+                                <td><%=totalCost%> Taka</td>
                             </tr>
 
                             <%}%>

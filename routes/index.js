@@ -140,15 +140,11 @@ router.delete("/user/:id", isloggedIn, function(req, res){
                     res.redirect("/");
             });
             }else{
-                 req.flash("error", "You have a pending order, cant delete your account");
+                 req.flash("error", "You can not delete your account while having pending orders. For order issues call or message us on social media. ");
                  res.redirect("back");
             }
         }
-
-
     })
-
-
 });
 
 //user profile route
