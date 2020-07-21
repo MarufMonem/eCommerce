@@ -20,25 +20,23 @@ router.get("/orderConfirm", isloggedIn, function (req, res) {
 //If the uder places the order
 router.post("/cart/confirmed", function (req, res) {
 
+    //Finds the user and populated it cart
     user.findById(res.locals.currentUser._id).populate("cart").exec(function (err, foundUser) {
-
-        var undefinedValue= false;
-        foundUser.cart.forEach(function(cartItem){
-            if(cartItem.size == "none" || cartItem.amount == 0){
-                undefinedValue=true;
-            }
-        })
-
-
         if (err) {
             console.log("Error finding the user." + err);
         } else {
-            console.log("user cart item " + foundUser.cart);
-            console.log("user cart item size " + foundUser.cart[0].size);
-            console.log("user cart item amount " + foundUser.cart[0].amount);
 
+            var undefinedValue= false; //variable for checking undefined values size none or amount 0
+            //loops through all the cart item and checks
+            foundUser.cart.forEach(function(cartItem){
+                if(cartItem.size == "none" || cartItem.amount == 0){
+                    undefinedValue=true;
+                }
+            })
+
+            //if there are undefined items in cart show an error
             if(undefinedValue){
-                req.flash("error", "Cant place order where amount and size isnt defined");
+                req.flash("error", "Cant place order where amount or size isnt defined properly. They cant be null/0");
                 res.redirect("back");
             }else{
                 var userOrder = {
@@ -90,12 +88,8 @@ router.post("/cart/confirmed", function (req, res) {
                 req.flash("success", "Your order has been placed! We would contact you when its ready.");
                 res.redirect("/user/" + res.locals.currentUser._id);
             }
-
         }
-
     })
-
-
 });
 
 router.get("/cart/change/:id", function (req, res) {
