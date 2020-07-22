@@ -23,8 +23,8 @@ var productRoutes           = require("./routes/product"),
     orderRoutes             = require("./routes/order");
 
 mongoose.set('useUnifiedTopology', true); //removing deprication errors
-// mongoose.connect("mongodb://localhost/eCommerceWebsite" ,{ useNewUrlParser: true });
-mongoose.connect("mongodb+srv://eCommerce:16101078@ecommerce.gpjnj.mongodb.net/eCommerce?retryWrites=true&w=majority" ,{ useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/eCommerceWebsite" ,{ useNewUrlParser: true });
+
 
 //MAKING ALL DIFFRENT PACKAGES AND FEATURES USEABLE IN THE APP    
 app.use(bodyParser.urlencoded({ extended: true })); //get form data
